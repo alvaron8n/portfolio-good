@@ -1,0 +1,59 @@
+/* ============================================
+   CURVED LOOP - Strip marquee curvo
+   ============================================ */
+
+.curved-loop-wrap {
+  width: 100%;
+  padding: 1rem 0;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.curved-loop-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1440 / 100;
+  overflow: visible;
+}
+
+.curved-loop-text {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.25rem, 3vw, 2rem);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  fill: rgba(255, 255, 255, 0.08);
+  transition: fill 0.4s ease;
+}
+
+/* Hover - desktop */
+@media (hover: hover) and (pointer: fine) {
+  .curved-loop-wrap:hover .curved-loop-text {
+    fill: rgba(255, 255, 255, 0.15);
+  }
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+  .curved-loop-wrap {
+    padding: 0.5rem 0;
+  }
+  
+  .curved-loop-svg {
+    aspect-ratio: 1440 / 80;
+  }
+  
+  .curved-loop-text {
+    font-size: 1rem;
+    letter-spacing: 0.08em;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .curved-loop-wrap {
+    opacity: 0.5;
+  }
+}

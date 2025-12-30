@@ -1,13 +1,7 @@
 import { Router } from './app/Router'
-import { CustomCursor } from './components/CustomCursor'
 
 function App() {
-  return (
-    <>
-      <CustomCursor />
-      <Router />
-    </>
-  )
+  return <Router />
 }
 
 export default App

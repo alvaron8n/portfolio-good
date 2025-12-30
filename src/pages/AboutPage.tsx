@@ -1,9 +1,10 @@
-import { motion, useScroll, useTransform, useSpring, useMotionValue, useInView } from 'framer-motion'
+import { motion, useSpring, useMotionValue, useInView } from 'framer-motion'
 import { useRef, useState, useEffect } from 'react'
 import { Section } from '../components/Section'
 import { Container } from '../components/Container'
 import { Button } from '../components/Button'
 import { content } from '../content/content'
+import { VeilSectionHeader } from '../components/ui/VeilSectionHeader'
 
 // Animated counter component
 function AnimatedCounter({ value, suffix = '', duration = 2000 }: { value: number; suffix?: string; duration?: number }) {
@@ -95,7 +96,7 @@ function TimelineItem({ item, index, isLast }: {
 
 // Skill category with animated items
 function SkillCategory({ category, index }: {
-  category: { name: string; items: string[] }
+  category: { name: string; items: readonly string[] }
   index: number
 }) {
   const [hoveredSkill, setHoveredSkill] = useState<string | null>(null)
@@ -174,16 +175,7 @@ function SkillCategory({ category, index }: {
 }
 
 export function AboutPage() {
-  const heroRef = useRef<HTMLDivElement>(null)
   const photoRef = useRef<HTMLDivElement>(null)
-
-  const { scrollYProgress: heroScrollProgress } = useScroll({
-    target: heroRef,
-    offset: ['start start', 'end start']
-  })
-
-  const heroY = useTransform(heroScrollProgress, [0, 1], [0, 150])
-  const heroOpacity = useTransform(heroScrollProgress, [0, 0.8], [1, 0])
 
   // Photo magnetic effect
   const mouseX = useMotionValue(0)
@@ -214,75 +206,24 @@ export function AboutPage() {
 
   return (
     <>
-      {/* Hero Section */}
-      <Section className="relative min-h-[60vh] flex items-center overflow-hidden pt-32 pb-16" ref={heroRef}>
+      {/* Hero Section with VeilSectionHeader */}
+      <Section className="relative overflow-hidden pt-32 pb-8">
         <Container>
-          <motion.div
-            className="relative z-10 text-center max-w-4xl mx-auto"
-            style={{ y: heroY, opacity: heroOpacity }}
-          >
-            {/* Badge */}
-            <motion.div
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-8"
-              style={{
-                background: 'rgba(139, 92, 246, 0.1)',
-                border: '1px solid rgba(139, 92, 246, 0.3)',
-              }}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-            >
-              <motion.svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="#A78BFA"
-                strokeWidth="2"
-                className="w-4 h-4"
-                animate={{ rotate: [0, 10, -10, 0] }}
-                transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
-              >
-                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                <circle cx="12" cy="7" r="4" />
-              </motion.svg>
-              <span className="text-sm font-semibold text-violet-300">Sobre mí</span>
-            </motion.div>
-
-            {/* Title with animated gradient */}
-            <motion.h1
-              className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-            >
-              {content.about.hero.title.split(' ').slice(0, 2).join(' ')}{' '}
-              <motion.span
-                className="inline-block bg-gradient-to-r from-violet-400 via-cyan-400 to-violet-400 bg-clip-text text-transparent"
-                style={{ backgroundSize: '200% 100%' }}
-                animate={{ backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'] }}
-                transition={{ duration: 5, repeat: Infinity }}
-              >
-                {content.about.hero.title.split(' ').slice(2).join(' ')}
-              </motion.span>
-            </motion.h1>
-
-            {/* Subtitle */}
-            <motion.p
-              className="text-lg md:text-xl text-white/60 max-w-2xl mx-auto leading-relaxed"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            >
-              {content.about.hero.subtitle}
-            </motion.p>
-          </motion.div>
+          <VeilSectionHeader
+            variant="about"
+            eyebrow="Sobre mí"
+            title={content.about.hero.title}
+            subtitle={content.about.hero.subtitle}
+            align="center"
+          />
         </Container>
 
         {/* Animated background */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none overflow-hidden -z-10">
           <motion.div
             className="absolute w-[600px] h-[600px] rounded-full"
             style={{
-              background: 'radial-gradient(circle, rgba(139, 92, 246, 0.3) 0%, transparent 70%)',
+              background: 'radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, transparent 70%)',
               filter: 'blur(80px)',
               top: '-20%',
               right: '-15%',
@@ -293,7 +234,7 @@ export function AboutPage() {
           <motion.div
             className="absolute w-[500px] h-[500px] rounded-full"
             style={{
-              background: 'radial-gradient(circle, rgba(6, 182, 212, 0.25) 0%, transparent 70%)',
+              background: 'radial-gradient(circle, rgba(6, 182, 212, 0.12) 0%, transparent 70%)',
               filter: 'blur(80px)',
               bottom: '-10%',
               left: '-10%',
@@ -387,10 +328,8 @@ export function AboutPage() {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                <span className="bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent">
-                  {content.about.intro.headline}
-                </span>
+              <h2 className="heading-lg text-gradient mb-6">
+                {content.about.intro.headline}
               </h2>
 
               <div className="space-y-4 mb-10">
@@ -440,10 +379,10 @@ export function AboutPage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <span className="text-sm font-semibold text-violet-400 uppercase tracking-wider mb-3 block">
+            <span className="label-mono text-violet mb-3 block">
               Habilidades
             </span>
-            <h2 className="text-3xl md:text-4xl font-bold text-white">
+            <h2 className="heading-lg text-text-primary">
               {content.about.skills.title}
             </h2>
           </motion.div>
@@ -465,10 +404,10 @@ export function AboutPage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <span className="text-sm font-semibold text-cyan-400 uppercase tracking-wider mb-3 block">
+            <span className="label-mono text-cyan mb-3 block">
               Trayectoria
             </span>
-            <h2 className="text-3xl md:text-4xl font-bold text-white">
+            <h2 className="heading-lg text-text-primary">
               {content.about.experience.title}
             </h2>
           </motion.div>
@@ -495,10 +434,10 @@ export function AboutPage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <span className="text-sm font-semibold text-cyan-400 uppercase tracking-wider mb-3 block">
+            <span className="label-mono text-cyan mb-3 block">
               Formación
             </span>
-            <h2 className="text-3xl md:text-4xl font-bold text-white">
+            <h2 className="heading-lg text-text-primary">
               {content.about.education.title}
             </h2>
           </motion.div>
@@ -631,10 +570,10 @@ export function AboutPage() {
             />
 
             <div className="relative">
-              <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+              <h2 className="heading-lg text-text-primary mb-4">
                 {content.about.cta.title}
               </h2>
-              <p className="text-lg text-white/60 mb-8 max-w-lg mx-auto">
+              <p className="body-lg mb-8 max-w-lg mx-auto">
                 {content.about.cta.text}
               </p>
               <div className="flex flex-wrap gap-4 justify-center">

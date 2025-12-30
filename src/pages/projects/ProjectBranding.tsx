@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { Section } from '../../components/Section'
 import { Container } from '../../components/Container'
+import { BrandingGalleryMarquee } from '@/sections/BrandingGalleryMarquee'
 
 export function ProjectBranding() {
   const cases = [
@@ -102,6 +103,9 @@ export function ProjectBranding() {
           </div>
         </Container>
       </section>
+
+      {/* 3D Gallery Marquee */}
+      <BrandingGalleryMarquee />
 
       {/* Cases Grid */}
       <Section className="brand-cases">
