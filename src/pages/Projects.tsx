@@ -1,13 +1,16 @@
-import { motion, AnimatePresence, useMotionValue, useSpring, useTransform, useScroll } from 'framer-motion'
-import { useState, useRef, useMemo } from 'react'
+import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion'
+import { useState, useMemo, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { Section } from '../components/Section'
 import { Container } from '../components/Container'
 import { content } from '../content/content'
+import { VeilSectionHeader } from '../components/ui/VeilSectionHeader'
+
+type ProjectItem = (typeof content.projects.items)[number]
 
 // Project card with 3D tilt and glow effects
 function ProjectCard({ project, index, colors }: {
-  project: typeof content.projects.items[0]
+  project: ProjectItem
   index: number
   colors: { accent: string; light: string }
 }) {
@@ -352,12 +355,12 @@ function ProjectCard({ project, index, colors }: {
             </motion.span>
 
             {/* Title */}
-            <h3 className="text-xl font-semibold text-white mt-2 mb-3 group-hover:text-white/90 transition-colors">
+            <h3 className="heading-sm text-text-primary mt-2 mb-3 group-hover:text-white/90 transition-colors">
               {project.title}
             </h3>
 
             {/* Description */}
-            <p className="text-sm text-white/50 leading-relaxed mb-5 line-clamp-2">
+            <p className="body-sm mb-5 line-clamp-2">
               {project.shortDesc}
             </p>
 
@@ -436,15 +439,6 @@ function FilterButton({ category, isActive, onClick, count }: {
 
 export function Projects() {
   const [activeCategory, setActiveCategory] = useState('all')
-  const heroRef = useRef<HTMLDivElement>(null)
-
-  const { scrollYProgress } = useScroll({
-    target: heroRef,
-    offset: ['start start', 'end start']
-  })
-
-  const heroY = useTransform(scrollYProgress, [0, 1], [0, 150])
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0])
 
   const filteredProjects = activeCategory === 'all'
     ? content.projects.items
@@ -468,84 +462,24 @@ export function Projects() {
 
   return (
     <>
-      {/* Hero Section */}
-      <Section className="relative min-h-[60vh] flex items-center overflow-hidden pt-32 pb-16" ref={heroRef}>
+      {/* Hero Section with VeilSectionHeader */}
+      <Section className="relative overflow-hidden pt-32 pb-8">
         <Container>
-          <motion.div
-            className="relative z-10 text-center max-w-4xl mx-auto"
-            style={{ y: heroY, opacity: heroOpacity }}
-          >
-            {/* Badge */}
-            <motion.div
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-8"
-              style={{
-                background: 'rgba(139, 92, 246, 0.1)',
-                border: '1px solid rgba(139, 92, 246, 0.3)',
-              }}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-            >
-              <motion.svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="#A78BFA"
-                strokeWidth="2"
-                className="w-4 h-4"
-                animate={{ rotate: [0, 10, -10, 0] }}
-                transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
-              >
-                <rect x="3" y="3" width="7" height="7" rx="1" />
-                <rect x="14" y="3" width="7" height="7" rx="1" />
-                <rect x="14" y="14" width="7" height="7" rx="1" />
-                <rect x="3" y="14" width="7" height="7" rx="1" />
-              </motion.svg>
-              <span className="text-sm font-semibold text-violet-300">Proyectos</span>
-            </motion.div>
-
-            {/* Title with animated gradient */}
-            <motion.h1
-              className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-            >
-              {content.projects.hero.title.split(' ').map((word, i) => (
-                <span key={i}>
-                  {i === 1 ? (
-                    <motion.span
-                      className="inline-block bg-gradient-to-r from-violet-400 via-cyan-400 to-violet-400 bg-clip-text text-transparent"
-                      style={{ backgroundSize: '200% 100%' }}
-                      animate={{ backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'] }}
-                      transition={{ duration: 5, repeat: Infinity }}
-                    >
-                      {word}
-                    </motion.span>
-                  ) : (
-                    word
-                  )}{' '}
-                </span>
-              ))}
-            </motion.h1>
-
-            {/* Subtitle */}
-            <motion.p
-              className="text-lg md:text-xl text-white/60 max-w-2xl mx-auto leading-relaxed"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            >
-              {content.projects.hero.subtitle}
-            </motion.p>
-          </motion.div>
+          <VeilSectionHeader
+            variant="projects"
+            eyebrow="Proyectos"
+            title={content.projects.hero.title}
+            subtitle={content.projects.hero.subtitle}
+            align="center"
+          />
         </Container>
 
         {/* Animated background */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none overflow-hidden -z-10">
           <motion.div
             className="absolute w-[600px] h-[600px] rounded-full"
             style={{
-              background: 'radial-gradient(circle, rgba(139, 92, 246, 0.3) 0%, transparent 70%)',
+              background: 'radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, transparent 70%)',
               filter: 'blur(80px)',
               top: '-20%',
               left: '-15%',
@@ -559,7 +493,7 @@ export function Projects() {
           <motion.div
             className="absolute w-[500px] h-[500px] rounded-full"
             style={{
-              background: 'radial-gradient(circle, rgba(6, 182, 212, 0.25) 0%, transparent 70%)',
+              background: 'radial-gradient(circle, rgba(6, 182, 212, 0.12) 0%, transparent 70%)',
               filter: 'blur(80px)',
               bottom: '-10%',
               right: '-10%',
@@ -569,19 +503,6 @@ export function Projects() {
               opacity: [0.25, 0.35, 0.25],
             }}
             transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
-          />
-
-          {/* Grid pattern */}
-          <div
-            className="absolute inset-0"
-            style={{
-              backgroundImage: `
-                linear-gradient(rgba(139, 92, 246, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(139, 92, 246, 0.03) 1px, transparent 1px)
-              `,
-              backgroundSize: '60px 60px',
-              maskImage: 'radial-gradient(ellipse at center, black 30%, transparent 70%)',
-            }}
           />
         </div>
       </Section>

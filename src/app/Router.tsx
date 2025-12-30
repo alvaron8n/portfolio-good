@@ -1,18 +1,22 @@
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
-import { useEffect } from 'react'
+import { useEffect, lazy, Suspense } from 'react'
+import type { ReactNode } from 'react'
 import { Layout } from './Layout'
-import { Home } from '../pages/Home'
-import { ServicesPage } from '../pages/ServicesPage'
-import { Projects } from '../pages/Projects'
-import { AboutPage } from '../pages/AboutPage'
-import { Contact } from '../pages/Contact'
+import { PageLoader } from '../components/ui/loader'
 
-// Project detail pages
-import { ProjectCRM } from '../pages/projects/ProjectCRM'
-import { ProjectWebsLocales } from '../pages/projects/ProjectWebsLocales'
-import { ProjectBranding } from '../pages/projects/ProjectBranding'
-import { ProjectEcommerce } from '../pages/projects/ProjectEcommerce'
+// Lazy load pages using named exports
+const Home = lazy(() => import('../pages/Home').then(module => ({ default: module.Home })))
+const ServicesPage = lazy(() => import('../pages/ServicesPage').then(module => ({ default: module.ServicesPage })))
+const Projects = lazy(() => import('../pages/Projects').then(module => ({ default: module.Projects })))
+const AboutPage = lazy(() => import('../pages/AboutPage').then(module => ({ default: module.AboutPage })))
+const Contact = lazy(() => import('../pages/Contact').then(module => ({ default: module.Contact })))
+
+// Lazy load project detail pages
+const ProjectCRM = lazy(() => import('../pages/projects/ProjectCRM').then(module => ({ default: module.ProjectCRM })))
+const ProjectWebsLocales = lazy(() => import('../pages/projects/ProjectWebsLocales').then(module => ({ default: module.ProjectWebsLocales })))
+const ProjectBranding = lazy(() => import('../pages/projects/ProjectBranding').then(module => ({ default: module.ProjectBranding })))
+const ProjectEcommerce = lazy(() => import('../pages/projects/ProjectEcommerce').then(module => ({ default: module.ProjectEcommerce })))
 
 // Scroll to top on page change
 function ScrollToTop() {
@@ -25,26 +29,17 @@ function ScrollToTop() {
   return null
 }
 
-// Page transition wrapper
-function PageWrapper({ children }: { children: React.ReactNode }) {
-  const location = useLocation()
-
+// Reusable Page Wrapper for transitions
+function PageWrapper({ children }: { children: ReactNode }) {
   return (
-    <AnimatePresence mode="wait">
-      <motion.div
-        key={location.pathname}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: -10 }}
-        transition={{
-          duration: 0.4,
-          ease: [0.25, 0.46, 0.45, 0.94],
-          opacity: { duration: 0.3 }
-        }}
-      >
-        {children}
-      </motion.div>
-    </AnimatePresence>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3 }}
+    >
+      {children}
+    </motion.div>
   )
 }
 
@@ -59,96 +54,51 @@ function AnimatedRoutes() {
         <Routes location={location} key={location.pathname}>
           <Route element={<Layout />}>
             <Route path="/" element={
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
-              >
+              <PageWrapper>
                 <Home />
-              </motion.div>
+              </PageWrapper>
             } />
             <Route path="/servicios" element={
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
-              >
+              <PageWrapper>
                 <ServicesPage />
-              </motion.div>
+              </PageWrapper>
             } />
             <Route path="/proyectos" element={
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
-              >
+              <PageWrapper>
                 <Projects />
-              </motion.div>
+              </PageWrapper>
             } />
             <Route path="/sobre-mi" element={
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
-              >
+              <PageWrapper>
                 <AboutPage />
-              </motion.div>
+              </PageWrapper>
             } />
             <Route path="/contacto" element={
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
-              >
+              <PageWrapper>
                 <Contact />
-              </motion.div>
+              </PageWrapper>
             } />
 
             {/* Project detail pages */}
             <Route path="/proyectos/crm-automatizacion" element={
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
-              >
+              <PageWrapper>
                 <ProjectCRM />
-              </motion.div>
+              </PageWrapper>
             } />
             <Route path="/proyectos/webs-locales" element={
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
-              >
+              <PageWrapper>
                 <ProjectWebsLocales />
-              </motion.div>
+              </PageWrapper>
             } />
             <Route path="/proyectos/branding" element={
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
-              >
+              <PageWrapper>
                 <ProjectBranding />
-              </motion.div>
+              </PageWrapper>
             } />
             <Route path="/proyectos/ecommerce-propio" element={
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
-              >
+              <PageWrapper>
                 <ProjectEcommerce />
-              </motion.div>
+              </PageWrapper>
             } />
           </Route>
         </Routes>
@@ -160,7 +110,9 @@ function AnimatedRoutes() {
 export function Router() {
   return (
     <BrowserRouter>
-      <AnimatedRoutes />
+      <Suspense fallback={<PageLoader />}>
+        <AnimatedRoutes />
+      </Suspense>
     </BrowserRouter>
   )
 }

@@ -60,9 +60,9 @@ const variantStyles: Record<ButtonVariant, string> = {
 }
 
 const sizeStyles: Record<ButtonSize, string> = {
-  sm: 'px-4 py-2 text-sm gap-2',
-  md: 'px-6 py-3 text-base gap-2',
-  lg: 'px-8 py-4 text-lg gap-3',
+  sm: 'px-5 py-2.5 text-sm gap-2 min-h-[44px]', /* Enhanced for touch targets */
+  md: 'px-6 py-3 text-base gap-2 min-h-[48px]',
+  lg: 'px-8 py-4 text-lg gap-3 min-h-[56px]',
 }
 
 export function Button({
@@ -80,9 +80,9 @@ export function Button({
 }: ButtonProps) {
   const baseStyles = `
     relative inline-flex items-center justify-center
-    font-semibold rounded-xl
+    font-display font-semibold rounded-xl
     transition-all duration-300 ease-out
-    focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a12]
+    focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 focus-visible:ring-offset-[#050508]
     disabled:opacity-50 disabled:pointer-events-none
     overflow-hidden
   `

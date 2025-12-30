@@ -7,7 +7,14 @@
       "Bash(./node_modules/.bin/tailwindcss:*)",
       "Bash(npm ls:*)",
       "Bash(npm run build:*)",
-      "Bash(ls:*)"
+      "Bash(ls:*)",
+      "Bash(npx tsc:*)",
+      "Bash(timeout 10 npm run dev:*)",
+      "Bash(timeout 8 npm run dev:*)",
+      "Bash(npx shadcn@latest add:*)",
+      "Bash(npx shadcn@latest init:*)",
+      "Bash(dir /b \"C:\\Users\\Alvaro\\P O R T F O L I O - Claude\\public\")",
+      "Bash(dir /s /b \"C:\\Users\\Alvaro\\P O R T F O L I O - Claude\\public\")"
     ]
   }
 }

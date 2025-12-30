@@ -1,0 +1,121 @@
+/* Layout Base para Páginas de Proyecto */
+.project-page-container {
+  min-height: 100vh;
+  background: var(--color-bg-base);
+  color: var(--color-text-primary);
+  overflow-x: hidden;
+}
+
+/* Sección Estándar de Proyecto */
+.project-section {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+  position: relative;
+  overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .project-section {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .project-section {
+    padding-top: 8rem;
+    padding-bottom: 8rem;
+  }
+}
+
+/* Headers de Sección en Proyectos */
+.project-section-header {
+  text-align: center;
+  margin-bottom: 3rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  position: relative;
+  z-index: 10;
+}
+
+@media (min-width: 768px) {
+  .project-section-header {
+    margin-bottom: 4rem;
+  }
+}
+
+.project-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--color-violet-light);
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.project-heading {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 700;
+  color: white;
+  margin-bottom: 1.5rem;
+}
+
+.project-description {
+  font-size: 1.125rem;
+  line-height: 1.75;
+  color: var(--color-text-secondary);
+  max-width: 42rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Cards Comunes */
+.project-card {
+  padding: 2rem;
+  background: var(--color-bg-glass);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .project-card {
+    padding: 2.5rem;
+  }
+}
+
+/* Botones de Navegación entre Proyectos */
+.project-nav-item {
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  border: 1px solid var(--color-border-subtle);
+  background: var(--color-bg-glass);
+  transition: all 0.3s ease;
+}
+
+.project-nav-item:hover {
+  border-color: var(--color-violet);
+  background: var(--color-bg-glass-strong);
+  transform: translateY(-0.25rem);
+}
+
+.project-nav-label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-text-muted);
+  margin-bottom: 0.5rem;
+}
+
+.project-nav-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: white;
+}
