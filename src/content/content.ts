@@ -4,9 +4,9 @@ export const content = {
   // ============================================
   site: {
     name: 'Álvaro Fernández',
-    role: 'Automatización & Desarrollo IA',
-    tagline: 'Sistemas que trabajan solos.',
-    availability: '2 slots en Enero',
+    role: 'Webs · Automatización · IA',
+    tagline: 'Hago webs, automatizo procesos y trabajo con inteligencia artificial.',
+    availability: 'Disponible para proyectos',
     whatsappUrl: 'https://wa.me/34684005952',
     email: 'alferpri@gmail.com',
     phone: '+34 684 005 952',
@@ -30,25 +30,130 @@ export const content = {
   ],
 
   // ============================================
-  // HOME - COPY REDUCIDO
+  // HOME - NUEVO COPY (cercano, claro, honesto)
   // ============================================
   home: {
     hero: {
-      badge: '2 slots en Enero',
-      line1: 'Automatizo lo que',
-      line2: 'tu equipo odia hacer.',
-      accent: 'en serio',
-      proof: {
-        metric: '85%',
-        text: 'menos tiempo en facturación',
-      },
+      name: 'Álvaro Fernández',
+      tagline: 'Hago webs, automatizo procesos y trabajo con inteligencia artificial.',
+      description: 'Si tienes un negocio pequeño o un proyecto personal y necesitas una web que funcione bien, o quieres dejar de hacer a mano cosas que un ordenador puede hacer solo, puedo ayudarte.',
       cta: {
-        label: 'Ver cómo',
-        href: '/proyectos/crm-automatizacion',
+        label: 'Cuéntame tu proyecto',
+        href: 'https://cal.com/alvarofp/15min',
       },
-      techStack: 'n8n ✦ React ✦ Supabase ✦ Claude AI ✦ Automatización ✦ ',
+      ctaSecondary: {
+        label: 'Ver proyectos',
+        href: '/proyectos',
+      },
     },
 
+    whatIDo: {
+      title: 'Esto es lo que hago',
+      items: [
+        {
+          id: 'webs',
+          title: 'Webs',
+          description: 'Diseño y desarrollo páginas web. Pueden ser landing pages sencillas, webs corporativas o tiendas online. Me centro en que carguen rápido, se vean bien en el móvil y cumplan su función: que la gente entienda qué ofreces y contacte contigo.',
+        },
+        {
+          id: 'automatizacion',
+          title: 'Automatización',
+          description: 'Muchos negocios pierden horas cada semana copiando datos de un sitio a otro, enviando emails uno a uno o pasando información entre herramientas. Yo conecto esas herramientas para que funcionen solas. Tú defines las reglas, yo hago que se cumplan sin que tengas que estar pendiente.',
+        },
+        {
+          id: 'ia',
+          title: 'Proyectos con IA',
+          description: 'Desarrollo software a medida usando inteligencia artificial como herramienta. Esto me permite crear cosas más rápido y a mejor precio que el desarrollo tradicional. No es magia: es usar las herramientas que hay ahora para hacer el trabajo de forma más eficiente.',
+        },
+      ],
+    },
+
+    forWho: {
+      title: 'Para quién trabajo',
+      intro: 'Esto es para ti si:',
+      items: [
+        'Eres autónomo o tienes una pequeña empresa y necesitas una web clara, sin complicaciones.',
+        'Tienes un negocio que funciona pero pierdes tiempo en tareas repetitivas que sabes que podrían automatizarse.',
+        'Quieres lanzar un proyecto personal y no sabes por dónde empezar con la parte técnica.',
+        'Odias el humo, las promesas vacías y los presupuestos inflados. Prefieres a alguien que te explique las cosas con claridad.',
+        'No necesitas (ni quieres) una agencia grande. Buscas trabajar directamente con una persona.',
+      ],
+    },
+
+    howIWork: {
+      title: 'Cómo funciona esto',
+      steps: [
+        {
+          number: '01',
+          title: 'Hablamos',
+          description: 'Primero me cuentas qué necesitas. Sin compromiso, sin formularios eternos. Una llamada corta o unos mensajes. Quiero entender tu situación real, no venderte algo que no necesitas.',
+        },
+        {
+          number: '02',
+          title: 'Te digo si puedo ayudarte',
+          description: 'Soy honesto. Si creo que tu proyecto no encaja con lo que hago, te lo digo. Si hay algo más urgente que resolver antes de hacer una web o automatizar, te lo digo también. No voy a inventarme trabajo.',
+        },
+        {
+          number: '03',
+          title: 'Presupuesto claro',
+          description: 'Si seguimos, te mando un presupuesto detallado. Sabrás exactamente qué incluye, qué no incluye y cuánto tiempo llevará. Sin sorpresas.',
+        },
+        {
+          number: '04',
+          title: 'Trabajamos juntos',
+          description: 'Mientras dure el proyecto, hablamos lo que haga falta. Te enseño avances, te explico decisiones, escucho tu feedback. No desaparezco hasta la entrega.',
+        },
+        {
+          number: '05',
+          title: 'Te lo entrego funcionando',
+          description: 'Cuando termino, tienes algo que funciona. Te enseño a usarlo y me aseguro de que lo entiendes. Si hay dudas después, aquí estoy.',
+        },
+      ],
+    },
+
+    whatMakesMeDifferent: {
+      title: 'Lo que hago distinto',
+      items: [
+        {
+          title: 'Trabajo solo',
+          description: 'No soy una agencia. No hay comerciales, gestores de cuenta ni intermediarios. Hablas conmigo, trabajo yo. Eso tiene ventajas (comunicación directa, precios más ajustados) e inconvenientes (mi capacidad es limitada, no puedo coger todo).',
+        },
+        {
+          title: 'Vengo del marketing',
+          description: 'Antes de meterme en desarrollo, trabajé años en marketing digital. Eso significa que cuando hago una web no pienso solo en que sea bonita, sino en que cumpla un objetivo real.',
+        },
+        {
+          title: 'No prometo milagros',
+          description: 'No te voy a decir que tu web va a triplicar ventas ni que la automatización va a cambiar tu vida. Lo que sí puedo decir es que harás las cosas mejor, con menos esfuerzo manual y con herramientas que funcionan.',
+        },
+      ],
+      notDo: {
+        title: 'Cosas que NO hago',
+        items: [
+          'No hago apps móviles nativas.',
+          'No hago SEO como servicio independiente (aunque lo tengo en cuenta en las webs).',
+          'No hago proyectos "para ayer". Si tienes mucha prisa, probablemente no soy la mejor opción.',
+          'No trabajo con clientes que no saben lo que quieren y esperan que yo lo adivine. Necesito tu implicación.',
+        ],
+      },
+    },
+
+    cta: {
+      title: '¿Te encaja?',
+      description: 'Si lo que has leído tiene sentido para ti, escríbeme. Podemos hablar 15 minutos sin compromiso y ver si puedo ayudarte con lo que necesitas.',
+      button: {
+        label: 'Hablemos',
+        href: 'https://cal.com/alvarofp/15min',
+      },
+      fallback: {
+        label: 'alferpri@gmail.com',
+        href: 'mailto:alferpri@gmail.com',
+      },
+    },
+
+    // ============================================
+    // SECCIONES LEGACY (para que no rompa nada)
+    // ============================================
     socialProof: {
       logos: [
         { name: 'Flama Studio' },
@@ -114,43 +219,30 @@ export const content = {
 
     projects: {
       title: 'Proyectos',
-      subtitle: 'No es teoría. Funcionan ahora.',
+      subtitle: 'Algunos trabajos recientes.',
       items: [
         {
           slug: 'crm-automatizacion',
           title: 'CRM Automatizado',
           category: 'Automatización',
-          result: '85% menos tiempo',
+          result: 'Menos tiempo manual',
         },
         {
           slug: 'webs-locales',
           title: 'Webs Locales',
           category: 'Web',
-          result: '+60% reservas',
+          result: 'Más consultas',
         },
         {
           slug: 'branding',
           title: 'Branding Tech',
           category: 'Identidad',
-          result: 'Premium desde día 1',
+          result: 'Imagen profesional',
         },
       ],
       cta: {
         label: 'Ver todos',
         href: '/proyectos',
-      },
-    },
-
-    cta: {
-      question: '¿Listo?',
-      accent: 'hablemos',
-      button: {
-        label: 'Reservar 15 min',
-        href: 'https://cal.com/alvarofp/15min',
-      },
-      fallback: {
-        label: 'alferpri@gmail.com',
-        href: 'mailto:alferpri@gmail.com',
       },
     },
   },
@@ -160,10 +252,10 @@ export const content = {
   // ============================================
   footer: {
     cta: {
-      line: '¿Aún aquí?',
-      accent: 'bien',
+      line: '¿Tienes un proyecto?',
+      accent: 'Hablemos',
       button: {
-        label: 'Hablemos',
+        label: 'Reservar llamada',
         href: 'https://cal.com/alvarofp/15min',
       },
     },

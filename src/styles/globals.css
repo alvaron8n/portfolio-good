@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @import "./hero.css";
 @import "./contact.css";
+@import "./sections.css";
 
 /* ============================================
    DESIGN TOKENS - Tailwind v4 Theme
