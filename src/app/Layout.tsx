@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { Outlet, Link, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion'
 import { Container } from '../components/Container'
@@ -20,8 +20,8 @@ const pageVariants = {
     filter: 'blur(0px)',
     transition: {
       duration: 0.5,
-      ease: [0.25, 0.46, 0.45, 0.94],
-      when: 'beforeChildren',
+      ease: [0.25, 0.46, 0.45, 0.94] as const,
+      when: 'beforeChildren' as const,
       staggerChildren: 0.1
     }
   },
@@ -31,7 +31,7 @@ const pageVariants = {
     filter: 'blur(5px)',
     transition: {
       duration: 0.3,
-      ease: 'easeInOut'
+      ease: [0.25, 0.46, 0.45, 0.94] as const
     }
   }
 }
@@ -133,7 +133,6 @@ function Header() {
 
   // Determine if we're on a project page for breadcrumb
   const isProjectPage = location.pathname.startsWith('/proyectos/') && location.pathname !== '/proyectos'
-  const isInternalPage = location.pathname !== '/'
 
   return (
     <>

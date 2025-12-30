@@ -270,6 +270,7 @@ export const content = {
         slug: 'crm-automatizacion',
         title: 'CRM & Automatización',
         category: 'automatizacion',
+        categoryLabel: 'Automatización',
         shortDesc: 'De 4 horas a 12 segundos.',
         featured: true,
       },
@@ -277,6 +278,7 @@ export const content = {
         slug: 'webs-locales',
         title: 'Webs Locales',
         category: 'web',
+        categoryLabel: 'Web',
         shortDesc: 'Webs que triplicaron consultas.',
         featured: true,
       },
@@ -284,6 +286,7 @@ export const content = {
         slug: 'branding',
         title: 'Branding Tech',
         category: 'branding',
+        categoryLabel: 'Branding',
         shortDesc: 'Marcas premium desde día 1.',
         featured: true,
       },
@@ -316,6 +319,95 @@ export const content = {
     intro: {
       line1: 'Vengo del marketing.',
       line2: 'Ahora construyo los sistemas que el marketing necesita.',
+      headline: 'Construyo sistemas que trabajan mientras duermes',
+      paragraphs: [
+        'Empecé en marketing digital hace más de 5 años. Campañas, embudos, automatizaciones básicas. Pero me frustraba ver cómo el 80% del tiempo se iba en tareas repetitivas.',
+        'Así que aprendí a programar. No para ser developer, sino para eliminar fricciones. Para que los negocios funcionen solos.',
+        'Hoy combino visión de negocio con capacidad técnica. Entiendo qué necesitas y sé cómo construirlo.',
+      ],
+    },
+    skills: {
+      title: 'Lo que domino',
+      categories: [
+        {
+          name: 'Automatización',
+          items: ['n8n', 'Make', 'Zapier', 'APIs', 'Webhooks'],
+        },
+        {
+          name: 'Desarrollo',
+          items: ['React', 'TypeScript', 'Node.js', 'Supabase', 'PostgreSQL'],
+        },
+        {
+          name: 'IA & LLMs',
+          items: ['Claude', 'GPT-4', 'Prompt Engineering', 'RAG', 'Fine-tuning'],
+        },
+        {
+          name: 'Marketing',
+          items: ['SEO', 'CRO', 'Analytics', 'Funnels', 'Email Marketing'],
+        },
+      ],
+    },
+    experience: {
+      title: 'Mi trayectoria',
+      items: [
+        {
+          period: '2023 - Presente',
+          role: 'Founder',
+          company: 'Flama Studio',
+          description: 'Automatización, desarrollo con IA y webs que convierten.',
+        },
+        {
+          period: '2021 - 2023',
+          role: 'Marketing Manager',
+          company: 'Agencia Digital',
+          description: 'Estrategia digital y automatización de procesos.',
+        },
+        {
+          period: '2019 - 2021',
+          role: 'Digital Marketing Specialist',
+          company: 'Startup Tech',
+          description: 'SEO, SEM, Social Media y Email Marketing.',
+        },
+      ],
+    },
+    education: {
+      title: 'Formación',
+      items: [
+        {
+          period: '2023',
+          title: 'AI & Automation',
+          institution: 'Autodidacta + Cursos especializados',
+        },
+        {
+          period: '2019',
+          title: 'Marketing Digital',
+          institution: 'Universidad de Málaga',
+        },
+        {
+          period: '2018',
+          title: 'Publicidad y RRPP',
+          institution: 'Universidad de Málaga',
+        },
+      ],
+    },
+    languages: {
+      title: 'Idiomas',
+      items: [
+        { language: 'Español', level: 'Nativo' },
+        { language: 'Inglés', level: 'Profesional' },
+      ],
+    },
+    interests: {
+      title: 'Intereses',
+      items: ['Automatización', 'Inteligencia Artificial', 'Startups', 'Productividad', 'Diseño', 'Música'],
+    },
+    cta: {
+      title: '¿Conectamos?',
+      text: 'Si buscas automatizar tu negocio o desarrollar algo con IA, hablemos.',
+      buttons: [
+        { label: 'Reservar llamada', href: 'https://cal.com/alvarofp/15min', variant: 'primary' },
+        { label: 'Ver proyectos', href: '/proyectos', variant: 'secondary' },
+      ],
     },
   },
 } as const

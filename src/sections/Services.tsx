@@ -8,7 +8,7 @@ function ServiceCard({
   service, 
   index 
 }: { 
-  service: typeof content.home.services.items[0]
+  service: typeof content.home.services.items[number]
   index: number 
 }) {
   return (

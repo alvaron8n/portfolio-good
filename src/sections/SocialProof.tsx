@@ -18,7 +18,7 @@ export function SocialProof() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            {socialProof.logos.map((logo, i) => (
+            {socialProof.logos.map((logo) => (
               <span 
                 key={logo.name}
                 className="text-white/20 font-display font-semibold text-sm tracking-wide hover:text-white/30 transition-colors"

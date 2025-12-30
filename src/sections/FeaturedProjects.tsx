@@ -12,7 +12,7 @@ function ProjectCard({
   index,
   isMobile
 }: { 
-  project: typeof content.home.projects.items[0]
+  project: typeof content.home.projects.items[number]
   index: number
   isMobile: boolean
 }) {

@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { useState } from 'react'
+import { useState, type ReactNode } from 'react'
 import { Container } from '../components/Container'
 import { content } from '../content/content'
 
@@ -25,7 +25,7 @@ function ContactCard({
 }) {
   const [isHovered, setIsHovered] = useState(false)
 
-  const config: Record<string, { color: string; icon: JSX.Element }> = {
+  const config: Record<string, { color: string; icon: ReactNode }> = {
     calendar: {
       color: '#8B5CF6',
       icon: (
