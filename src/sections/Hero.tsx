@@ -5,7 +5,7 @@ import { content } from '../content/content'
 import heroVideo from '../lib/KLING 2.mp4'
 
 // ============================================
-// GLASS PANEL - Apple-style blur
+// GLASS PANEL - Apple-like (invisible, not showy)
 // ============================================
 interface GlassPanelProps {
   children: React.ReactNode
@@ -16,23 +16,23 @@ function GlassPanel({ children, className = '' }: GlassPanelProps) {
   return (
     <div
       className={`
-        relative rounded-3xl overflow-hidden
-        bg-[#0d0d18]/70
-        backdrop-blur-2xl
-        border border-white/[0.12]
-        shadow-[0_8px_40px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.08)]
+        relative rounded-2xl lg:rounded-3xl overflow-hidden
+        bg-[#080810]/60
+        backdrop-blur-xl
+        border border-white/[0.1]
+        shadow-[0_8px_32px_rgba(0,0,0,0.35)]
         ${className}
       `}
     >
-      {/* Subtle inner glow */}
-      <div className="absolute inset-0 bg-gradient-to-br from-white/[0.03] via-transparent to-transparent pointer-events-none" />
+      {/* Subtle top highlight */}
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
       {children}
     </div>
   )
 }
 
 // ============================================
-// MAIN HERO
+// MAIN HERO - Refined & Professional
 // ============================================
 export function Hero() {
   const { hero } = content.home
@@ -44,13 +44,13 @@ export function Hero() {
   })
 
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0])
-  const y = useTransform(scrollYProgress, [0, 0.5], [0, 100])
-  const scale = useTransform(scrollYProgress, [0, 0.5], [1, 1.1])
+  const y = useTransform(scrollYProgress, [0, 0.5], [0, 60])
+  const scale = useTransform(scrollYProgress, [0, 0.5], [1, 1.05])
 
   return (
     <section 
       ref={sectionRef} 
-      className="hero-glass-section min-h-[100dvh] relative overflow-hidden flex items-center"
+      className="hero-section min-h-[100dvh] relative overflow-hidden flex items-center"
     >
       {/* Video Background */}
       <motion.div 
@@ -67,136 +67,132 @@ export function Hero() {
           <source src={heroVideo} type="video/mp4" />
         </video>
         
-        {/* Dark overlay for readability */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/60" />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-transparent" />
+        {/* Overlays for text readability */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/50" />
       </motion.div>
 
-      {/* Watermark - Desktop: top right, Mobile: hidden */}
-      <motion.div 
-        className="absolute top-24 right-8 z-20 hidden lg:block"
-        initial={{ opacity: 0, x: 20 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 1, delay: 0.5 }}
+      {/* Watermark - Simple text, no box */}
+      <motion.span 
+        className="absolute top-28 right-8 z-20 hidden lg:block font-mono text-[11px] tracking-[0.2em] text-white/30 uppercase"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1.5, delay: 1 }}
       >
-        <span className="font-mono text-[11px] tracking-[0.3em] text-white/40 uppercase">
-          Álvaro Fernández — Portfolio 2026
-        </span>
-      </motion.div>
+        Álvaro Fernández — Portfolio 2026
+      </motion.span>
 
       {/* Content */}
-      <div className="relative z-10 w-full px-6 md:px-12 lg:px-20">
+      <div className="relative z-10 w-full px-5 md:px-10 lg:px-16 xl:px-24">
         <motion.div 
-          className="max-w-7xl mx-auto"
+          className="max-w-6xl"
           style={{ opacity, y }}
         >
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            {/* LEFT: Glass Panel with Content */}
-            <div className="lg:col-span-8 xl:col-span-7">
-              <GlassPanel className="p-8 md:p-10 lg:p-12">
-                {/* Status Badge */}
-                <motion.div
+          {/* Single Unified Glass Panel */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, ease: [0.25, 0.1, 0.25, 1] }}
+          >
+            <GlassPanel className="p-8 md:p-12 lg:p-14 max-w-2xl">
+              
+              {/* Badge */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+                className="inline-flex items-center gap-2.5 mb-8"
+              >
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-60"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
+                </span>
+                <span className="font-mono text-[11px] uppercase tracking-[0.15em] text-white/50">
+                  {hero.badge}
+                </span>
+              </motion.div>
+
+              {/* Headline - Unified */}
+              <div className="mb-8">
+                <motion.h1
+                  className="text-[1.75rem] sm:text-4xl md:text-5xl lg:text-[3.25rem] font-bold uppercase tracking-tight leading-[1.1] text-white"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.2 }}
-                  className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white/[0.05] border border-white/[0.08] mb-8"
+                  transition={{ duration: 0.7, delay: 0.4 }}
                 >
-                  <span className="relative flex h-2 w-2">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-                  </span>
-                  <span className="font-mono text-[11px] uppercase tracking-widest text-white/60">
-                    {hero.badge}
-                  </span>
-                </motion.div>
-
-                {/* Headline */}
-                <div className="mb-8">
-                  <motion.h1
-                    className="text-[1.75rem] sm:text-4xl md:text-5xl lg:text-[3.5rem] xl:text-[4rem] font-black uppercase tracking-tight leading-[1] text-white"
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.7, delay: 0.3 }}
-                  >
-                    Sistemas que te
-                  </motion.h1>
-                  
-                  <motion.h1
-                    className="text-[1.75rem] sm:text-4xl md:text-5xl lg:text-[3.5rem] xl:text-[4rem] font-black uppercase tracking-tight leading-[1] text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-cyan-300 mt-2"
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.7, delay: 0.4 }}
-                  >
-                    devuelven el
-                  </motion.h1>
-                  
-                  <motion.h1
-                    className="text-[2.5rem] sm:text-5xl md:text-6xl lg:text-[4.5rem] xl:text-[5rem] font-serif italic text-white leading-[1.1] mt-3"
-                    style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.7, delay: 0.5 }}
-                  >
-                    Tiempo.
-                  </motion.h1>
-                </div>
-
-                {/* Subheadline */}
-                <motion.p
-                  className="text-base md:text-lg text-white/50 font-light max-w-lg leading-relaxed mb-10"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.8, delay: 0.6 }}
-                >
-                  {hero.subheadline}
-                </motion.p>
-
-                {/* CTAs */}
-                <motion.div
-                  className="flex flex-col sm:flex-row items-start gap-5"
+                  Sistemas que te
+                </motion.h1>
+                
+                <motion.h1
+                  className="text-[1.75rem] sm:text-4xl md:text-5xl lg:text-[3.25rem] font-bold uppercase tracking-tight leading-[1.1] text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-cyan-300 mt-1"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.7 }}
+                  transition={{ duration: 0.7, delay: 0.5 }}
                 >
-                  <MagneticButton strength={0.15}>
-                    <a
-                      href={hero.cta.href}
-                      className="relative px-7 py-4 bg-white text-black font-bold font-mono uppercase tracking-wider text-xs hover:bg-cyan-400 transition-colors duration-300"
-                    >
-                      {hero.cta.label}
-                    </a>
-                  </MagneticButton>
-                  
-                  <MagneticButton strength={0.1}>
-                    <a
-                      href={hero.secondaryCta.href}
-                      className="px-4 py-4 text-white/50 hover:text-white font-mono text-xs uppercase tracking-wider transition-colors relative group"
-                    >
-                      <span className="absolute left-0 bottom-2 w-full h-px bg-white/30 scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300" />
-                      {hero.secondaryCta.label}
-                    </a>
-                  </MagneticButton>
-                </motion.div>
-              </GlassPanel>
-            </div>
+                  devuelven el
+                </motion.h1>
+                
+                <motion.h1
+                  className="text-[2.5rem] sm:text-5xl md:text-6xl lg:text-7xl text-white leading-[1] mt-2 font-serif italic"
+                  style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.7, delay: 0.6 }}
+                >
+                  Tiempo.
+                </motion.h1>
+              </div>
 
-            {/* RIGHT: Empty space for video visibility */}
-            <div className="hidden lg:block lg:col-span-4 xl:col-span-5" />
-          </div>
+              {/* Subheadline */}
+              <motion.p
+                className="text-[15px] md:text-base lg:text-lg text-white/50 font-light leading-relaxed max-w-lg mb-10"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.8, delay: 0.7 }}
+              >
+                {hero.subheadline}
+              </motion.p>
+
+              {/* CTAs */}
+              <motion.div
+                className="flex flex-col sm:flex-row items-start gap-4"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.6, delay: 0.9 }}
+              >
+                <MagneticButton strength={0.12}>
+                  <a
+                    href={hero.cta.href}
+                    className="inline-block px-7 py-3.5 bg-white text-[#0a0a14] font-semibold font-mono uppercase tracking-wider text-[11px] rounded-lg hover:bg-cyan-400 transition-colors duration-300"
+                  >
+                    {hero.cta.label}
+                  </a>
+                </MagneticButton>
+                
+                <MagneticButton strength={0.08}>
+                  <a
+                    href={hero.secondaryCta.href}
+                    className="inline-block px-5 py-3.5 text-white/40 hover:text-white font-mono text-[11px] uppercase tracking-wider transition-colors duration-300"
+                  >
+                    {hero.secondaryCta.label}
+                  </a>
+                </MagneticButton>
+              </motion.div>
+
+            </GlassPanel>
+          </motion.div>
         </motion.div>
       </div>
 
-      {/* Mobile watermark - bottom center */}
-      <motion.div 
-        className="absolute bottom-6 left-0 right-0 z-20 lg:hidden text-center"
+      {/* Mobile watermark */}
+      <motion.span 
+        className="absolute bottom-6 left-0 right-0 z-20 lg:hidden text-center font-mono text-[9px] tracking-[0.15em] text-white/25 uppercase"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 1 }}
+        transition={{ duration: 1, delay: 1.2 }}
       >
-        <span className="font-mono text-[10px] tracking-[0.2em] text-white/30 uppercase">
-          Portfolio 2026
-        </span>
-      </motion.div>
+        Portfolio 2026
+      </motion.span>
     </section>
   )
 }
