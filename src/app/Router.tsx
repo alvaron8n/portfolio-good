@@ -1,7 +1,5 @@
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
-import { AnimatePresence, motion } from 'framer-motion'
 import { useEffect, lazy, Suspense } from 'react'
-import type { ReactNode } from 'react'
 import { Layout } from './Layout'
 import { PageLoader } from '../components/ui/loader'
 
@@ -29,80 +27,26 @@ function ScrollToTop() {
   return null
 }
 
-// Reusable Page Wrapper for transitions
-function PageWrapper({ children }: { children: ReactNode }) {
-  return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.3 }}
-    >
-      {children}
-    </motion.div>
-  )
-}
-
 // Animated routes component
-function AnimatedRoutes() {
-  const location = useLocation()
-
+function AppRoutes() {
   return (
     <>
       <ScrollToTop />
-      <AnimatePresence mode="wait">
-        <Routes location={location} key={location.pathname}>
-          <Route element={<Layout />}>
-            <Route path="/" element={
-              <PageWrapper>
-                <Home />
-              </PageWrapper>
-            } />
-            <Route path="/servicios" element={
-              <PageWrapper>
-                <ServicesPage />
-              </PageWrapper>
-            } />
-            <Route path="/proyectos" element={
-              <PageWrapper>
-                <Projects />
-              </PageWrapper>
-            } />
-            <Route path="/sobre-mi" element={
-              <PageWrapper>
-                <AboutPage />
-              </PageWrapper>
-            } />
-            <Route path="/contacto" element={
-              <PageWrapper>
-                <Contact />
-              </PageWrapper>
-            } />
+      <Routes>
+        <Route element={<Layout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/servicios" element={<ServicesPage />} />
+          <Route path="/proyectos" element={<Projects />} />
+          <Route path="/sobre-mi" element={<AboutPage />} />
+          <Route path="/contacto" element={<Contact />} />
 
-            {/* Project detail pages */}
-            <Route path="/proyectos/crm-automatizacion" element={
-              <PageWrapper>
-                <ProjectCRM />
-              </PageWrapper>
-            } />
-            <Route path="/proyectos/webs-locales" element={
-              <PageWrapper>
-                <ProjectWebsLocales />
-              </PageWrapper>
-            } />
-            <Route path="/proyectos/branding" element={
-              <PageWrapper>
-                <ProjectBranding />
-              </PageWrapper>
-            } />
-            <Route path="/proyectos/ecommerce-propio" element={
-              <PageWrapper>
-                <ProjectEcommerce />
-              </PageWrapper>
-            } />
-          </Route>
-        </Routes>
-      </AnimatePresence>
+          {/* Project detail pages */}
+          <Route path="/proyectos/crm-automatizacion" element={<ProjectCRM />} />
+          <Route path="/proyectos/webs-locales" element={<ProjectWebsLocales />} />
+          <Route path="/proyectos/branding" element={<ProjectBranding />} />
+          <Route path="/proyectos/ecommerce-propio" element={<ProjectEcommerce />} />
+        </Route>
+      </Routes>
     </>
   )
 }
@@ -111,7 +55,7 @@ export function Router() {
   return (
     <BrowserRouter>
       <Suspense fallback={<PageLoader />}>
-        <AnimatedRoutes />
+        <AppRoutes />
       </Suspense>
     </BrowserRouter>
   )

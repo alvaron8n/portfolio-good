@@ -5,32 +5,33 @@ import { content } from '../content/content'
 import heroVideo from '../lib/KLING 2.mp4'
 
 // ============================================
-// GLASS PANEL - Apple-like
+// GLASS PANEL - Apple-like (optimized values)
 // ============================================
 interface GlassPanelProps {
   children: React.ReactNode
   className?: string
-  intensity?: 'light' | 'medium' | 'strong'
 }
 
-function GlassPanel({ children, className = '', intensity = 'medium' }: GlassPanelProps) {
-  const styles = {
-    light: 'bg-[#080810]/40 backdrop-blur-lg border-white/[0.06]',
-    medium: 'bg-[#080810]/55 backdrop-blur-xl border-white/[0.08]',
-    strong: 'bg-[#080810]/70 backdrop-blur-2xl border-white/[0.12]',
-  }
-
+function GlassPanel({ children, className = '' }: GlassPanelProps) {
   return (
     <div
       className={`
-        relative rounded-2xl lg:rounded-3xl overflow-hidden
-        ${styles[intensity]}
-        border
-        shadow-[0_8px_32px_rgba(0,0,0,0.4)]
+        relative rounded-2xl overflow-hidden
         ${className}
       `}
+      style={{
+        background: 'rgba(255, 255, 255, 0.05)',
+        backdropFilter: 'blur(12px) saturate(180%)',
+        WebkitBackdropFilter: 'blur(12px) saturate(180%)',
+        border: '1px solid rgba(255, 255, 255, 0.15)',
+        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.25)',
+      }}
     >
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent" />
+      {/* Top edge highlight */}
+      <div 
+        className="absolute inset-x-0 top-0 h-px"
+        style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent)' }}
+      />
       {children}
     </div>
   )
@@ -62,8 +63,8 @@ export function Hero() {
         <video autoPlay muted loop playsInline className="w-full h-full object-cover">
           <source src={heroVideo} type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/50" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/30 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/40" />
       </motion.div>
 
       {/* Watermark */}
@@ -78,7 +79,7 @@ export function Hero() {
 
       {/* Content */}
       <div className="relative z-10 w-full px-5 md:px-10 lg:px-16 xl:px-24">
-        <motion.div className="max-w-3xl" style={{ opacity, y }}>
+        <motion.div className="max-w-4xl" style={{ opacity, y }}>
           
           {/* Card 1: Full Headline */}
           <motion.div
@@ -86,38 +87,38 @@ export function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
           >
-            <GlassPanel intensity="strong" className="p-6 md:p-10 lg:p-12">
+            <GlassPanel className="p-8 md:p-12 lg:p-14">
               {/* Badge */}
-              <div className="inline-flex items-center gap-2.5 mb-6">
+              <div className="inline-flex items-center gap-2.5 mb-8">
                 <span className="relative flex h-2 w-2">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-60"></span>
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
                 </span>
-                <span className="font-mono text-[11px] uppercase tracking-[0.15em] text-white/50">
+                <span className="font-mono text-[11px] uppercase tracking-[0.15em] text-white/60">
                   {hero.badge}
                 </span>
               </div>
 
-              {/* Headline completo */}
-              <div className="space-y-1">
-                <h1 className="text-[1.75rem] sm:text-4xl md:text-5xl lg:text-[3.5rem] font-bold uppercase tracking-tight leading-[1.1] text-white">
-                  Sistemas que te
+              {/* Headline - 2 lines */}
+              <div>
+                {/* Line 1: SISTEMAS QUE TE DEVUELVEN EL */}
+                <h1 className="text-[1.5rem] sm:text-3xl md:text-4xl lg:text-5xl font-bold uppercase tracking-tight leading-[1.15] text-white">
+                  Sistemas que te devuelven el
                 </h1>
-                <h1 className="text-[1.75rem] sm:text-4xl md:text-5xl lg:text-[3.5rem] font-bold uppercase tracking-tight leading-[1.1] text-white">
-                  devuelven el
-                </h1>
-                {/* Tiempo con tipografía de acento + borde negro */}
+                
+                {/* Line 2: TIEMPO with Noto Serif + orange gradient + black stroke */}
                 <h2 
-                  className="text-[2.5rem] sm:text-5xl md:text-6xl lg:text-7xl leading-[1] pt-2"
+                  className="text-[3rem] sm:text-5xl md:text-6xl lg:text-[5.5rem] leading-[1] mt-3"
                   style={{ 
-                    fontFamily: "'Caveat', cursive",
+                    fontFamily: "'Noto Serif', Georgia, serif",
                     fontWeight: 700,
-                    background: 'linear-gradient(135deg, #f97316 0%, #fb923c 30%, #fbbf24 70%, #f97316 100%)',
+                    fontStyle: 'italic',
+                    background: 'linear-gradient(135deg, #ea580c 0%, #f97316 25%, #fb923c 50%, #fbbf24 75%, #f97316 100%)',
                     WebkitBackgroundClip: 'text',
                     WebkitTextFillColor: 'transparent',
-                    WebkitTextStroke: '2px rgba(0,0,0,0.9)',
+                    WebkitTextStroke: '1.5px #000',
                     paintOrder: 'stroke fill',
-                    filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.5))',
+                    filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.4))',
                   }}
                 >
                   Tiempo.
@@ -133,8 +134,8 @@ export function Hero() {
             transition={{ duration: 0.8, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
             className="mt-4"
           >
-            <GlassPanel intensity="light" className="p-6 md:p-8 max-w-xl">
-              <p className="text-[15px] md:text-base text-white/50 font-light leading-relaxed mb-6">
+            <GlassPanel className="p-6 md:p-8 max-w-xl">
+              <p className="text-[15px] md:text-base text-white/60 font-light leading-relaxed mb-6">
                 {hero.subheadline}
               </p>
 
@@ -151,7 +152,7 @@ export function Hero() {
                 <MagneticButton strength={0.08}>
                   <a
                     href={hero.secondaryCta.href}
-                    className="inline-block px-5 py-3.5 text-white/40 hover:text-white font-mono text-[11px] uppercase tracking-wider transition-colors duration-300"
+                    className="inline-block px-5 py-3.5 text-white/50 hover:text-white font-mono text-[11px] uppercase tracking-wider transition-colors duration-300"
                   >
                     {hero.secondaryCta.label}
                   </a>
