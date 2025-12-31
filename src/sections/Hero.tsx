@@ -80,7 +80,7 @@ export function Hero() {
       <div className="relative z-10 w-full px-5 md:px-10 lg:px-16 xl:px-24">
         <motion.div className="max-w-3xl" style={{ opacity, y }}>
           
-          {/* Card 1: Main Headline */}
+          {/* Card 1: Full Headline */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -98,42 +98,39 @@ export function Hero() {
                 </span>
               </div>
 
-              {/* H1 */}
-              <h1 className="text-[1.75rem] sm:text-4xl md:text-5xl lg:text-[3.5rem] font-bold uppercase tracking-tight leading-[1.1] text-white">
-                Sistemas que te
-              </h1>
-              <h1 className="text-[1.75rem] sm:text-4xl md:text-5xl lg:text-[3.5rem] font-bold uppercase tracking-tight leading-[1.1] text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-cyan-300 mt-1">
-                devuelven el
-              </h1>
+              {/* Headline completo */}
+              <div className="space-y-1">
+                <h1 className="text-[1.75rem] sm:text-4xl md:text-5xl lg:text-[3.5rem] font-bold uppercase tracking-tight leading-[1.1] text-white">
+                  Sistemas que te
+                </h1>
+                <h1 className="text-[1.75rem] sm:text-4xl md:text-5xl lg:text-[3.5rem] font-bold uppercase tracking-tight leading-[1.1] text-white">
+                  devuelven el
+                </h1>
+                {/* Tiempo con tipografía de acento + borde negro */}
+                <h2 
+                  className="text-[2.5rem] sm:text-5xl md:text-6xl lg:text-7xl leading-[1] pt-2"
+                  style={{ 
+                    fontFamily: "'Caveat', cursive",
+                    fontWeight: 700,
+                    background: 'linear-gradient(135deg, #f97316 0%, #fb923c 30%, #fbbf24 70%, #f97316 100%)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    WebkitTextStroke: '2px rgba(0,0,0,0.9)',
+                    paintOrder: 'stroke fill',
+                    filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.5))',
+                  }}
+                >
+                  Tiempo.
+                </h2>
+              </div>
             </GlassPanel>
           </motion.div>
 
-          {/* Card 2: Accent Word "Tiempo" */}
+          {/* Card 2: Subheadline + CTAs */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.15, ease: [0.25, 0.1, 0.25, 1] }}
-            className="mt-4"
-          >
-            <GlassPanel intensity="medium" className="p-6 md:p-8 inline-block">
-              <h2 
-                className="text-[3rem] sm:text-6xl md:text-7xl lg:text-8xl leading-[0.9] text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-amber-400 to-orange-500"
-                style={{ 
-                  fontFamily: "'Playfair Display', Georgia, serif",
-                  fontStyle: 'italic',
-                  fontWeight: 600,
-                }}
-              >
-                Tiempo.
-              </h2>
-            </GlassPanel>
-          </motion.div>
-
-          {/* Card 3: Subheadline + CTAs */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
+            transition={{ duration: 0.8, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
             className="mt-4"
           >
             <GlassPanel intensity="light" className="p-6 md:p-8 max-w-xl">
