@@ -3,51 +3,37 @@ import { Section } from '../components/Section'
 import { Container } from '../components/Container'
 import { content } from '../content/content'
 import { GlassCard } from '../components/ui/GlassCard'
+import CurvedLoop from '../components/ui/CurvedLoop'
 
 export function SocialProof() {
   const { socialProof } = content.home
 
   return (
-    <Section className="py-20 border-b border-white/[0.05] overflow-hidden relative">
+    <Section className="pt-4 pb-20 border-b border-white/[0.05] overflow-hidden relative">
+      
+      {/* CurvedLoop Marquee - Top with minimal padding */}
+      <motion.div
+        className="mb-16"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8 }}
+      >
+        <CurvedLoop
+          marqueeText="IA ✦ RRSS ✦ WEB ✦ BRANDING ✦ ROI ✦ "
+          speed={1.5}
+          curveAmount={80}
+          direction="left"
+          interactive={true}
+        />
+      </motion.div>
+
       <Container>
         <div className="max-w-5xl mx-auto">
           
-          <div className="flex flex-col md:flex-row items-center gap-12 md:gap-24">
-            {/* Left: Intro */}
-            <div className="w-full md:w-1/3 text-center md:text-left">
-              <p className="font-mono text-xs uppercase tracking-widest text-white/40 mb-4">
-                Trusted By
-              </p>
-              <div className="h-px w-12 bg-cyan-500/50 mx-auto md:mx-0" />
-            </div>
-
-            {/* Right: Marquee / Grid */}
-            <div className="w-full md:w-2/3 relative mask-fade-edges">
-              <motion.div
-                className="flex items-center gap-12 md:gap-16 whitespace-nowrap"
-                animate={{ x: [0, -100] }}
-                transition={{ 
-                  repeat: Infinity, 
-                  repeatType: "mirror", 
-                  duration: 20, 
-                  ease: "linear" 
-                }}
-              >
-                {[...socialProof.logos, ...socialProof.logos].map((logo, i) => (
-                  <span 
-                    key={`${logo.name}-${i}`}
-                    className="font-display font-bold text-xl md:text-2xl text-white/30 hover:text-white/80 transition-colors cursor-default"
-                  >
-                    {logo.name}
-                  </span>
-                ))}
-              </motion.div>
-            </div>
-          </div>
-
           {/* Quote - Glass Card */}
           <motion.div
-            className="mt-20 relative"
+            className="relative"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}

@@ -5,34 +5,39 @@ import { content } from '../content/content'
 import heroVideo from '../lib/KLING 2.mp4'
 
 // ============================================
-// GLASS PANEL - Apple-like (invisible, not showy)
+// GLASS PANEL - Apple-like
 // ============================================
 interface GlassPanelProps {
   children: React.ReactNode
   className?: string
+  intensity?: 'light' | 'medium' | 'strong'
 }
 
-function GlassPanel({ children, className = '' }: GlassPanelProps) {
+function GlassPanel({ children, className = '', intensity = 'medium' }: GlassPanelProps) {
+  const styles = {
+    light: 'bg-[#080810]/40 backdrop-blur-lg border-white/[0.06]',
+    medium: 'bg-[#080810]/55 backdrop-blur-xl border-white/[0.08]',
+    strong: 'bg-[#080810]/70 backdrop-blur-2xl border-white/[0.12]',
+  }
+
   return (
     <div
       className={`
         relative rounded-2xl lg:rounded-3xl overflow-hidden
-        bg-[#080810]/60
-        backdrop-blur-xl
-        border border-white/[0.1]
-        shadow-[0_8px_32px_rgba(0,0,0,0.35)]
+        ${styles[intensity]}
+        border
+        shadow-[0_8px_32px_rgba(0,0,0,0.4)]
         ${className}
       `}
     >
-      {/* Subtle top highlight */}
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent" />
       {children}
     </div>
   )
 }
 
 // ============================================
-// MAIN HERO - Refined & Professional
+// MAIN HERO
 // ============================================
 export function Hero() {
   const { hero } = content.home
@@ -53,26 +58,15 @@ export function Hero() {
       className="hero-section min-h-[100dvh] relative overflow-hidden flex items-center"
     >
       {/* Video Background */}
-      <motion.div 
-        className="absolute inset-0 z-0"
-        style={{ scale }}
-      >
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          className="w-full h-full object-cover"
-        >
+      <motion.div className="absolute inset-0 z-0" style={{ scale }}>
+        <video autoPlay muted loop playsInline className="w-full h-full object-cover">
           <source src={heroVideo} type="video/mp4" />
         </video>
-        
-        {/* Overlays for text readability */}
         <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/50" />
       </motion.div>
 
-      {/* Watermark - Simple text, no box */}
+      {/* Watermark */}
       <motion.span 
         className="absolute top-28 right-8 z-20 hidden lg:block font-mono text-[11px] tracking-[0.2em] text-white/30 uppercase"
         initial={{ opacity: 0 }}
@@ -84,25 +78,17 @@ export function Hero() {
 
       {/* Content */}
       <div className="relative z-10 w-full px-5 md:px-10 lg:px-16 xl:px-24">
-        <motion.div 
-          className="max-w-6xl"
-          style={{ opacity, y }}
-        >
-          {/* Single Unified Glass Panel */}
+        <motion.div className="max-w-3xl" style={{ opacity, y }}>
+          
+          {/* Card 1: Main Headline */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, ease: [0.25, 0.1, 0.25, 1] }}
+            transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
           >
-            <GlassPanel className="p-8 md:p-12 lg:p-14 max-w-2xl">
-              
+            <GlassPanel intensity="strong" className="p-6 md:p-10 lg:p-12">
               {/* Badge */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.6, delay: 0.3 }}
-                className="inline-flex items-center gap-2.5 mb-8"
-              >
+              <div className="inline-flex items-center gap-2.5 mb-6">
                 <span className="relative flex h-2 w-2">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-60"></span>
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
@@ -110,56 +96,52 @@ export function Hero() {
                 <span className="font-mono text-[11px] uppercase tracking-[0.15em] text-white/50">
                   {hero.badge}
                 </span>
-              </motion.div>
-
-              {/* Headline - Unified */}
-              <div className="mb-8">
-                <motion.h1
-                  className="text-[1.75rem] sm:text-4xl md:text-5xl lg:text-[3.25rem] font-bold uppercase tracking-tight leading-[1.1] text-white"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.7, delay: 0.4 }}
-                >
-                  Sistemas que te
-                </motion.h1>
-                
-                <motion.h1
-                  className="text-[1.75rem] sm:text-4xl md:text-5xl lg:text-[3.25rem] font-bold uppercase tracking-tight leading-[1.1] text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-cyan-300 mt-1"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.7, delay: 0.5 }}
-                >
-                  devuelven el
-                </motion.h1>
-                
-                <motion.h1
-                  className="text-[2.5rem] sm:text-5xl md:text-6xl lg:text-7xl text-white leading-[1] mt-2 font-serif italic"
-                  style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.7, delay: 0.6 }}
-                >
-                  Tiempo.
-                </motion.h1>
               </div>
 
-              {/* Subheadline */}
-              <motion.p
-                className="text-[15px] md:text-base lg:text-lg text-white/50 font-light leading-relaxed max-w-lg mb-10"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.8, delay: 0.7 }}
-              >
-                {hero.subheadline}
-              </motion.p>
+              {/* H1 */}
+              <h1 className="text-[1.75rem] sm:text-4xl md:text-5xl lg:text-[3.5rem] font-bold uppercase tracking-tight leading-[1.1] text-white">
+                Sistemas que te
+              </h1>
+              <h1 className="text-[1.75rem] sm:text-4xl md:text-5xl lg:text-[3.5rem] font-bold uppercase tracking-tight leading-[1.1] text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-cyan-300 mt-1">
+                devuelven el
+              </h1>
+            </GlassPanel>
+          </motion.div>
 
-              {/* CTAs */}
-              <motion.div
-                className="flex flex-col sm:flex-row items-start gap-4"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.6, delay: 0.9 }}
+          {/* Card 2: Accent Word "Tiempo" */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.15, ease: [0.25, 0.1, 0.25, 1] }}
+            className="mt-4"
+          >
+            <GlassPanel intensity="medium" className="p-6 md:p-8 inline-block">
+              <h2 
+                className="text-[3rem] sm:text-6xl md:text-7xl lg:text-8xl leading-[0.9] text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-amber-400 to-orange-500"
+                style={{ 
+                  fontFamily: "'Playfair Display', Georgia, serif",
+                  fontStyle: 'italic',
+                  fontWeight: 600,
+                }}
               >
+                Tiempo.
+              </h2>
+            </GlassPanel>
+          </motion.div>
+
+          {/* Card 3: Subheadline + CTAs */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
+            className="mt-4"
+          >
+            <GlassPanel intensity="light" className="p-6 md:p-8 max-w-xl">
+              <p className="text-[15px] md:text-base text-white/50 font-light leading-relaxed mb-6">
+                {hero.subheadline}
+              </p>
+
+              <div className="flex flex-col sm:flex-row items-start gap-4">
                 <MagneticButton strength={0.12}>
                   <a
                     href={hero.cta.href}
@@ -177,10 +159,10 @@ export function Hero() {
                     {hero.secondaryCta.label}
                   </a>
                 </MagneticButton>
-              </motion.div>
-
+              </div>
             </GlassPanel>
           </motion.div>
+
         </motion.div>
       </div>
 

@@ -32,9 +32,9 @@ const CurvedLoop = ({
   const uid = useId()
   const pathId = `curve-${uid}`
   
-  // Curva adaptativa
-  const actualCurve = isMobile ? curveAmount * 0.5 : curveAmount
-  const pathD = `M-100,60 Q720,${60 + actualCurve} 1540,60`
+  // Curva adaptativa - centrada en el viewBox
+  const actualCurve = isMobile ? curveAmount * 0.6 : curveAmount
+  const pathD = `M-100,80 Q720,${80 + actualCurve} 1540,80`
 
   const dragRef = useRef(false)
   const lastXRef = useRef(0)
@@ -144,7 +144,7 @@ const CurvedLoop = ({
     >
       <svg
         className="curved-loop-svg"
-        viewBox="0 0 1440 120"
+        viewBox="0 0 1440 180"
         preserveAspectRatio="xMidYMid slice"
       >
         {/* Hidden measure text */}
