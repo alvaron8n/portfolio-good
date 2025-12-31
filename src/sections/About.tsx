@@ -4,27 +4,45 @@ import { Section } from '../components/Section'
 import { Container } from '../components/Container'
 import { content } from '../content/content'
 import { GlassCard } from '../components/ui/GlassCard'
+import AlvaroImg from '../lib/Alvaro.jpg'
 
 // ============================================
-// ABSTRACT CUBE
+// PROFILE IMAGE WITH PREMIUM FRAME
 // ============================================
-function AbstractCube() {
+function ProfileImage() {
   return (
-    <div className="relative w-64 h-64 perspective-1000">
-      <motion.div
-        className="w-full h-full relative preserve-3d"
-        animate={{ rotateX: [0, 360], rotateY: [0, 360] }}
-        transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-      >
-        {/* Wireframe Faces */}
-        <div className="absolute inset-0 border-[0.5px] border-cyan-500/20 bg-cyan-500/5 translate-z-32" />
-        <div className="absolute inset-0 border-[0.5px] border-cyan-500/20 bg-cyan-500/5 translate-z-[-32px]" />
-        <div className="absolute inset-0 border-[0.5px] border-violet-500/20 bg-violet-500/5 rotate-y-90" />
-        <div className="absolute inset-0 border-[0.5px] border-violet-500/20 bg-violet-500/5 rotate-x-90" />
-      </motion.div>
+    <div className="relative w-full max-w-[320px] mx-auto">
+      {/* Glow effect behind */}
+      <div className="absolute -inset-4 bg-gradient-to-br from-cyan-500/20 via-transparent to-orange-500/20 blur-2xl rounded-3xl" />
       
-      {/* Inner Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-cyan-400/10 blur-2xl rounded-full" />
+      {/* Main image container */}
+      <div className="relative">
+        {/* Corner brackets - top left */}
+        <div className="absolute -top-2 -left-2 w-8 h-8 border-t-2 border-l-2 border-cyan-500/60" />
+        {/* Corner brackets - top right */}
+        <div className="absolute -top-2 -right-2 w-8 h-8 border-t-2 border-r-2 border-cyan-500/60" />
+        {/* Corner brackets - bottom left */}
+        <div className="absolute -bottom-2 -left-2 w-8 h-8 border-b-2 border-l-2 border-cyan-500/60" />
+        {/* Corner brackets - bottom right */}
+        <div className="absolute -bottom-2 -right-2 w-8 h-8 border-b-2 border-r-2 border-cyan-500/60" />
+        
+        {/* Image with gradient overlay */}
+        <div className="relative overflow-hidden rounded-lg border border-white/10">
+          <img 
+            src={AlvaroImg} 
+            alt="Álvaro Fernández" 
+            className="w-full aspect-[4/5] object-cover object-top"
+          />
+          {/* Subtle gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#030304]/60 via-transparent to-transparent" />
+        </div>
+        
+        {/* Status indicator */}
+        <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-2 px-3 py-1.5 bg-[#0a0a0f]/90 border border-white/10 rounded-full backdrop-blur-sm">
+          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+          <span className="font-mono text-[10px] text-emerald-400 tracking-wider">AVAILABLE</span>
+        </div>
+      </div>
     </div>
   )
 }
@@ -40,23 +58,16 @@ export function About() {
       <Container>
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">
           
-          {/* Visual / Accent (Left on Desktop) */}
-          <div className="lg:col-span-5 hidden lg:flex justify-center relative">
-             <AbstractCube />
-             
-             {/* Floating Code Snippets using GlassCard */}
-             <motion.div 
-               className="absolute -right-10 top-10 w-fit"
-               animate={{ y: [0, -10, 0] }}
-               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-             >
-               <GlassCard className="p-4 font-mono text-[10px] text-emerald-400">
-                 {`> initializing_core_systems...`}<br/>
-                 {`> optimization_level: MAX`}<br/>
-                 {`> status: ONLINE`}
-               </GlassCard>
-             </motion.div>
-          </div>
+          {/* Profile Image (Left on Desktop, Top on Mobile) */}
+          <motion.div 
+            className="lg:col-span-5 flex justify-center relative order-first"
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+             <ProfileImage />
+          </motion.div>
 
           {/* Content (Right on Desktop) */}
           <motion.div 
