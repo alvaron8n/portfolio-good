@@ -5,32 +5,33 @@ import { content } from '../content/content'
 import heroVideo from '../lib/KLING 2.mp4'
 
 // ============================================
-// GLASS PANEL - Apple-like (optimized values)
+// GLASS PANEL - Premium Apple/Stripe style
 // ============================================
-interface GlassPanelProps {
-  children: React.ReactNode
-  className?: string
-}
-
-function GlassPanel({ children, className = '' }: GlassPanelProps) {
+function GlassPanel({ children, className = '' }: { children: React.ReactNode; className?: string }) {
   return (
     <div
-      className={`
-        relative rounded-2xl overflow-hidden
-        ${className}
-      `}
+      className={`relative rounded-2xl overflow-hidden ${className}`}
       style={{
-        background: 'rgba(255, 255, 255, 0.05)',
-        backdropFilter: 'blur(12px) saturate(180%)',
-        WebkitBackdropFilter: 'blur(12px) saturate(180%)',
+        background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%)',
+        backdropFilter: 'blur(24px) saturate(200%)',
+        WebkitBackdropFilter: 'blur(24px) saturate(200%)',
         border: '1px solid rgba(255, 255, 255, 0.15)',
-        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.25)',
+        boxShadow: `
+          0 8px 32px rgba(0, 0, 0, 0.25),
+          inset 0 1px 0 rgba(255, 255, 255, 0.1),
+          inset 0 -1px 0 rgba(0, 0, 0, 0.1)
+        `,
       }}
     >
       {/* Top edge highlight */}
       <div 
         className="absolute inset-x-0 top-0 h-px"
-        style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent)' }}
+        style={{ background: 'linear-gradient(90deg, transparent 10%, rgba(255,255,255,0.25) 50%, transparent 90%)' }}
+      />
+      {/* Left edge subtle highlight */}
+      <div 
+        className="absolute inset-y-0 left-0 w-px"
+        style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.15) 0%, transparent 100%)' }}
       />
       {children}
     </div>
@@ -50,13 +51,13 @@ export function Hero() {
   })
 
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0])
-  const y = useTransform(scrollYProgress, [0, 0.5], [0, 60])
+  const y = useTransform(scrollYProgress, [0, 0.5], [0, 50])
   const scale = useTransform(scrollYProgress, [0, 0.5], [1, 1.05])
 
   return (
     <section 
       ref={sectionRef} 
-      className="hero-section min-h-[100dvh] relative overflow-hidden flex items-center"
+      className="hero-section min-h-[100dvh] relative overflow-hidden flex items-end pb-12 md:pb-16 lg:pb-20"
     >
       {/* Video Background */}
       <motion.div className="absolute inset-0 z-0" style={{ scale }}>
@@ -64,12 +65,13 @@ export function Hero() {
           <source src={heroVideo} type="video/mp4" />
         </video>
         <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/30 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/40" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/50" />
       </motion.div>
 
       {/* Watermark */}
       <motion.span 
-        className="absolute top-28 right-8 z-20 hidden lg:block font-mono text-[11px] tracking-[0.2em] text-white/30 uppercase"
+        className="absolute top-28 right-6 lg:right-10 z-20 hidden md:block text-[10px] tracking-[0.2em] text-white/20 uppercase"
+        style={{ fontFamily: "'Montserrat', sans-serif" }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1.5, delay: 1 }}
@@ -77,73 +79,79 @@ export function Hero() {
         Álvaro Fernández — Portfolio 2026
       </motion.span>
 
-      {/* Content */}
-      <div className="relative z-10 w-full px-5 md:px-10 lg:px-16 xl:px-24">
-        <motion.div className="max-w-4xl" style={{ opacity, y }}>
+      {/* Content - Bottom Left */}
+      <div className="relative z-10 w-full px-4 md:px-8 lg:px-12">
+        <motion.div className="max-w-xl" style={{ opacity, y }}>
           
-          {/* Card 1: Full Headline */}
+          {/* Card 1: Headline - Compact */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
+            transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
           >
-            <GlassPanel className="p-8 md:p-12 lg:p-14">
+            <GlassPanel className="p-4 md:p-5 lg:p-6">
               {/* Badge */}
-              <div className="inline-flex items-center gap-2.5 mb-8">
-                <span className="relative flex h-2 w-2">
+              <div className="inline-flex items-center gap-2 mb-3 md:mb-4">
+                <span className="relative flex h-1.5 w-1.5">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-60"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
+                  <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-400"></span>
                 </span>
-                <span className="font-mono text-[11px] uppercase tracking-[0.15em] text-white/60">
+                <span 
+                  className="text-[9px] md:text-[10px] uppercase tracking-[0.1em] text-white/45"
+                  style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 500 }}
+                >
                   {hero.badge}
                 </span>
               </div>
 
-              {/* Headline - 2 lines */}
-              <div>
-                {/* Line 1: SISTEMAS QUE TE DEVUELVEN EL */}
-                <h1 className="text-[1.5rem] sm:text-3xl md:text-4xl lg:text-5xl font-bold uppercase tracking-tight leading-[1.15] text-white">
-                  Sistemas que te devuelven el
-                </h1>
-                
-                {/* Line 2: TIEMPO with Noto Serif + orange gradient + black stroke */}
-                <h2 
-                  className="text-[3rem] sm:text-5xl md:text-6xl lg:text-[5.5rem] leading-[1] mt-3"
-                  style={{ 
-                    fontFamily: "'Noto Serif', Georgia, serif",
-                    fontWeight: 700,
-                    fontStyle: 'italic',
-                    background: 'linear-gradient(135deg, #ea580c 0%, #f97316 25%, #fb923c 50%, #fbbf24 75%, #f97316 100%)',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                    WebkitTextStroke: '1.5px #000',
-                    paintOrder: 'stroke fill',
-                    filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.4))',
-                  }}
+              {/* Headline - 2 líneas, Space Grotesk */}
+              <h1 style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                <span 
+                  className="block text-lg sm:text-xl md:text-2xl lg:text-3xl uppercase tracking-tight leading-[1.1] text-white font-bold"
                 >
-                  Tiempo.
-                </h2>
-              </div>
+                  Sistemas que te devuelven
+                </span>
+                
+                <span 
+                  className="block text-lg sm:text-xl md:text-2xl lg:text-3xl uppercase tracking-tight leading-[1.1] mt-0.5 font-bold"
+                >
+                  <span className="text-white">el </span>
+                  <span 
+                    style={{ 
+                      background: 'linear-gradient(135deg, #ea580c 0%, #f97316 35%, #fb923c 70%, #fbbf24 100%)',
+                      WebkitBackgroundClip: 'text',
+                      WebkitTextFillColor: 'transparent',
+                      filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.3))',
+                    }}
+                  >
+                    TIEMPO.
+                  </span>
+                </span>
+              </h1>
             </GlassPanel>
           </motion.div>
 
-          {/* Card 2: Subheadline + CTAs */}
+          {/* Card 2: Subheadline + CTAs - Compact */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
-            className="mt-4"
+            transition={{ duration: 0.6, delay: 0.12, ease: [0.25, 0.1, 0.25, 1] }}
+            className="mt-2.5 md:mt-3"
           >
-            <GlassPanel className="p-6 md:p-8 max-w-xl">
-              <p className="text-[15px] md:text-base text-white/60 font-light leading-relaxed mb-6">
+            <GlassPanel className="p-4 md:p-5 max-w-md">
+              <p 
+                className="text-xs md:text-sm text-white/50 leading-relaxed mb-4"
+                style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 400 }}
+              >
                 {hero.subheadline}
               </p>
 
-              <div className="flex flex-col sm:flex-row items-start gap-4">
-                <MagneticButton strength={0.12}>
+              <div className="flex items-center gap-3">
+                <MagneticButton strength={0.1}>
                   <a
                     href={hero.cta.href}
-                    className="inline-block px-7 py-3.5 bg-white text-[#0a0a14] font-semibold font-mono uppercase tracking-wider text-[11px] rounded-lg hover:bg-cyan-400 transition-colors duration-300"
+                    className="inline-block px-5 py-2.5 bg-white text-[#0a0a14] font-semibold uppercase tracking-wider text-[9px] md:text-[10px] rounded-lg hover:bg-cyan-400 transition-colors duration-300"
+                    style={{ fontFamily: "'Space Grotesk', sans-serif" }}
                   >
                     {hero.cta.label}
                   </a>
@@ -152,7 +160,8 @@ export function Hero() {
                 <MagneticButton strength={0.08}>
                   <a
                     href={hero.secondaryCta.href}
-                    className="inline-block px-5 py-3.5 text-white/50 hover:text-white font-mono text-[11px] uppercase tracking-wider transition-colors duration-300"
+                    className="inline-block px-3 py-2.5 text-white/40 hover:text-white text-[9px] md:text-[10px] uppercase tracking-wider transition-colors duration-300"
+                    style={{ fontFamily: "'Space Grotesk', sans-serif" }}
                   >
                     {hero.secondaryCta.label}
                   </a>
@@ -166,10 +175,11 @@ export function Hero() {
 
       {/* Mobile watermark */}
       <motion.span 
-        className="absolute bottom-6 left-0 right-0 z-20 lg:hidden text-center font-mono text-[9px] tracking-[0.15em] text-white/25 uppercase"
+        className="absolute bottom-3 left-0 right-0 z-20 md:hidden text-center text-[8px] tracking-[0.12em] text-white/15 uppercase"
+        style={{ fontFamily: "'Montserrat', sans-serif" }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 1.2 }}
+        transition={{ duration: 1, delay: 1 }}
       >
         Portfolio 2026
       </motion.span>

@@ -214,11 +214,12 @@ function Header() {
               </a>
             </div>
 
-            {/* Mobile Menu Button */}
+            {/* Mobile Menu Button - 44px tap target */}
             <motion.button
               whileTap={{ scale: 0.9 }}
-              className="md:hidden p-2 text-cyan-400 hover:text-cyan-300 transition-colors"
+              className="md:hidden p-3 min-w-[44px] min-h-[44px] flex items-center justify-center text-cyan-400 hover:text-cyan-300 transition-colors"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label="Toggle menu"
             >
               <HamburgerIcon isOpen={mobileMenuOpen} />
             </motion.button>
@@ -228,15 +229,15 @@ function Header() {
           {isScrolled && <ScrollProgress />}
         </nav>
 
-        {/* Mobile Menu */}
+        {/* Mobile Menu - Full opaque backdrop */}
         <AnimatePresence>
           {mobileMenuOpen && (
             <motion.div
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.3 }}
-              className="md:hidden fixed inset-0 z-40 bg-[#050508]/98 backdrop-blur-3xl pt-24"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.25 }}
+              className="md:hidden fixed inset-0 z-40 bg-[#050508] pt-24"
             >
               <nav className="flex flex-col items-center justify-center min-h-[60vh] gap-8 px-6">
                 <ul className="flex flex-col items-center gap-6">
@@ -412,17 +413,7 @@ export function Layout() {
       <Header />
       
       <main className="flex-1">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={location.pathname}
-            initial="initial"
-            animate="enter"
-            exit="exit"
-            variants={pageVariants}
-          >
-            <Outlet />
-          </motion.div>
-        </AnimatePresence>
+        <Outlet />
       </main>
 
       <Footer />

@@ -1,0 +1,268 @@
+/* ============================================
+   IMMERSIVE WORK GRID - Premium Zoom Effect
+   ============================================ */
+
+.immersive-section {
+  width: 100%;
+  background: var(--color-bg-base, #0a0a0f);
+  position: relative;
+}
+
+/* ==========================================
+   INTRO SECTION
+   ========================================== */
+.immersive-intro {
+  text-align: center;
+  padding: 4rem 1.5rem 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.immersive-label {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--color-primary, #f97316);
+  padding: 0.5rem 1rem;
+  background: rgba(249, 115, 22, 0.1);
+  border: 1px solid rgba(249, 115, 22, 0.2);
+  border-radius: 100px;
+  margin-bottom: 1.5rem;
+}
+
+.immersive-heading {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: rgba(255, 255, 255, 0.95);
+  margin: 0;
+}
+
+.immersive-accent {
+  font-family: 'BBH Bartle', 'Space Grotesk', sans-serif;
+  background: linear-gradient(135deg, #ea580c 0%, #f97316 50%, #fbbf24 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ==========================================
+   WRAPPER - Pin Container
+   ========================================== */
+.immersive-wrapper {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+  background: var(--color-bg-base, #0a0a0f);
+}
+
+/* ==========================================
+   GRID LAYOUT
+   ========================================== */
+.immersive-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 12px;
+  width: 85vw;
+  height: 80vh;
+  max-width: 1400px;
+  max-height: 900px;
+  transform-origin: center center;
+  will-change: transform;
+}
+
+@media (max-width: 768px) {
+  .immersive-grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    gap: 8px;
+    width: 92vw;
+    height: 85vh;
+  }
+  
+  .immersive-item--center {
+    grid-column: span 2;
+  }
+}
+
+/* ==========================================
+   GRID ITEMS
+   ========================================== */
+.immersive-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  will-change: transform, opacity, filter;
+  
+  /* Glassmorphism subtle border */
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(16, 16, 24, 0.5);
+}
+
+.immersive-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.immersive-item:hover img {
+  transform: scale(1.08);
+}
+
+/* ==========================================
+   CENTER ITEM - Featured Project
+   ========================================== */
+.immersive-item--center {
+  z-index: 10;
+  border-radius: 20px;
+  border: 1px solid rgba(249, 115, 22, 0.3);
+  box-shadow: 
+    0 30px 60px rgba(0, 0, 0, 0.5),
+    0 0 80px rgba(249, 115, 22, 0.1);
+}
+
+/* ==========================================
+   OVERLAY - Content on center
+   ========================================== */
+.immersive-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 2rem;
+  background: linear-gradient(
+    0deg,
+    rgba(10, 10, 15, 0.95) 0%,
+    rgba(10, 10, 15, 0.6) 40%,
+    transparent 70%
+  );
+  opacity: 1;
+  transition: opacity 0.4s ease;
+}
+
+@media (min-width: 768px) {
+  .immersive-overlay {
+    padding: 2.5rem;
+  }
+}
+
+/* Tag */
+.immersive-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-primary, #f97316);
+  margin-bottom: 0.75rem;
+}
+
+/* Title */
+.immersive-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(1.25rem, 3vw, 2rem);
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 0.5rem;
+  line-height: 1.2;
+}
+
+/* Description */
+.immersive-text {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0 0 1.25rem;
+  line-height: 1.5;
+}
+
+/* CTA Button */
+.immersive-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #0a0a0f;
+  background: linear-gradient(135deg, #f97316 0%, #fbbf24 100%);
+  padding: 0.75rem 1.25rem;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  width: fit-content;
+}
+
+.immersive-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(249, 115, 22, 0.3);
+}
+
+.immersive-cta svg {
+  transition: transform 0.3s ease;
+}
+
+.immersive-cta:hover svg {
+  transform: translateX(4px);
+}
+
+/* ==========================================
+   VIGNETTE OVERLAY
+   ========================================== */
+.immersive-vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse 50% 50% at center,
+    transparent 0%,
+    transparent 30%,
+    rgba(10, 10, 15, 0.7) 70%,
+    rgba(10, 10, 15, 0.95) 100%
+  );
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  z-index: 5;
+}
+
+/* ==========================================
+   REDUCED MOTION
+   ========================================== */
+@media (prefers-reduced-motion: reduce) {
+  .immersive-wrapper {
+    height: auto;
+    min-height: 80vh;
+    padding: 4rem 0;
+  }
+
+  .immersive-grid {
+    transform: none !important;
+  }
+
+  .immersive-item {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+  }
+
+  .immersive-vignette {
+    display: none;
+  }
+
+  .immersive-item img {
+    transition: none;
+  }
+}

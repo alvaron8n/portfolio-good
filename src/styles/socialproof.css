@@ -1,0 +1,392 @@
+/* ============================================
+   EPIC MANIFESTO CARD - Premium Styles
+   ============================================ */
+
+.epic-section {
+  padding-top: 2rem;
+  padding-bottom: 8rem;
+  overflow: hidden;
+  position: relative;
+  background: radial-gradient(
+    ellipse 80% 50% at 50% 50%,
+    rgba(249, 115, 22, 0.03) 0%,
+    transparent 70%
+  );
+}
+
+/* ==========================================
+   3D PERSPECTIVE CONTAINER
+   ========================================== */
+.epic-card-perspective {
+  perspective: 1500px;
+  perspective-origin: center;
+}
+
+.epic-card-container {
+  position: relative;
+  cursor: default;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* ==========================================
+   OUTER GLOW - Ambient light effect
+   ========================================== */
+.epic-outer-glow {
+  position: absolute;
+  inset: -40px;
+  background: radial-gradient(
+    ellipse 60% 40% at 50% 50%,
+    rgba(249, 115, 22, 0.15) 0%,
+    rgba(251, 191, 36, 0.05) 40%,
+    transparent 70%
+  );
+  filter: blur(40px);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* ==========================================
+   ANIMATED BORDER
+   ========================================== */
+.epic-border-wrapper {
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  border-radius: 28px;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  transition: opacity 0.4s ease;
+}
+
+.epic-border-inner {
+  width: 100%;
+  height: 100%;
+  border-radius: 27px;
+  background: var(--color-bg-base);
+}
+
+/* ==========================================
+   MAIN GLASS CARD
+   ========================================== */
+.epic-glass-card {
+  position: relative;
+  border-radius: 28px;
+  padding: 3.5rem 2.5rem;
+  overflow: hidden;
+  
+  /* Premium glassmorphism */
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.08) 0%,
+    rgba(255, 255, 255, 0.03) 50%,
+    rgba(255, 255, 255, 0.01) 100%
+  );
+  backdrop-filter: blur(32px) saturate(180%);
+  -webkit-backdrop-filter: blur(32px) saturate(180%);
+  
+  /* Subtle inner shadow for depth */
+  box-shadow: 
+    inset 0 1px 1px rgba(255, 255, 255, 0.1),
+    inset 0 -1px 1px rgba(0, 0, 0, 0.1),
+    0 25px 50px -12px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+@media (min-width: 768px) {
+  .epic-glass-card {
+    padding: 5rem 4rem;
+  }
+}
+
+/* ==========================================
+   NOISE TEXTURE
+   ========================================== */
+.epic-noise {
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  opacity: 0.6;
+  mix-blend-mode: overlay;
+  border-radius: 28px;
+}
+
+/* ==========================================
+   SPECULAR & SPOTLIGHT
+   ========================================== */
+.epic-specular {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: 28px;
+  z-index: 1;
+}
+
+.epic-spotlight {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: 28px;
+  z-index: 2;
+}
+
+/* ==========================================
+   EDGE HIGHLIGHTS
+   ========================================== */
+.epic-edge-top {
+  position: absolute;
+  top: 0;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.3) 20%,
+    rgba(255, 255, 255, 0.5) 50%,
+    rgba(255, 255, 255, 0.3) 80%,
+    transparent 100%
+  );
+  z-index: 10;
+}
+
+.epic-edge-left {
+  position: absolute;
+  left: 0;
+  top: 10%;
+  bottom: 30%;
+  width: 1px;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.2) 30%,
+    rgba(255, 255, 255, 0.1) 100%
+  );
+  z-index: 10;
+}
+
+/* ==========================================
+   CORNER ACCENTS
+   ========================================== */
+.epic-corner {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  z-index: 10;
+  opacity: 0.4;
+  transition: opacity 0.3s ease;
+}
+
+.epic-card-container:hover .epic-corner {
+  opacity: 0.8;
+}
+
+.epic-corner-tl {
+  top: 16px;
+  left: 16px;
+  border-top: 2px solid rgba(249, 115, 22, 0.6);
+  border-left: 2px solid rgba(249, 115, 22, 0.6);
+  border-radius: 4px 0 0 0;
+}
+
+.epic-corner-tr {
+  top: 16px;
+  right: 16px;
+  border-top: 2px solid rgba(249, 115, 22, 0.6);
+  border-right: 2px solid rgba(249, 115, 22, 0.6);
+  border-radius: 0 4px 0 0;
+}
+
+.epic-corner-bl {
+  bottom: 16px;
+  left: 16px;
+  border-bottom: 2px solid rgba(249, 115, 22, 0.6);
+  border-left: 2px solid rgba(249, 115, 22, 0.6);
+  border-radius: 0 0 0 4px;
+}
+
+.epic-corner-br {
+  bottom: 16px;
+  right: 16px;
+  border-bottom: 2px solid rgba(249, 115, 22, 0.6);
+  border-right: 2px solid rgba(249, 115, 22, 0.6);
+  border-radius: 0 0 4px 0;
+}
+
+/* ==========================================
+   CONTENT AREA
+   ========================================== */
+.epic-content {
+  position: relative;
+  z-index: 20;
+  text-align: center;
+  transform-style: preserve-3d;
+}
+
+/* ==========================================
+   DECORATIVE QUOTE MARKS
+   ========================================== */
+.epic-quote-marks {
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 60px;
+  pointer-events: none;
+}
+
+@media (min-width: 768px) {
+  .epic-quote-marks {
+    top: -10px;
+    width: 100px;
+    height: 80px;
+  }
+}
+
+/* ==========================================
+   QUOTE TEXT
+   ========================================== */
+.epic-quote {
+  margin: 0;
+  padding-top: 2rem;
+}
+
+.epic-quote-text {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(1.5rem, 4vw, 2.75rem);
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: -0.02em;
+  color: rgba(255, 255, 255, 0.95);
+  margin: 0;
+}
+
+/* ==========================================
+   KEYWORD HIGHLIGHTS - BBH Bartle
+   ========================================== */
+.epic-keyword {
+  position: relative;
+  display: inline-block;
+  margin: 0 0.1em;
+}
+
+.epic-keyword-text {
+  font-family: 'BBH Bartle', 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  background: linear-gradient(
+    135deg,
+    #ea580c 0%,
+    #f97316 30%,
+    #fb923c 60%,
+    #fbbf24 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 20px rgba(249, 115, 22, 0.4));
+  position: relative;
+  z-index: 2;
+}
+
+.epic-keyword-underline {
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #ea580c, #f97316, #fbbf24);
+  border-radius: 2px;
+  transform-origin: left center;
+  opacity: 0.8;
+}
+
+.epic-keyword-glow {
+  position: absolute;
+  inset: -8px -12px;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(249, 115, 22, 0.2) 0%,
+    transparent 70%
+  );
+  filter: blur(8px);
+  z-index: 1;
+  animation: keywordPulse 3s ease-in-out infinite;
+}
+
+@keyframes keywordPulse {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.1); }
+}
+
+/* ==========================================
+   AUTHOR SECTION
+   ========================================== */
+.epic-author {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2.5rem;
+  flex-wrap: wrap;
+}
+
+.epic-author-line {
+  width: 50px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+  position: relative;
+}
+
+.epic-author-line-inner {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(249, 115, 22, 0.6), transparent);
+  transform-origin: left center;
+}
+
+.epic-author-name {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.epic-author-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.75rem;
+  background: rgba(249, 115, 22, 0.1);
+  border: 1px solid rgba(249, 115, 22, 0.2);
+  border-radius: 100px;
+}
+
+.epic-author-badge-dot {
+  width: 6px;
+  height: 6px;
+  background: #10b981;
+  border-radius: 50%;
+  animation: dotPulse 2s ease-in-out infinite;
+}
+
+@keyframes dotPulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+  50% { opacity: 0.8; box-shadow: 0 0 0 4px rgba(16, 185, 129, 0); }
+}
+
+.epic-author-badge-text {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: rgba(249, 115, 22, 0.8);
+}

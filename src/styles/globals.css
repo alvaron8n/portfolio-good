@@ -1,17 +1,30 @@
 @import "tailwindcss";
 @import "./hero.css";
 @import "./contact.css";
+@import "./socialproof.css";
+@import "./sections.css";
 
 /* ============================================
-   DESIGN TOKENS - Modern Tech / Geometric Theme
+   DESIGN TOKENS - Flama Studio Style Guide
    ============================================ */
 @theme {
-  /* Typography - Tech Stack */
+  /* ==========================================
+     TYPOGRAPHY SYSTEM
+     ========================================== */
+  
+  /* Primary: Space Grotesk - H1, H2, Headlines */
   --font-display: 'Space Grotesk', system-ui, sans-serif;
-  --font-body: 'Inter', system-ui, sans-serif;
+  
+  /* Body: Montserrat - Paragraphs, UI text */
+  --font-body: 'Montserrat', system-ui, sans-serif;
+  
+  /* Accent: BBH Bartle - ONLY for keywords (IA, Persona, TIEMPO, etc.) */
+  --font-accent: 'BBH Bartle', 'Space Grotesk', system-ui, sans-serif;
+  
+  /* Mono: JetBrains Mono - Code, technical labels */
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
   
-  /* Type Scale - Geometric Ratio */
+  /* Type Scale */
   --text-xs: 0.75rem;     /* 12px */
   --text-sm: 0.875rem;    /* 14px */
   --text-base: 1rem;      /* 16px */
@@ -23,42 +36,66 @@
   --text-5xl: 4rem;       /* 64px */
   --text-hero: clamp(3.5rem, 5vw + 1rem, 7rem);
   
-  /* Colors - Cyber / Tech */
-  --color-bg-base: #030304;      /* Deep Void */
-  --color-bg-surface: #0A0A0F;   /* Dark Tech Panel */
-  --color-bg-elevated: #12121A;  /* Floating Element */
+  /* ==========================================
+     COLOR SYSTEM
+     ========================================== */
   
-  /* Accents */
-  --color-cyan: #00F0FF;         /* Electric Cyan */
-  --color-cyan-dim: #008F99;
-  --color-violet: #7000FF;       /* Neon Violet */
-  --color-violet-light: #9D4EDD;
-  --color-emerald: #00FF9D;      /* Success/System Green */
-  --color-rose: #FF003C;         /* Alert Red */
+  /* Backgrounds - Deep dark */
+  --color-bg-base: #0a0a0f;      /* Primary background */
+  --color-bg-surface: #101018;   /* Cards, elevated surfaces */
+  --color-bg-elevated: #16161f;  /* Modals, dropdowns */
   
-  /* Text */
-  --color-text-primary: #F0F0F0;
-  --color-text-secondary: #A0A0AA;
-  --color-text-muted: #50505A;
+  /* Primary Accent - Orange Gradient */
+  --color-primary: #f97316;           /* Base orange */
+  --color-primary-dark: #ea580c;      /* Orange 600 */
+  --color-primary-light: #fb923c;     /* Orange 400 */
+  --color-primary-bright: #fbbf24;    /* Amber/Yellow end */
   
-  /* Borders */
-  --color-border-subtle: rgba(255, 255, 255, 0.05);
-  --color-border-default: rgba(255, 255, 255, 0.1);
-  --color-border-strong: rgba(255, 255, 255, 0.2);
-  --color-border-glow: rgba(0, 240, 255, 0.5);
+  /* Secondary Accent - Emerald (complementary to orange) */
+  --color-secondary: #10b981;         /* Emerald 500 */
+  --color-secondary-dark: #059669;    /* Emerald 600 */
+  --color-secondary-light: #34d399;   /* Emerald 400 */
   
-  /* Effects - Glass 2.0 Premium */
-  --shadow-glow-cyan: 0 0 30px rgba(0, 240, 255, 0.1);
-  --shadow-glow-violet: 0 0 30px rgba(112, 0, 255, 0.1);
-  --glass-border: 1px solid rgba(255, 255, 255, 0.08);
-  /* Stronger top highlight for "thick glass" feel */
-  --glass-inner-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.15), inset 0 0 0 1px rgba(255, 255, 255, 0.03);
-  --glass-highlight: inset 0 0 40px rgba(255, 255, 255, 0.02);
+  /* Semantic Colors */
+  --color-success: #22c55e;    /* Green */
+  --color-warning: #f59e0b;    /* Amber */
+  --color-error: #ef4444;      /* Red */
+  --color-info: #3b82f6;       /* Blue */
   
-  /* Animation Curves - Physics Based */
-  --ease-tech: cubic-bezier(0.22, 1, 0.36, 1); /* Sharp snap */
-  --ease-fluid: cubic-bezier(0.33, 1, 0.68, 1); /* "The Physics of Feel" - Soft Landing */
-  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1); /* Elastic */
+  /* Text Colors */
+  --color-text-primary: #f5f5f5;      /* 96% white */
+  --color-text-secondary: #a3a3a3;    /* 64% white */
+  --color-text-muted: #525252;        /* 32% white */
+  
+  /* Border Colors */
+  --color-border-subtle: rgba(255, 255, 255, 0.06);
+  --color-border-default: rgba(255, 255, 255, 0.12);
+  --color-border-strong: rgba(255, 255, 255, 0.20);
+  --color-border-accent: rgba(249, 115, 22, 0.4);
+  
+  /* ==========================================
+     EFFECTS & SHADOWS
+     ========================================== */
+  
+  /* Glassmorphism */
+  --glass-bg: rgba(16, 16, 24, 0.7);
+  --glass-blur: blur(24px) saturate(180%);
+  --glass-border: 1px solid rgba(255, 255, 255, 0.10);
+  --glass-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  
+  /* Glows */
+  --glow-primary: 0 0 40px rgba(249, 115, 22, 0.15);
+  --glow-secondary: 0 0 40px rgba(16, 185, 129, 0.15);
+  
+  /* ==========================================
+     ANIMATION CURVES
+     ========================================== */
+  --ease-smooth: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-spring: cubic-bezier(0.43, 0.13, 0.23, 0.96);
 }
 
 /* ============================================
@@ -90,7 +127,7 @@ body {
 }
 
 /* ============================================
-   SCROLLBAR (Tech Style)
+   SCROLLBAR
    ============================================ */
 ::-webkit-scrollbar {
   width: 8px;
@@ -104,16 +141,19 @@ body {
 ::-webkit-scrollbar-thumb {
   background: var(--color-border-strong);
   border: 2px solid var(--color-bg-base);
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-cyan-dim);
+  background: var(--color-primary);
 }
 
 /* ============================================
    TYPOGRAPHY UTILITIES
    ============================================ */
 .font-display { font-family: var(--font-display); }
+.font-body { font-family: var(--font-body); }
+.font-accent { font-family: var(--font-accent); }
 .font-mono { font-family: var(--font-mono); }
 
 .heading-hero {
@@ -121,7 +161,7 @@ body {
   font-size: var(--text-hero);
   font-weight: 700;
   line-height: 0.95;
-  letter-spacing: -0.04em; /* Tighter tracking for display */
+  letter-spacing: -0.04em;
   text-transform: uppercase;
 }
 
@@ -141,12 +181,40 @@ body {
   letter-spacing: -0.01em;
 }
 
-.label-tech {
+/* Accent text - Syne font for highlighted words */
+.text-accent {
+  font-family: var(--font-accent);
+  font-weight: 700;
+}
+
+.label-mono {
   font-family: var(--font-mono);
   font-size: 0.75rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--color-cyan);
+  color: var(--color-primary);
+}
+
+.body-lg {
+  font-family: var(--font-body);
+  font-size: var(--text-lg);
+  line-height: 1.7;
+}
+
+/* Text gradient - Primary orange */
+.text-gradient-primary {
+  background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 50%, var(--color-primary-bright) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Text gradient - Secondary emerald */
+.text-gradient-secondary {
+  background: linear-gradient(135deg, var(--color-secondary-dark) 0%, var(--color-secondary) 50%, var(--color-secondary-light) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 /* ============================================
@@ -168,22 +236,22 @@ body {
     linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
 }
 
-/* 2. Glassmorphism 2.0 - Premium Glass */
+/* 2. Glassmorphism - Premium Glass */
 .glass-premium {
-  background: rgba(10, 10, 15, 0.6);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
   border: var(--glass-border);
-  box-shadow: var(--glass-inner-shadow), var(--glass-highlight), 0 20px 40px rgba(0,0,0,0.4);
+  box-shadow: var(--glass-shadow);
   position: relative;
   overflow: hidden;
-  transition: all 0.4s var(--ease-fluid);
+  transition: all 0.4s var(--ease-smooth);
 }
 
 .glass-premium:hover {
-  background: rgba(20, 20, 30, 0.7);
+  background: rgba(22, 22, 31, 0.8);
   border-color: rgba(255, 255, 255, 0.15);
-  box-shadow: var(--glass-inner-shadow), var(--glass-highlight), 0 30px 60px rgba(0,0,0,0.5);
+  box-shadow: var(--glass-shadow), var(--glow-primary);
   transform: translateY(-2px);
 }
 
@@ -201,7 +269,7 @@ body {
 
 /* 3. Tech Panel */
 .tech-panel {
-  background: rgba(10, 10, 15, 0.6);
+  background: rgba(16, 16, 24, 0.6);
   backdrop-filter: blur(12px);
   border: 1px solid var(--color-border-default);
   position: relative;
@@ -215,11 +283,11 @@ body {
   left: 0;
   width: 100%;
   height: 1px;
-  background: linear-gradient(90deg, transparent, var(--color-cyan), transparent);
+  background: linear-gradient(90deg, transparent, var(--color-primary), transparent);
   opacity: 0.5;
 }
 
-/* 4. Corner Brackets (The "Tech" Look) */
+/* 4. Corner Brackets - Tech accent */
 .corner-brackets {
   position: relative;
 }
@@ -230,14 +298,14 @@ body {
   inset: -1px;
   border: 1px solid transparent;
   background: 
-    linear-gradient(to right, var(--color-cyan) 2px, transparent 2px) top left,
-    linear-gradient(to bottom, var(--color-cyan) 2px, transparent 2px) top left,
-    linear-gradient(to left, var(--color-cyan) 2px, transparent 2px) top right,
-    linear-gradient(to bottom, var(--color-cyan) 2px, transparent 2px) top right,
-    linear-gradient(to right, var(--color-cyan) 2px, transparent 2px) bottom left,
-    linear-gradient(to top, var(--color-cyan) 2px, transparent 2px) bottom left,
-    linear-gradient(to left, var(--color-cyan) 2px, transparent 2px) bottom right,
-    linear-gradient(to top, var(--color-cyan) 2px, transparent 2px) bottom right;
+    linear-gradient(to right, var(--color-primary) 2px, transparent 2px) top left,
+    linear-gradient(to bottom, var(--color-primary) 2px, transparent 2px) top left,
+    linear-gradient(to left, var(--color-primary) 2px, transparent 2px) top right,
+    linear-gradient(to bottom, var(--color-primary) 2px, transparent 2px) top right,
+    linear-gradient(to right, var(--color-primary) 2px, transparent 2px) bottom left,
+    linear-gradient(to top, var(--color-primary) 2px, transparent 2px) bottom left,
+    linear-gradient(to left, var(--color-primary) 2px, transparent 2px) bottom right,
+    linear-gradient(to top, var(--color-primary) 2px, transparent 2px) bottom right;
   background-size: 8px 8px;
   background-repeat: no-repeat;
   pointer-events: none;
@@ -246,14 +314,14 @@ body {
 
 /* 5. Text Gradients */
 .text-gradient-cyan {
-  background: linear-gradient(135deg, #fff 0%, var(--color-cyan) 100%);
+  background: linear-gradient(135deg, #fff 0%, var(--color-secondary) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .text-gradient-violet {
-  background: linear-gradient(135deg, #fff 0%, var(--color-violet-light) 100%);
+  background: linear-gradient(135deg, #fff 0%, var(--color-primary) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -275,7 +343,7 @@ body {
   background: linear-gradient(
     to bottom,
     transparent 50%,
-    rgba(0, 240, 255, 0.02) 50%
+    rgba(249, 115, 22, 0.02) 50%
   );
   background-size: 100% 4px;
   pointer-events: none;
@@ -286,8 +354,14 @@ body {
    ANIMATIONS
    ============================================ */
 @keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 10px rgba(0, 240, 255, 0.1); border-color: rgba(0, 240, 255, 0.3); }
-  50% { box-shadow: 0 0 20px rgba(0, 240, 255, 0.3); border-color: rgba(0, 240, 255, 0.6); }
+  0%, 100% { 
+    box-shadow: 0 0 10px rgba(249, 115, 22, 0.1); 
+    border-color: rgba(249, 115, 22, 0.3); 
+  }
+  50% { 
+    box-shadow: 0 0 20px rgba(249, 115, 22, 0.3); 
+    border-color: rgba(249, 115, 22, 0.6); 
+  }
 }
 
 .animate-pulse-glow {
@@ -303,6 +377,6 @@ body {
    SELECTION
    ============================================ */
 ::selection {
-  background: var(--color-cyan);
+  background: var(--color-primary);
   color: #000;
 }

@@ -58,8 +58,8 @@ export const content = {
         { name: 'Urban 33' },
       ],
       quote: {
-        text: 'Álvaro transformó un proceso de 4 horas semanales en algo que ocurre automáticamente en segundos. La tranquilidad mental que eso nos da es invaluable.',
-        author: 'Director de Operaciones, Agencia de Marketing',
+        text: 'La IA no te quitará el trabajo, lo hará una persona que la utilice.',
+        author: 'Álvaro Fernández',
       },
     },
 

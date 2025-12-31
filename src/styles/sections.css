@@ -22,7 +22,7 @@
   font-size: 0.75rem;
   font-weight: 500;
   letter-spacing: 0.05em;
-  color: var(--color-violet);
+  color: var(--color-primary);
   opacity: 0.6;
   padding-top: 0.25rem;
 }
@@ -83,7 +83,7 @@
 
 .forwho-list-dash {
   flex-shrink: 0;
-  color: var(--color-violet);
+  color: var(--color-primary);
   opacity: 0.6;
   font-weight: 500;
 }
@@ -128,7 +128,7 @@
   top: 44px;
   width: 2px;
   height: calc(100% + 1rem);
-  background: linear-gradient(to bottom, var(--color-violet), transparent);
+  background: linear-gradient(to bottom, var(--color-primary), transparent);
   opacity: 0.15;
 }
 
@@ -137,8 +137,8 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: rgba(139, 92, 246, 0.1);
-  border: 1px solid rgba(139, 92, 246, 0.2);
+  background: rgba(249, 115, 22, 0.1);
+  border: 1px solid rgba(249, 115, 22, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -148,7 +148,7 @@
   font-family: var(--font-mono);
   font-size: 0.75rem;
   font-weight: 600;
-  color: var(--color-violet);
+  color: var(--color-primary);
 }
 
 .howiwork-step-content {
