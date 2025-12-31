@@ -1,171 +1,743 @@
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Section } from '../../components/Section'
 import { Container } from '../../components/Container'
+import { VideoFrame } from '../../components/case-study/VideoFrame'
+import { CaseStudyGrid } from '../../components/case-study/CaseStudyGrid'
 
+// ============================================
+// CASE STUDIES DATA
+// ============================================
+const caseStudies = [
+  {
+    id: 'bohemian',
+    name: 'Bohemian Bar',
+    type: 'Hostelería',
+    location: 'Plasencia',
+    year: '2024',
+    color: '#F97316',
+    description: 'Web premium para coctelería de autor con sistema de reservas integrado.',
+    challenge: {
+      icon: '🎯',
+      title: 'El Reto',
+      content: 'El cliente recibía demasiadas llamadas para reservas, perdiendo tiempo valioso. Necesitaba una presencia digital que reflejara la exclusividad de su coctelería.'
+    },
+    solution: {
+      icon: '💡',
+      title: 'Solución',
+      content: [
+        'Diseño oscuro y elegante acorde a la marca',
+        'Sistema de reservas online con confirmación automática',
+        'Menú digital interactivo con fotos profesionales',
+        'SEO local optimizado para Plasencia'
+      ]
+    },
+    results: {
+      icon: '📈',
+      title: 'Resultados',
+      content: [
+        '60% menos llamadas telefónicas',
+        '+45% reservas de grupos',
+        'Posición #1 en Google Maps local',
+        'Tiempo de gestión reducido a la mitad'
+      ]
+    },
+    services: ['Diseño Web', 'UI/UX', 'Reservas Online', 'Menú Digital', 'SEO Local']
+  },
+  {
+    id: 'alba-plata',
+    name: 'Alba Plata',
+    type: 'Retail',
+    location: 'Plasencia',
+    year: '2024',
+    color: '#F97316',
+    description: 'Tienda gourmet con catálogo digital y sistema de pedidos.',
+    challenge: {
+      icon: '🎯',
+      title: 'El Reto',
+      content: 'Una tienda gourmet tradicional que necesitaba expandir su alcance más allá de los clientes locales y modernizar su imagen sin perder el toque artesanal.'
+    },
+    solution: {
+      icon: '💡',
+      title: 'Solución',
+      content: [
+        'Diseño cálido con fotografía de producto premium',
+        'Catálogo digital organizado por categorías',
+        'Sistema de pedidos con recogida en tienda',
+        'Blog de recetas para engagement'
+      ]
+    },
+    results: {
+      icon: '📈',
+      title: 'Resultados',
+      content: [
+        'Ventas online desde el primer mes',
+        '+30% clientes nuevos de otras localidades',
+        'Pedidos de empresas locales',
+        'Newsletter con 500+ suscriptores'
+      ]
+    },
+    services: ['Diseño Web', 'E-commerce Lite', 'Catálogo Digital', 'Blog', 'Email Marketing']
+  },
+  {
+    id: 'urban33',
+    name: 'Urban 33',
+    type: 'Servicios',
+    location: 'Plasencia',
+    year: '2023',
+    color: '#F97316',
+    description: 'Asesoría fiscal moderna que transmite confianza y profesionalidad.',
+    challenge: {
+      icon: '🎯',
+      title: 'El Reto',
+      content: 'Una asesoría tradicional con imagen anticuada que no generaba confianza online. Los competidores captaban leads digitales mientras ellos dependían del boca a boca.'
+    },
+    solution: {
+      icon: '💡',
+      title: 'Solución',
+      content: [
+        'Rediseño completo con imagen corporativa moderna',
+        'Landing pages para cada servicio',
+        'Formularios de contacto optimizados para conversión',
+        'Testimonios y casos de éxito destacados'
+      ]
+    },
+    results: {
+      icon: '📈',
+      title: 'Resultados',
+      content: [
+        '3x consultas online en 3 meses',
+        '25% nuevos clientes vía web',
+        'Mejor posicionamiento vs competencia',
+        'Percepción de marca premium'
+      ]
+    },
+    services: ['Diseño Web', 'Branding', 'Landing Pages', 'Lead Generation', 'Copywriting']
+  },
+  {
+    id: 'health',
+    name: 'Health Clinic',
+    type: 'Salud',
+    location: 'Plasencia',
+    year: '2023',
+    color: '#F97316',
+    description: 'Clínica de fisioterapia con sistema de citas online y diseño humano.',
+    challenge: {
+      icon: '🎯',
+      title: 'El Reto',
+      content: 'La clínica tenía una web obsoleta que no transmitía profesionalidad. Los pacientes llamaban para pedir cita, saturando la recepción.'
+    },
+    solution: {
+      icon: '💡',
+      title: 'Solución',
+      content: [
+        'Diseño limpio y profesional con colores relajantes',
+        'Sistema de citas online con calendario en tiempo real',
+        'Presentación del equipo para humanizar la marca',
+        'Blog de salud para posicionamiento SEO'
+      ]
+    },
+    results: {
+      icon: '📈',
+      title: 'Resultados',
+      content: [
+        '70% citas reservadas online',
+        'Recepción liberada para atención presencial',
+        '+40% visitas orgánicas mensuales',
+        'Mejor valoración en Google Reviews'
+      ]
+    },
+    services: ['Diseño Web', 'Sistema de Citas', 'SEO', 'Blog Salud', 'Google My Business']
+  }
+]
+
+// ============================================
+// MAIN COMPONENT
+// ============================================
 export function ProjectWebsLocales() {
-  const [activeCase, setActiveCase] = useState(0)
-
-  const cases = [
-    { id: 'bohemian', name: 'Bohemian Bar', type: 'Hostelería', location: 'Plasencia', description: 'Web premium para coctelería de autor. Diseño oscuro y elegante.', keyFeature: 'Sistema de reservas online integrado', result: 'Redujo llamadas un 60% y aumentó reservas de grupos.', tags: ['Reservas', 'Menú Digital'], color: '#8B5CF6' },
-    { id: 'alba-plata', name: 'Alba Plata', type: 'Retail', location: 'Plasencia', description: 'Tienda gourmet con diseño cálido y artesanal.', keyFeature: 'Catálogo digital con sistema de pedidos', result: 'Expandió ventas más allá de la tienda física.', tags: ['Catálogo', 'Pedidos'], color: '#F59E0B' },
-    { id: 'urban33', name: 'Urban 33', type: 'Servicios', location: 'Plasencia', description: 'Asesoría fiscal moderna que transmite confianza.', keyFeature: 'Formulario de contacto optimizado', result: 'Triplicó consultas online.', tags: ['Corporativa', 'Lead Gen'], color: '#06B6D4' },
-    { id: 'health', name: 'Health Clinic', type: 'Salud', location: 'Plasencia', description: 'Clínica de fisioterapia con diseño limpio y profesional.', keyFeature: 'Sistema de citas online', result: 'Humanizó la marca y mejoró conversiones.', tags: ['Citas Online', 'Equipo'], color: '#10B981' },
-  ]
+  const [activeIndex, setActiveIndex] = useState(0)
+  const activeCase = caseStudies[activeIndex]
 
   return (
-    <div className="wl-page">
-      {/* Hero */}
-      <section className="wl-hero">
+    <div className="pwl-page">
+      {/* ========== HERO ========== */}
+      <section className="pwl-hero">
         <Container>
-          <div className="wl-hero-content">
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-              <Link to="/proyectos" className="wl-back">← Volver a proyectos</Link>
-            </motion.div>
-            <motion.span className="wl-cat" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }}>Diseño Web · UI/UX · CRO</motion.span>
-            <motion.h1 className="wl-title" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
-              Local Business<br /><span className="wl-grad">Web Collection</span>
-            </motion.h1>
-            <motion.p className="wl-sub" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }}>
-              Experiencias digitales para negocios locales, enfocadas en conversión.
-            </motion.p>
-          </div>
+          <motion.div 
+            className="pwl-hero-content"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <Link to="/proyectos" className="pwl-back">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M19 12H5M12 19l-7-7 7-7"/>
+              </svg>
+              Volver a proyectos
+            </Link>
+
+            <div className="pwl-meta">
+              <span className="pwl-badge">Diseño Web</span>
+              <span className="pwl-badge">UI/UX</span>
+              <span className="pwl-badge">CRO</span>
+            </div>
+
+            <h1 className="pwl-title">
+              Local Business
+              <span className="pwl-grad">Web Collection</span>
+            </h1>
+
+            <p className="pwl-subtitle">
+              Experiencias digitales para negocios locales, diseñadas para convertir visitantes en clientes.
+            </p>
+          </motion.div>
         </Container>
-        <div className="wl-hero-bg"><div className="wl-orb wl-orb--1" /><div className="wl-orb wl-orb--2" /></div>
+
+        {/* Background effects */}
+        <div className="pwl-hero-bg">
+          <div className="pwl-orb pwl-orb--1" />
+          <div className="pwl-orb pwl-orb--2" />
+        </div>
       </section>
 
-      {/* Tabs */}
-      <Section className="wl-tabs-section">
+      {/* ========== TABS ========== */}
+      <section className="pwl-tabs-section">
         <Container>
-          <div className="wl-tabs">
-            {cases.map((c, i) => (
-              <button key={c.id} className={`wl-tab ${activeCase === i ? 'active' : ''}`} onClick={() => setActiveCase(i)} style={{ '--tc': c.color } as React.CSSProperties}>
-                <span className="wl-tab-type">{c.type}</span>
-                <span className="wl-tab-name">{c.name}</span>
+          <div className="pwl-tabs">
+            {caseStudies.map((study, index) => (
+              <button
+                key={study.id}
+                onClick={() => setActiveIndex(index)}
+                className={`pwl-tab ${activeIndex === index ? 'active' : ''}`}
+              >
+                <span className="pwl-tab-type">{study.type}</span>
+                <span className="pwl-tab-name">{study.name}</span>
+                {activeIndex === index && (
+                  <motion.div 
+                    className="pwl-tab-indicator" 
+                    layoutId="tabIndicator"
+                    transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                  />
+                )}
               </button>
             ))}
           </div>
         </Container>
-      </Section>
+      </section>
 
-      {/* Active Case */}
-      <Section className="wl-case">
-        <Container>
-          <motion.div key={activeCase} className="wl-case-card" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} style={{ '--cc': cases[activeCase].color } as React.CSSProperties}>
-            <div className="wl-case-grid">
-              <div className="wl-case-visual">
-                <div className="wl-mockup">
-                  <div className="wl-mockup-bar"><span /><span /><span /></div>
-                  <div className="wl-mockup-content" style={{ background: `linear-gradient(135deg, ${cases[activeCase].color}30, transparent)` }}>
-                    <div className="wl-mock-nav" /><div className="wl-mock-hero" /><div className="wl-mock-cards"><div /><div /><div /></div>
+      {/* ========== CASE STUDY CONTENT ========== */}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={activeCase.id}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          transition={{ duration: 0.4 }}
+        >
+          {/* Video Section */}
+          <Section className="pwl-video-section">
+            <Container>
+              <div className="pwl-case-header">
+                <div className="pwl-case-info">
+                  <span className="pwl-case-type">{activeCase.type}</span>
+                  <h2 className="pwl-case-name">{activeCase.name}</h2>
+                  <div className="pwl-case-meta">
+                    <span>📍 {activeCase.location}</span>
+                    <span>📅 {activeCase.year}</span>
                   </div>
+                  <p className="pwl-case-desc">{activeCase.description}</p>
                 </div>
               </div>
-              <div className="wl-case-info">
-                <span className="wl-case-type" style={{ color: cases[activeCase].color }}>{cases[activeCase].type}</span>
-                <h2 className="wl-case-name">{cases[activeCase].name}</h2>
-                <span className="wl-case-loc">📍 {cases[activeCase].location}</span>
-                <p className="wl-case-desc">{cases[activeCase].description}</p>
-                <div className="wl-feature"><span className="wl-feature-label">Característica clave</span><span className="wl-feature-value">{cases[activeCase].keyFeature}</span></div>
-                <div className="wl-result"><span>📈</span><span>{cases[activeCase].result}</span></div>
-                <div className="wl-tags">{cases[activeCase].tags.map(t => <span key={t} className="wl-tag" style={{ borderColor: cases[activeCase].color, color: cases[activeCase].color }}>{t}</span>)}</div>
-              </div>
-            </div>
-          </motion.div>
-        </Container>
-      </Section>
+              
+              <VideoFrame placeholder accentColor={activeCase.color} />
+            </Container>
+          </Section>
 
-      {/* CTA */}
-      <Section className="wl-cta">
+          {/* Case Study Grid */}
+          <Section className="pwl-study-section">
+            <Container>
+              <CaseStudyGrid
+                challenge={activeCase.challenge}
+                solution={activeCase.solution}
+                results={activeCase.results}
+                accentColor={activeCase.color}
+              />
+            </Container>
+          </Section>
+
+          {/* Services */}
+          <Section className="pwl-services-section">
+            <Container>
+              <h3 className="pwl-services-title">Servicios aplicados</h3>
+              <div className="pwl-services">
+                {activeCase.services.map((service) => (
+                  <span key={service} className="pwl-service">{service}</span>
+                ))}
+              </div>
+            </Container>
+          </Section>
+        </motion.div>
+      </AnimatePresence>
+
+      {/* ========== CTA ========== */}
+      <Section className="pwl-cta-section">
         <Container>
-          <motion.div className="wl-cta-card" initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+          <motion.div 
+            className="pwl-cta"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
             <h2>¿Tienes un negocio local?</h2>
             <p>Hablemos de cómo una web bien diseñada puede traerte más clientes.</p>
-            <div className="wl-cta-btns">
-              <Link to="/contacto" className="wl-btn wl-btn--pri">Contactar</Link>
-              <Link to="/proyectos/branding" className="wl-btn wl-btn--sec">Siguiente proyecto</Link>
+            <div className="pwl-cta-buttons">
+              <Link to="/contacto" className="pwl-btn pwl-btn--primary">
+                Contactar
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+              </Link>
+              <Link to="/proyectos/branding" className="pwl-btn pwl-btn--secondary">
+                Siguiente proyecto
+              </Link>
             </div>
           </motion.div>
         </Container>
       </Section>
 
-      {/* Nav */}
-      <Section className="wl-nav">
+      {/* ========== NAVIGATION ========== */}
+      <Section className="pwl-nav-section">
         <Container>
-          <div className="wl-nav-grid">
-            <Link to="/proyectos/crm-automatizacion" className="wl-nav-item"><span className="wl-nav-label">← Anterior</span><span className="wl-nav-title">CRM & Automatización</span></Link>
-            <Link to="/proyectos/branding" className="wl-nav-item wl-nav-item--next"><span className="wl-nav-label">Siguiente →</span><span className="wl-nav-title">Branding</span></Link>
+          <div className="pwl-nav">
+            <Link to="/proyectos/crm-automatizacion" className="pwl-nav-item">
+              <span className="pwl-nav-label">← Anterior</span>
+              <span className="pwl-nav-title">CRM & Automatización</span>
+            </Link>
+            <Link to="/proyectos/branding" className="pwl-nav-item pwl-nav-item--next">
+              <span className="pwl-nav-label">Siguiente →</span>
+              <span className="pwl-nav-title">Branding</span>
+            </Link>
           </div>
         </Container>
       </Section>
 
+      {/* ========== STYLES ========== */}
       <style>{`
-        .wl-page { --wl-dark: #0A0A0F; --wl-glass: rgba(255,255,255,0.03); --wl-border: rgba(255,255,255,0.08); }
-        .wl-hero { position: relative; min-height: 70vh; display: flex; align-items: center; padding: 120px 0 80px; overflow: hidden; background: linear-gradient(135deg, #0F0F1A 0%, #1A1A2E 100%); }
-        .wl-hero-bg { position: absolute; inset: 0; pointer-events: none; }
-        .wl-orb { position: absolute; border-radius: 50%; filter: blur(100px); }
-        .wl-orb--1 { width: 400px; height: 400px; background: #06B6D4; top: -20%; left: -10%; opacity: 0.15; }
-        .wl-orb--2 { width: 300px; height: 300px; background: #8B5CF6; bottom: -10%; right: -5%; opacity: 0.1; }
-        .wl-hero-content { position: relative; z-index: 2; max-width: 600px; }
-        .wl-back { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; color: rgba(255,255,255,0.5); text-decoration: none; margin-bottom: 32px; }
-        .wl-back:hover { color: white; }
-        .wl-cat { display: block; font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; color: #06B6D4; margin-bottom: 16px; }
-        .wl-title { font-size: clamp(36px, 7vw, 64px); font-weight: 700; color: white; line-height: 1.1; margin: 0 0 24px; }
-        .wl-grad { background: linear-gradient(135deg, #06B6D4, #8B5CF6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .wl-sub { font-size: 18px; color: rgba(255,255,255,0.6); line-height: 1.7; }
-        .wl-tabs-section { padding: 40px 0; background: #12121A; position: sticky; top: 80px; z-index: 10; }
-        .wl-tabs { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-        .wl-tab { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; padding: 14px 20px; background: var(--wl-glass); border: 1px solid var(--wl-border); border-radius: 12px; cursor: pointer; transition: all 0.3s; }
-        .wl-tab:hover { border-color: var(--tc); }
-        .wl-tab.active { background: color-mix(in srgb, var(--tc) 15%, transparent); border-color: var(--tc); }
-        .wl-tab-type { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: rgba(255,255,255,0.5); }
-        .wl-tab-name { font-size: 15px; font-weight: 600; color: white; }
-        .wl-case { padding: 60px 0 100px; background: #12121A; }
-        .wl-case-card { background: var(--wl-glass); border: 1px solid var(--wl-border); border-radius: 24px; overflow: hidden; }
-        .wl-case-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
-        @media (max-width: 768px) { .wl-case-grid { grid-template-columns: 1fr; } }
-        .wl-case-visual { padding: 32px; display: flex; align-items: center; justify-content: center; }
-        .wl-mockup { width: 100%; max-width: 400px; background: #1a1a24; border-radius: 12px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
-        .wl-mockup-bar { display: flex; gap: 6px; padding: 10px 14px; background: rgba(0,0,0,0.3); border-bottom: 1px solid rgba(255,255,255,0.05); }
-        .wl-mockup-bar span { width: 10px; height: 10px; border-radius: 50%; }
-        .wl-mockup-bar span:nth-child(1) { background: #FF5F57; }
-        .wl-mockup-bar span:nth-child(2) { background: #FFBD2E; }
-        .wl-mockup-bar span:nth-child(3) { background: #28CA41; }
-        .wl-mockup-content { padding: 20px; min-height: 200px; }
-        .wl-mock-nav { width: 100%; height: 12px; background: rgba(255,255,255,0.1); border-radius: 4px; margin-bottom: 20px; }
-        .wl-mock-hero { width: 70%; height: 16px; background: rgba(255,255,255,0.2); border-radius: 4px; margin-bottom: 24px; }
-        .wl-mock-cards { display: flex; gap: 10px; }
-        .wl-mock-cards div { flex: 1; height: 50px; background: rgba(255,255,255,0.05); border-radius: 8px; }
-        .wl-case-info { padding: 32px; display: flex; flex-direction: column; justify-content: center; }
-        .wl-case-type { font-size: 12px; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
-        .wl-case-name { font-size: 28px; font-weight: 700; color: white; margin: 8px 0; }
-        .wl-case-loc { font-size: 14px; color: rgba(255,255,255,0.5); margin-bottom: 16px; display: block; }
-        .wl-case-desc { font-size: 15px; line-height: 1.8; color: rgba(255,255,255,0.6); margin: 0 0 20px; }
-        .wl-feature { padding: 14px; background: rgba(255,255,255,0.03); border-radius: 10px; margin-bottom: 12px; }
-        .wl-feature-label { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: rgba(255,255,255,0.4); margin-bottom: 4px; }
-        .wl-feature-value { font-size: 14px; font-weight: 500; color: white; }
-        .wl-result { display: flex; align-items: flex-start; gap: 10px; padding: 14px; background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.2); border-radius: 10px; margin-bottom: 20px; font-size: 14px; color: rgba(255,255,255,0.8); }
-        .wl-tags { display: flex; flex-wrap: wrap; gap: 8px; }
-        .wl-tag { padding: 6px 12px; border: 1px solid; border-radius: 100px; font-size: 12px; font-weight: 500; }
-        .wl-cta { padding: 100px 0; background: var(--wl-dark); }
-        .wl-cta-card { text-align: center; padding: 60px 40px; background: linear-gradient(135deg, rgba(6,182,212,0.1), transparent); border: 1px solid rgba(6,182,212,0.2); border-radius: 32px; }
-        .wl-cta-card h2 { font-size: 36px; font-weight: 700; color: white; margin: 0 0 16px; }
-        .wl-cta-card p { font-size: 18px; color: rgba(255,255,255,0.6); margin: 0 0 32px; }
-        .wl-cta-btns { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
-        .wl-btn { padding: 16px 32px; border-radius: 100px; font-size: 15px; font-weight: 600; text-decoration: none; transition: all 0.3s; }
-        .wl-btn--pri { background: linear-gradient(135deg, #06B6D4, #8B5CF6); color: white; }
-        .wl-btn--pri:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(6,182,212,0.3); }
-        .wl-btn--sec { background: var(--wl-glass); border: 1px solid var(--wl-border); color: white; }
-        .wl-btn--sec:hover { border-color: #06B6D4; }
-        .wl-nav { padding: 60px 0; border-top: 1px solid var(--wl-border); }
-        .wl-nav-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-        .wl-nav-item { padding: 24px; background: var(--wl-glass); border: 1px solid var(--wl-border); border-radius: 16px; text-decoration: none; transition: all 0.3s; }
-        .wl-nav-item:hover { border-color: #06B6D4; }
-        .wl-nav-item--next { text-align: right; }
-        .wl-nav-label { display: block; font-size: 13px; color: rgba(255,255,255,0.5); margin-bottom: 4px; }
-        .wl-nav-title { font-size: 16px; font-weight: 600; color: white; }
-        @media (max-width: 640px) { .wl-hero { min-height: auto; padding: 100px 0 60px; } .wl-title { font-size: 32px; } .wl-tabs { justify-content: flex-start; overflow-x: auto; } .wl-case-info { padding: 24px; } .wl-nav-grid { grid-template-columns: 1fr; } .wl-nav-item--next { text-align: left; } }
+        .pwl-page {
+          --pwl-orange: #F97316;
+          --pwl-orange-light: #FB923C;
+          --pwl-dark: #0A0A0F;
+          --pwl-glass: rgba(255, 255, 255, 0.04);
+          --pwl-border: rgba(255, 255, 255, 0.08);
+        }
+
+        /* Hero */
+        .pwl-hero {
+          position: relative;
+          min-height: 60vh;
+          display: flex;
+          align-items: center;
+          padding: 140px 0 80px;
+          overflow: hidden;
+          background: linear-gradient(180deg, #0F0F1A 0%, #0A0A0F 100%);
+        }
+
+        .pwl-hero-bg {
+          position: absolute;
+          inset: 0;
+          pointer-events: none;
+          overflow: hidden;
+        }
+
+        .pwl-orb {
+          position: absolute;
+          border-radius: 50%;
+          filter: blur(120px);
+        }
+
+        .pwl-orb--1 {
+          width: 500px;
+          height: 500px;
+          background: var(--pwl-orange);
+          top: -30%;
+          right: -10%;
+          opacity: 0.12;
+        }
+
+        .pwl-orb--2 {
+          width: 400px;
+          height: 400px;
+          background: var(--pwl-orange-light);
+          bottom: -20%;
+          left: -10%;
+          opacity: 0.08;
+        }
+
+        .pwl-hero-content {
+          position: relative;
+          z-index: 2;
+          max-width: 700px;
+        }
+
+        .pwl-back {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          font-size: 14px;
+          color: rgba(255, 255, 255, 0.5);
+          text-decoration: none;
+          margin-bottom: 32px;
+          transition: color 0.3s;
+        }
+
+        .pwl-back:hover {
+          color: var(--pwl-orange);
+        }
+
+        .pwl-meta {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 10px;
+          margin-bottom: 20px;
+        }
+
+        .pwl-badge {
+          padding: 6px 14px;
+          background: rgba(249, 115, 22, 0.15);
+          border: 1px solid rgba(249, 115, 22, 0.3);
+          border-radius: 100px;
+          font-size: 12px;
+          font-weight: 600;
+          color: var(--pwl-orange);
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+        }
+
+        .pwl-title {
+          font-size: clamp(36px, 8vw, 56px);
+          font-weight: 700;
+          color: white;
+          line-height: 1.1;
+          margin: 0 0 24px;
+        }
+
+        .pwl-grad {
+          display: block;
+          background: linear-gradient(135deg, var(--pwl-orange), var(--pwl-orange-light));
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+        }
+
+        .pwl-subtitle {
+          font-size: 18px;
+          color: rgba(255, 255, 255, 0.6);
+          line-height: 1.7;
+          margin: 0;
+        }
+
+        /* Tabs */
+        .pwl-tabs-section {
+          position: sticky;
+          top: 80px;
+          z-index: 20;
+          padding: 20px 0;
+          background: rgba(10, 10, 15, 0.95);
+          backdrop-filter: blur(20px);
+          border-bottom: 1px solid var(--pwl-border);
+        }
+
+        .pwl-tabs {
+          display: flex;
+          gap: 12px;
+          justify-content: center;
+          flex-wrap: wrap;
+        }
+
+        .pwl-tab {
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 4px;
+          padding: 14px 20px;
+          background: var(--pwl-glass);
+          border: 1px solid var(--pwl-border);
+          border-radius: 12px;
+          cursor: pointer;
+          transition: all 0.3s;
+          overflow: hidden;
+        }
+
+        .pwl-tab:hover {
+          border-color: rgba(249, 115, 22, 0.3);
+        }
+
+        .pwl-tab.active {
+          border-color: var(--pwl-orange);
+        }
+
+        .pwl-tab-indicator {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(135deg, rgba(249, 115, 22, 0.15), rgba(251, 146, 60, 0.05));
+          border-radius: 11px;
+          z-index: -1;
+        }
+
+        .pwl-tab-type {
+          font-size: 11px;
+          text-transform: uppercase;
+          letter-spacing: 1px;
+          color: rgba(255, 255, 255, 0.5);
+        }
+
+        .pwl-tab.active .pwl-tab-type {
+          color: var(--pwl-orange);
+        }
+
+        .pwl-tab-name {
+          font-size: 15px;
+          font-weight: 600;
+          color: white;
+        }
+
+        /* Video Section */
+        .pwl-video-section {
+          padding: 60px 0 40px;
+          background: var(--pwl-dark);
+        }
+
+        .pwl-case-header {
+          text-align: center;
+          margin-bottom: 40px;
+        }
+
+        .pwl-case-type {
+          font-size: 12px;
+          text-transform: uppercase;
+          letter-spacing: 1.5px;
+          color: var(--pwl-orange);
+          font-weight: 600;
+        }
+
+        .pwl-case-name {
+          font-size: clamp(28px, 5vw, 40px);
+          font-weight: 700;
+          color: white;
+          margin: 8px 0 12px;
+        }
+
+        .pwl-case-meta {
+          display: flex;
+          justify-content: center;
+          gap: 20px;
+          font-size: 14px;
+          color: rgba(255, 255, 255, 0.5);
+          margin-bottom: 16px;
+        }
+
+        .pwl-case-desc {
+          font-size: 16px;
+          color: rgba(255, 255, 255, 0.6);
+          max-width: 500px;
+          margin: 0 auto;
+          line-height: 1.7;
+        }
+
+        /* Study Section */
+        .pwl-study-section {
+          padding: 60px 0;
+          background: var(--pwl-dark);
+        }
+
+        /* Services */
+        .pwl-services-section {
+          padding: 40px 0 80px;
+          background: var(--pwl-dark);
+        }
+
+        .pwl-services-title {
+          font-size: 13px;
+          text-transform: uppercase;
+          letter-spacing: 2px;
+          color: rgba(255, 255, 255, 0.4);
+          text-align: center;
+          margin: 0 0 20px;
+        }
+
+        .pwl-services {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 10px;
+        }
+
+        .pwl-service {
+          padding: 10px 18px;
+          background: var(--pwl-glass);
+          border: 1px solid var(--pwl-border);
+          border-radius: 100px;
+          font-size: 13px;
+          font-weight: 500;
+          color: rgba(255, 255, 255, 0.7);
+          transition: all 0.3s;
+        }
+
+        .pwl-service:hover {
+          border-color: var(--pwl-orange);
+          color: var(--pwl-orange);
+        }
+
+        /* CTA */
+        .pwl-cta-section {
+          padding: 80px 0;
+          background: linear-gradient(180deg, var(--pwl-dark) 0%, #0F0F1A 100%);
+        }
+
+        .pwl-cta {
+          text-align: center;
+          padding: 60px 40px;
+          background: linear-gradient(135deg, rgba(249, 115, 22, 0.1), transparent);
+          border: 1px solid rgba(249, 115, 22, 0.2);
+          border-radius: 32px;
+          backdrop-filter: blur(20px);
+        }
+
+        .pwl-cta h2 {
+          font-size: clamp(28px, 5vw, 40px);
+          font-weight: 700;
+          color: white;
+          margin: 0 0 16px;
+        }
+
+        .pwl-cta p {
+          font-size: 18px;
+          color: rgba(255, 255, 255, 0.6);
+          margin: 0 0 32px;
+        }
+
+        .pwl-cta-buttons {
+          display: flex;
+          justify-content: center;
+          gap: 16px;
+          flex-wrap: wrap;
+        }
+
+        .pwl-btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          padding: 16px 32px;
+          border-radius: 100px;
+          font-size: 15px;
+          font-weight: 600;
+          text-decoration: none;
+          transition: all 0.3s;
+        }
+
+        .pwl-btn--primary {
+          background: linear-gradient(135deg, var(--pwl-orange), var(--pwl-orange-light));
+          color: white;
+          box-shadow: 0 10px 30px rgba(249, 115, 22, 0.3);
+        }
+
+        .pwl-btn--primary:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 15px 40px rgba(249, 115, 22, 0.4);
+        }
+
+        .pwl-btn--secondary {
+          background: var(--pwl-glass);
+          border: 1px solid var(--pwl-border);
+          color: white;
+        }
+
+        .pwl-btn--secondary:hover {
+          border-color: var(--pwl-orange);
+          color: var(--pwl-orange);
+        }
+
+        /* Navigation */
+        .pwl-nav-section {
+          padding: 60px 0;
+          border-top: 1px solid var(--pwl-border);
+        }
+
+        .pwl-nav {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 24px;
+        }
+
+        .pwl-nav-item {
+          padding: 24px;
+          background: var(--pwl-glass);
+          border: 1px solid var(--pwl-border);
+          border-radius: 16px;
+          text-decoration: none;
+          transition: all 0.3s;
+        }
+
+        .pwl-nav-item:hover {
+          border-color: var(--pwl-orange);
+          transform: translateY(-2px);
+        }
+
+        .pwl-nav-item--next {
+          text-align: right;
+        }
+
+        .pwl-nav-label {
+          display: block;
+          font-size: 13px;
+          color: rgba(255, 255, 255, 0.5);
+          margin-bottom: 6px;
+        }
+
+        .pwl-nav-title {
+          font-size: 16px;
+          font-weight: 600;
+          color: white;
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+          .pwl-hero {
+            min-height: auto;
+            padding: 120px 0 60px;
+          }
+
+          .pwl-tabs {
+            justify-content: flex-start;
+            overflow-x: auto;
+            padding-bottom: 8px;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+          }
+
+          .pwl-tabs::-webkit-scrollbar {
+            display: none;
+          }
+
+          .pwl-tab {
+            flex-shrink: 0;
+          }
+
+          .pwl-cta {
+            padding: 40px 24px;
+          }
+
+          .pwl-nav {
+            grid-template-columns: 1fr;
+          }
+
+          .pwl-nav-item--next {
+            text-align: left;
+          }
+        }
       `}</style>
     </div>
   )
