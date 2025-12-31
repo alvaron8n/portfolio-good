@@ -8,6 +8,13 @@
   overflow: hidden;
   user-select: none;
   -webkit-user-select: none;
+  /* Use subtle opacity for premium feel */
+  opacity: 0.6;
+  transition: opacity 0.4s ease;
+}
+
+.curved-loop-wrap:hover {
+  opacity: 1;
 }
 
 .curved-loop-svg {
@@ -20,18 +27,18 @@
 
 .curved-loop-text {
   font-family: var(--font-display);
-  font-weight: 600;
-  font-size: clamp(1.25rem, 3vw, 2rem);
+  font-weight: 500;
+  font-size: clamp(1rem, 2.5vw, 1.5rem); /* Slightly smaller, more refined */
   text-transform: uppercase;
-  letter-spacing: 0.1em;
-  fill: rgba(255, 255, 255, 0.08);
+  letter-spacing: 0.15em;
+  fill: var(--color-cyan);
   transition: fill 0.4s ease;
 }
 
 /* Hover - desktop */
 @media (hover: hover) and (pointer: fine) {
   .curved-loop-wrap:hover .curved-loop-text {
-    fill: rgba(255, 255, 255, 0.15);
+    fill: var(--color-text-primary);
   }
 }
 
@@ -46,8 +53,8 @@
   }
   
   .curved-loop-text {
-    font-size: 1rem;
-    letter-spacing: 0.08em;
+    font-size: 0.875rem;
+    letter-spacing: 0.1em;
   }
 }
 

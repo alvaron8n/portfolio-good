@@ -2,61 +2,69 @@ import { motion } from 'framer-motion'
 import { Section } from '../components/Section'
 import { Container } from '../components/Container'
 import { content } from '../content/content'
+import { MagneticButton } from '../components/ui/MagneticButton'
 
 export function CTA() {
   const { cta } = content.home
 
   return (
-    <Section className="py-24 md:py-40">
+    <Section className="py-32 md:py-48 relative overflow-hidden bg-black">
+      {/* Background Grid - Warp Effect */}
+      <div className="absolute inset-0 opacity-20 pointer-events-none">
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:100px_100px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)]" />
+      </div>
+      
+      {/* Central Glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-500/10 rounded-full blur-[120px] pointer-events-none animate-pulse-glow" />
+
       <Container>
         <motion.div
-          className="text-center max-w-2xl mx-auto"
+          className="text-center max-w-3xl mx-auto relative z-10"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
-          {/* Giant question */}
-          <h2 
-            className="font-display font-bold text-white mb-6"
-            style={{ fontSize: 'var(--text-giant)' }}
-          >
-            {cta.question}
+          <div className="inline-block mb-6">
+            <span className="py-1 px-3 rounded border border-cyan-500/30 bg-cyan-500/5 text-cyan-400 font-mono text-xs tracking-widest uppercase">
+              System_Ready
+            </span>
+          </div>
+
+          <h2 className="font-display text-5xl md:text-7xl font-bold mb-8 tracking-tighter text-white">
+            {cta.headline}
           </h2>
 
-          {/* Handwritten accent */}
-          <p className="mb-10">
-            <span 
-              className="font-accent text-violet-400 text-3xl md:text-4xl -rotate-3 inline-block"
-            >
-              {cta.accent}
-            </span>
+          <p className="text-xl md:text-2xl text-white/50 mb-12 leading-relaxed font-light max-w-2xl mx-auto">
+            {cta.subheadline}
           </p>
 
-          {/* CTA Button */}
-          <motion.a
-            href={cta.button.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-white text-[#050508] font-semibold text-lg transition-transform duration-300 hover:scale-[1.02] active:scale-[0.98]"
-            whileTap={{ scale: 0.98 }}
-          >
-            <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <rect x="3" y="4" width="18" height="18" rx="2" />
-              <path d="M16 2v4M8 2v4M3 10h18" />
-            </svg>
-            <span>{cta.button.label}</span>
-          </motion.a>
+          <div className="flex flex-col items-center gap-8">
+            <MagneticButton strength={0.4}>
+              <motion.a
+                href={cta.button.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-3 px-10 py-5 bg-white text-black font-bold font-mono uppercase tracking-wider text-sm transition-all duration-300 hover:bg-cyan-400 hover:scale-105"
+                whileTap={{ scale: 0.95 }}
+              >
+                <span>{cta.button.label}</span>
+                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+              </motion.a>
+            </MagneticButton>
 
-          {/* Email fallback */}
-          <p className="mt-6 text-white/30 text-sm">
-            <a 
-              href={cta.fallback.href}
-              className="hover:text-white/50 transition-colors"
-            >
-              {cta.fallback.label}
-            </a>
-          </p>
+            <div className="text-white/30 text-xs font-mono uppercase tracking-widest mt-4">
+              {cta.emailText}{' '}
+              <a 
+                href={`mailto:${cta.email}`}
+                className="text-white/60 hover:text-cyan-400 transition-colors border-b border-white/10 hover:border-cyan-400 pb-0.5"
+              >
+                {cta.email}
+              </a>
+            </div>
+          </div>
         </motion.div>
       </Container>
     </Section>
