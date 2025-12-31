@@ -1,159 +1,183 @@
-import { motion } from 'framer-motion'
-import { useRef, useState, useEffect } from 'react'
+import { useRef, useEffect, useState } from 'react'
+import { motion, useMotionValue, useSpring, useTransform, type PanInfo } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { Section } from '../components/Section'
 import { Container } from '../components/Container'
 import { content } from '../content/content'
+import { GlassCard } from '../components/ui/GlassCard'
 
-const colors = ['#8B5CF6', '#06B6D4', '#F59E0B']
+const CARD_WIDTH = 350
+const CARD_GAP = 32
 
-function ProjectCard({ 
+function DraggableCarousel() {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const [containerWidth, setContainerWidth] = useState(0)
+  const x = useMotionValue(0)
+  const springX = useSpring(x, { stiffness: 150, damping: 20, mass: 0.5 })
+
+  const projects = content.home.projects.items
+
+  useEffect(() => {
+    if (containerRef.current) {
+      setContainerWidth(containerRef.current.offsetWidth)
+    }
+    const handleResize = () => {
+        if (containerRef.current) setContainerWidth(containerRef.current.offsetWidth)
+    }
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
+
+  // Calculate drag constraints
+  const totalWidth = projects.length * (CARD_WIDTH + CARD_GAP) - CARD_GAP
+  const dragConstraintLeft = -(totalWidth - containerWidth) - 50 // Extra padding
+  const dragConstraintRight = 50
+
+  const handleDragEnd = (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
+    // Optional: Add snap logic here if needed, for now free scroll with friction feels better for "Physics"
+  }
+
+  return (
+    <div ref={containerRef} className="overflow-hidden cursor-grab active:cursor-grabbing py-10">
+      <motion.div
+        className="flex gap-8 px-[5vw]"
+        drag="x"
+        dragConstraints={{ left: dragConstraintLeft, right: dragConstraintRight }}
+        style={{ x: springX }}
+        onDragEnd={handleDragEnd}
+        whileTap={{ cursor: "grabbing" }}
+      >
+        {projects.map((project, index) => (
+          <CarouselItem 
+            key={project.slug} 
+            project={project} 
+            index={index} 
+            containerX={springX} 
+            containerWidth={containerWidth}
+          />
+        ))}
+      </motion.div>
+    </div>
+  )
+}
+
+function CarouselItem({ 
   project, 
-  index,
-  isMobile
+  index, 
+  containerX,
+  containerWidth
 }: { 
   project: typeof content.home.projects.items[number]
   index: number
-  isMobile: boolean
+  containerX: any
+  containerWidth: number
 }) {
-  const color = colors[index % colors.length]
-
+  // Logic to determine distance from center
+  const itemX = index * (CARD_WIDTH + CARD_GAP)
+  // We approximate the center position based on drag x
+  // This is a simplification for visual effect
+  
+  // Transform mapped to the container's X position
+  // When the item is near the "center" of the view (relative to drag), it scales up
+  const range = [-(itemX + CARD_WIDTH + 200), -(itemX), -(itemX - 200)]
+  const outputScale = [0.9, 1, 0.9]
+  const outputOpacity = [0.5, 1, 0.5]
+  const outputBlur = ["4px", "0px", "4px"]
+  
+  // Note: Precise centering with drag requires reading the exact offset. 
+  // For simplicity and performance, we'll use a simpler hover effect for focus 
+  // and rely on the drag physics for the "feel".
+  // Real-time scale on drag can be expensive if not careful.
+  
   return (
-    <Link
-      to={`/proyectos/${project.slug}`}
-      className={`flex-shrink-0 snap-start ${isMobile ? 'w-[80vw]' : 'w-[340px]'}`}
+    <motion.div
+      className="flex-shrink-0 relative group"
+      style={{ 
+        width: CARD_WIDTH,
+      }}
+      whileHover={{ scale: 1.02, zIndex: 10 }}
+      transition={{ duration: 0.3 }}
     >
-      <motion.article
-        className="group relative h-full"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5, delay: index * 0.1 }}
-      >
-        <div 
-          className="relative aspect-[4/5] rounded-2xl overflow-hidden border border-white/[0.06] p-6 flex flex-col justify-end transition-all duration-300 group-hover:border-white/[0.12]"
-          style={{
-            background: `linear-gradient(to top, ${color}10, transparent)`
-          }}
-        >
-          {/* Number */}
-          <span 
-            className="absolute top-6 left-6 font-display text-6xl font-bold opacity-10 select-none"
-            style={{ color }}
-          >
-            {String(index + 1).padStart(2, '0')}
-          </span>
+      <Link to={`/proyectos/${project.slug}`} className="block h-full">
+        <GlassCard className="h-[450px] flex flex-col overflow-hidden transition-all duration-500 hover:border-cyan-500/40">
+          {/* Image Area */}
+          <div className="h-1/2 relative overflow-hidden bg-black/20">
+             <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0F] to-transparent z-10" />
+             {/* Abstract project visual placeholder */}
+             <div className="absolute inset-0 flex items-center justify-center opacity-30">
+                <div className="w-20 h-20 rounded-full border border-white/10" />
+             </div>
+             
+             <div className="absolute top-4 right-4 z-20">
+               <span className="text-[10px] font-mono border border-white/10 bg-black/50 backdrop-blur px-2 py-1 rounded text-white/60">
+                 {String(index + 1).padStart(2, '0')}
+               </span>
+             </div>
+          </div>
 
-          {/* Content */}
-          <div className="relative z-10">
-            <span 
-              className="inline-block px-2 py-1 mb-3 text-xs font-mono uppercase tracking-wider rounded"
-              style={{ 
-                color,
-                backgroundColor: `${color}15`
-              }}
-            >
+          {/* Content Area */}
+          <div className="flex-1 p-6 flex flex-col relative z-20">
+            <span className="text-cyan-400 text-xs font-mono uppercase tracking-widest mb-2 block">
               {project.category}
             </span>
-            
-            <h3 className="font-display text-xl font-bold text-white mb-2">
+            <h3 className="font-display text-2xl text-white mb-3 leading-tight group-hover:text-cyan-100 transition-colors">
               {project.title}
             </h3>
-            
-            <p className="text-white/50 text-sm flex items-center gap-2">
-              <svg className="w-4 h-4" style={{ color }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-                <path d="M22 4L12 14.01l-3-3" />
-              </svg>
+            <p className="text-sm text-white/50 leading-relaxed line-clamp-3 mb-4">
               {project.result}
             </p>
+            
+            <div className="mt-auto pt-4 border-t border-white/5 flex justify-between items-center">
+              <span className="text-xs text-white/30">View Case</span>
+              <motion.span 
+                className="text-white/80"
+                whileHover={{ x: 5 }}
+              >
+                →
+              </motion.span>
+            </div>
           </div>
-
-          {/* Hover arrow */}
-          <div 
-            className="absolute bottom-6 right-6 w-10 h-10 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-            style={{ backgroundColor: `${color}20` }}
-          >
-            <svg className="w-4 h-4" style={{ color }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M7 17L17 7M17 7H7M17 7V17" />
-            </svg>
-          </div>
-        </div>
-      </motion.article>
-    </Link>
+        </GlassCard>
+      </Link>
+    </motion.div>
   )
 }
 
 export function FeaturedProjects() {
-  const [isMobile, setIsMobile] = useState(false)
-  const scrollRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 768)
-    check()
-    window.addEventListener('resize', check)
-    return () => window.removeEventListener('resize', check)
-  }, [])
-
   const { projects } = content.home
 
   return (
-    <Section id="proyectos" className="py-20 md:py-32 overflow-hidden">
-      {/* Header */}
-      <Container className="mb-8">
-        <motion.div
-          className="flex items-end justify-between gap-4"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
-          <div>
-            <h2 className="font-display text-2xl md:text-3xl font-bold text-white mb-1">
+    <Section id="proyectos" className="py-24 md:py-32 overflow-hidden">
+      <Container>
+        <div className="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <span className="font-mono text-xs text-cyan-500 uppercase tracking-widest mb-2 block">
+              Selected Works
+            </span>
+            <h2 className="heading-lg text-white">
               {projects.title}
             </h2>
-            <p className="text-white/40 text-sm">
-              {projects.subtitle}
-            </p>
-          </div>
+          </motion.div>
           
-          <p className="hidden md:block text-white/30 text-xs">
-            ← Desliza →
-          </p>
-        </motion.div>
+          <motion.p 
+            className="text-white/50 text-sm max-w-xs md:text-right"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            Drag to explore recent cases and experiments.
+          </motion.p>
+        </div>
       </Container>
 
-      {/* Scroll Container */}
-      <div
-        ref={scrollRef}
-        className="flex gap-4 md:gap-6 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-4"
-        style={{
-          paddingLeft: 'max(1rem, calc((100vw - 1280px) / 2 + 1rem))',
-          paddingRight: 'max(1rem, calc((100vw - 1280px) / 2 + 1rem))',
-        }}
-      >
-        {projects.items.map((project, i) => (
-          <ProjectCard 
-            key={project.slug} 
-            project={project} 
-            index={i}
-            isMobile={isMobile}
-          />
-        ))}
-
-        {/* Ver más */}
-        <Link
-          to={projects.cta.href}
-          className={`flex-shrink-0 snap-start ${isMobile ? 'w-[50vw]' : 'w-[200px]'}`}
-        >
-          <div className="h-full aspect-[4/5] rounded-2xl border border-dashed border-white/[0.1] flex flex-col items-center justify-center gap-3 hover:border-violet-500/30 transition-colors">
-            <svg className="w-6 h-6 text-white/30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M5 12h14M12 5l7 7-7 7" />
-            </svg>
-            <span className="text-white/30 text-sm">{projects.cta.label}</span>
-          </div>
-        </Link>
-      </div>
+      {/* Carousel */}
+      <DraggableCarousel />
     </Section>
   )
 }

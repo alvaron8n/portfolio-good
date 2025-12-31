@@ -1,8 +1,9 @@
-import { motion } from 'framer-motion'
+import { motion, useMotionTemplate, useMotionValue } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { Section } from '../components/Section'
 import { Container } from '../components/Container'
 import { content } from '../content/content'
+import { MagneticButton } from '../components/ui/MagneticButton'
 
 function ServiceCard({ 
   service, 
@@ -11,50 +12,84 @@ function ServiceCard({
   service: typeof content.home.services.items[number]
   index: number 
 }) {
+  const mouseX = useMotionValue(0)
+  const mouseY = useMotionValue(0)
+
+  function handleMouseMove({ currentTarget, clientX, clientY }: React.MouseEvent) {
+    const { left, top } = currentTarget.getBoundingClientRect()
+    mouseX.set(clientX - left)
+    mouseY.set(clientY - top)
+  }
+
   return (
     <motion.div
-      className="group relative p-6 md:p-8 rounded-2xl bg-white/[0.02] border border-white/[0.06] hover:border-white/[0.12] transition-colors duration-300"
+      className="group relative h-full rounded-2xl bg-white/[0.02] border border-white/5 overflow-hidden"
+      onMouseMove={handleMouseMove}
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
     >
-      {/* Number */}
-      <span className="absolute top-6 right-6 font-display text-5xl font-bold text-white/[0.04] select-none group-hover:text-white/[0.08] transition-colors">
-        {service.number}
-      </span>
+      {/* Spotlight Effect */}
+      <motion.div
+        className="pointer-events-none absolute -inset-px rounded-2xl opacity-0 transition duration-300 group-hover:opacity-100"
+        style={{
+          background: useMotionTemplate`
+            radial-gradient(
+              650px circle at ${mouseX}px ${mouseY}px,
+              rgba(0, 240, 255, 0.1),
+              transparent 80%
+            )
+          `
+        }}
+      />
+      <motion.div
+        className="pointer-events-none absolute -inset-px rounded-2xl opacity-0 transition duration-300 group-hover:opacity-100"
+        style={{
+          background: useMotionTemplate`
+            radial-gradient(
+              400px circle at ${mouseX}px ${mouseY}px,
+              rgba(0, 240, 255, 0.4),
+              transparent 40%
+            )
+          `,
+          maskImage: `radial-gradient(400px circle at ${mouseX}px ${mouseY}px, black, transparent)`,
+          WebkitMaskImage: `radial-gradient(400px circle at ${mouseX}px ${mouseY}px, black, transparent)`,
+        }}
+      />
 
-      {/* Content */}
-      <div className="relative z-10">
-        <h3 className="font-display text-xl font-semibold text-white mb-2">
+      <div className="relative h-full p-8 flex flex-col z-10">
+        <div className="flex items-start justify-between mb-8">
+          <span className="font-mono text-[10px] text-cyan-400 border border-cyan-500/20 bg-cyan-500/5 rounded px-2 py-1">
+            {service.number}
+          </span>
+          <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white/40 group-hover:text-cyan-400 group-hover:bg-cyan-500/10 transition-colors duration-300">
+             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+               <path d="M12 2L2 7L12 12L22 7L12 2Z" />
+               <path d="M2 17L12 22L22 17" />
+               <path d="M2 12L12 17L22 12" />
+             </svg>
+          </div>
+        </div>
+
+        <h3 className="font-display text-2xl font-bold text-white mb-4 group-hover:text-cyan-50 transition-colors">
           {service.title}
         </h3>
         
-        <p className="text-white/50 text-sm mb-4">
-          {service.result}
+        <p className="text-sm text-white/50 mb-8 flex-grow leading-relaxed group-hover:text-white/70 transition-colors">
+          {service.description}
         </p>
 
-        {/* Accent handwritten (solo en el primero) */}
-        {service.accent && (
-          <span 
-            className="inline-block font-accent text-violet-400/60 text-sm -rotate-2"
-          >
-            {service.accent}
-          </span>
-        )}
-      </div>
-
-      {/* Hover arrow */}
-      <div className="absolute bottom-6 right-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-        <svg 
-          className="w-5 h-5 text-violet-400" 
-          viewBox="0 0 24 24" 
-          fill="none" 
-          stroke="currentColor" 
-          strokeWidth="2"
-        >
-          <path d="M7 17L17 7M17 7H7M17 7V17" />
-        </svg>
+        <div className="flex flex-wrap gap-2 mt-auto">
+          {service.tags.map((tag) => (
+            <span 
+              key={tag}
+              className="text-[10px] font-mono uppercase tracking-wider text-white/30 bg-white/[0.02] px-2 py-1 rounded border border-white/5"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
       </div>
     </motion.div>
   )
@@ -64,51 +99,52 @@ export function Services() {
   const { services } = content.home
 
   return (
-    <Section id="servicios" className="py-20 md:py-32">
+    <Section id="servicios" className="py-32 relative">
       <Container>
         {/* Header */}
-        <motion.div
-          className="mb-12"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
-          <h2 className="font-display text-2xl md:text-3xl font-bold text-white">
-            {services.title}
-          </h2>
-        </motion.div>
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-20">
+          <motion.div
+            className="max-w-xl"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="font-display text-4xl md:text-5xl font-bold text-white mb-6">
+              {services.title}
+            </h2>
+            <p className="text-lg text-white/50 max-w-md">
+              {services.subtitle}
+            </p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            <MagneticButton strength={0.2}>
+              <Link
+                to={services.cta.href}
+                className="group flex items-center gap-3 text-sm font-mono uppercase tracking-wider text-cyan-400 hover:text-cyan-300 transition-colors"
+              >
+                {services.cta.label}
+                <span className="relative flex h-3 w-3">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-cyan-500"></span>
+                </span>
+              </Link>
+            </MagneticButton>
+          </motion.div>
+        </div>
 
         {/* Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {services.items.map((service, i) => (
             <ServiceCard key={service.id} service={service} index={i} />
           ))}
         </div>
-
-        {/* CTA */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-        >
-          <Link
-            to={services.cta.href}
-            className="group inline-flex items-center gap-2 text-white/50 hover:text-white transition-colors"
-          >
-            <span>{services.cta.label}</span>
-            <svg 
-              className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" 
-              viewBox="0 0 24 24" 
-              fill="none" 
-              stroke="currentColor" 
-              strokeWidth="2"
-            >
-              <path d="M5 12h14M12 5l7 7-7 7" />
-            </svg>
-          </Link>
-        </motion.div>
       </Container>
     </Section>
   )
