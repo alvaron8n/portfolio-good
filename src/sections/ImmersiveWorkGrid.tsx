@@ -6,23 +6,23 @@ import './immersiveWorkGrid.css'
 
 gsap.registerPlugin(ScrollTrigger)
 
-// Grid images - tech/automation themed
+// Grid images - restaurant/food themed like reference
 const gridImages = {
   tiles: [
-    'https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&q=80', // circuits
-    'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&q=80', // dashboard
-    'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&q=80', // analytics
-    'https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=600&q=80', // branding
-    'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&q=80', // ecommerce
-    'https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=600&q=80', // code
-    'https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=600&q=80', // workspace
-    'https://images.unsplash.com/photo-1551434678-e076c223a692?w=600&q=80', // team
+    'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600&q=80', // restaurant exterior
+    'https://images.unsplash.com/photo-1544025162-d76694265947?w=600&q=80', // steak plated
+    'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80', // fine dining
+    'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600&q=80', // plated food
+    'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600&q=80', // pizza
+    'https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=600&q=80', // cocktail
+    'https://images.unsplash.com/photo-1559339352-11d035aa65de?w=600&q=80', // dessert
+    'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&q=80', // food spread
   ],
-  center: 'https://images.unsplash.com/photo-1551434678-e076c223a692?w=1200&q=80', // main
+  center: 'https://images.unsplash.com/photo-1525610553991-2bede1a236e2?w=1200&q=80', // bar interior
 }
 
 // Tile speeds for parallax
-const tileSpeeds = [0.8, 1.2, 0.9, 1.1, 1, 0.7, 1.3, 0.6]
+const tileSpeeds = [0.8, 1.2, 0.9, 0.7, 1.3, 0.6, 1.1, 1]
 
 export function ImmersiveWorkGrid() {
   const sectionRef = useRef<HTMLElement>(null)
@@ -33,13 +33,12 @@ export function ImmersiveWorkGrid() {
   const itemsRef = useRef<(HTMLDivElement | null)[]>([])
 
   useLayoutEffect(() => {
-    // Respect reduced motion
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (prefersReducedMotion) return
 
     const ctx = gsap.context(() => {
       const isMobile = window.innerWidth < 768
-      const scaleTarget = isMobile ? 3 : 5
+      const scaleTarget = isMobile ? 3.5 : 5
       const blurAmount = isMobile ? '10px' : '20px'
 
       const tl = gsap.timeline({
@@ -120,43 +119,28 @@ export function ImmersiveWorkGrid() {
       {/* Immersive grid wrapper */}
       <div ref={wrapperRef} className="immersive-wrapper">
         <div ref={gridRef} className="immersive-grid">
-          {/* Row 1 */}
-          <div 
-            ref={el => itemsRef.current[0] = el}
-            className="immersive-item"
-            data-speed="0.8"
-          >
-            <img src={gridImages.tiles[0]} alt="Automatización" loading="lazy" />
+          {/* Item 1 - Tall left */}
+          <div ref={el => { itemsRef.current[0] = el }} className="immersive-item">
+            <img src={gridImages.tiles[0]} alt="" loading="lazy" />
           </div>
-          <div 
-            ref={el => itemsRef.current[1] = el}
-            className="immersive-item"
-            data-speed="1.2"
-          >
-            <img src={gridImages.tiles[1]} alt="Dashboard" loading="lazy" />
+          
+          {/* Item 2 - Top middle */}
+          <div ref={el => { itemsRef.current[1] = el }} className="immersive-item">
+            <img src={gridImages.tiles[1]} alt="" loading="lazy" />
           </div>
-          <div 
-            ref={el => itemsRef.current[2] = el}
-            className="immersive-item"
-            data-speed="0.9"
-          >
-            <img src={gridImages.tiles[2]} alt="Analytics" loading="lazy" />
+          
+          {/* Item 3 - Top right wide */}
+          <div ref={el => { itemsRef.current[2] = el }} className="immersive-item">
+            <img src={gridImages.tiles[2]} alt="" loading="lazy" />
           </div>
-
-          {/* Row 2 */}
-          <div 
-            ref={el => itemsRef.current[3] = el}
-            className="immersive-item"
-            data-speed="1.1"
-          >
-            <img src={gridImages.tiles[3]} alt="Branding" loading="lazy" />
+          
+          {/* Item 4 - Right side */}
+          <div ref={el => { itemsRef.current[3] = el }} className="immersive-item">
+            <img src={gridImages.tiles[3]} alt="" loading="lazy" />
           </div>
           
           {/* CENTER - Featured project */}
-          <div 
-            ref={centerRef}
-            className="immersive-item immersive-item--center"
-          >
+          <div ref={centerRef} className="immersive-item immersive-item--center">
             <img src={gridImages.center} alt="Proyecto destacado" loading="lazy" />
             <div className="immersive-overlay">
               <span className="immersive-tag">Caso Destacado</span>
@@ -164,42 +148,31 @@ export function ImmersiveWorkGrid() {
               <p className="immersive-text">+60% en conversión de reservas directas</p>
               <Link to="/proyectos/webs-locales" className="immersive-cta">
                 Ver proyecto
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M5 12h14M12 5l7 7-7 7" />
                 </svg>
               </Link>
             </div>
           </div>
           
-          <div 
-            ref={el => itemsRef.current[4] = el}
-            className="immersive-item"
-            data-speed="0.7"
-          >
-            <img src={gridImages.tiles[4]} alt="Ecommerce" loading="lazy" />
+          {/* Item 6 - Bottom left */}
+          <div ref={el => { itemsRef.current[4] = el }} className="immersive-item">
+            <img src={gridImages.tiles[4]} alt="" loading="lazy" />
           </div>
-
-          {/* Row 3 */}
-          <div 
-            ref={el => itemsRef.current[5] = el}
-            className="immersive-item"
-            data-speed="1.3"
-          >
-            <img src={gridImages.tiles[5]} alt="Código" loading="lazy" />
+          
+          {/* Item 7 - Bottom middle */}
+          <div ref={el => { itemsRef.current[5] = el }} className="immersive-item">
+            <img src={gridImages.tiles[5]} alt="" loading="lazy" />
           </div>
-          <div 
-            ref={el => itemsRef.current[6] = el}
-            className="immersive-item"
-            data-speed="0.6"
-          >
-            <img src={gridImages.tiles[6]} alt="Workspace" loading="lazy" />
+          
+          {/* Item 8 - Bottom middle-right */}
+          <div ref={el => { itemsRef.current[6] = el }} className="immersive-item">
+            <img src={gridImages.tiles[6]} alt="" loading="lazy" />
           </div>
-          <div 
-            ref={el => itemsRef.current[7] = el}
-            className="immersive-item"
-            data-speed="1"
-          >
-            <img src={gridImages.tiles[7]} alt="Equipo" loading="lazy" />
+          
+          {/* Item 9 - Bottom right */}
+          <div ref={el => { itemsRef.current[7] = el }} className="immersive-item">
+            <img src={gridImages.tiles[7]} alt="" loading="lazy" />
           </div>
         </div>
 

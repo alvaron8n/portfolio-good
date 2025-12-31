@@ -1,68 +1,219 @@
 /* ============================================
-   HERO - Modern Tech / Geometric
+   HERO SECTION - Premium Mobile Styles
    ============================================ */
 
-/* ---- UTILITIES ---- */
-.perspective-1000 {
-  perspective: 1000px;
-}
-
-.preserve-3d {
-  transform-style: preserve-3d;
-}
-
-.clip-path-slant {
-  clip-path: polygon(10% 0, 100% 0, 100% 100%, 0% 100%);
-}
-
-.bg-300 {
-  background-size: 300% auto;
-}
-
-@keyframes gradient-x {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-.animate-gradient {
-  animation: gradient-x 4s linear infinite;
-}
-
-/* ---- SECTION ---- */
-.hero {
+/* ==========================================
+   TIEMPO - Premium Accent (ALL DEVICES)
+   ========================================== */
+.hero-tiempo {
   position: relative;
-  min-height: 100dvh;
-  display: flex;
-  flex-direction: column;
+  display: inline-block;
+  font-family: 'BBH Bartle', 'Space Grotesk', sans-serif;
+  background: linear-gradient(135deg, #ea580c 0%, #f97316 30%, #fb923c 60%, #fbbf24 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 2px 12px rgba(249, 115, 22, 0.5));
 }
 
-/* ---- GRID BACKGROUND (Overlay) ---- */
-/* This complements the Canvas grid */
-.hero::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image: 
-    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-  background-size: 100px 100px;
-  mask-image: radial-gradient(circle at center, black 30%, transparent 80%);
-  pointer-events: none;
-  z-index: 1;
+/* ==========================================
+   MOBILE GLASS CARDS - Premium Look
+   ========================================== */
+@media (max-width: 640px) {
+  
+  /* Card container spacing */
+  .hero-cards-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  /* Premium Glass Card - Mobile */
+  .hero-glass-card {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    
+    /* Multi-layer gradient background */
+    background: 
+      /* Inner warm glow - top left */
+      radial-gradient(ellipse 80% 60% at 15% 15%, rgba(255, 150, 50, 0.15), transparent 50%),
+      /* Cool accent - bottom right */
+      radial-gradient(ellipse 60% 50% at 85% 85%, rgba(0, 100, 200, 0.08), transparent 50%),
+      /* Base glass */
+      linear-gradient(135deg, rgba(20, 30, 60, 0.45) 0%, rgba(10, 15, 30, 0.35) 100%);
+    
+    /* Premium glassmorphism */
+    backdrop-filter: blur(20px) saturate(150%);
+    -webkit-backdrop-filter: blur(20px) saturate(150%);
+    
+    /* Bright border */
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    
+    /* Depth shadows */
+    box-shadow: 
+      0 20px 50px rgba(0, 0, 0, 0.5),
+      0 8px 20px rgba(0, 0, 0, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.12),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+  }
+
+  /* Card 1 - Headline */
+  .hero-glass-card--headline {
+    padding: 20px;
+  }
+
+  /* Card 2 - Description + CTAs */
+  .hero-glass-card--cta {
+    padding: 18px 20px;
+  }
+
+  /* Top edge shine */
+  .hero-glass-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 10%;
+    right: 10%;
+    height: 1px;
+    background: linear-gradient(90deg, 
+      transparent 0%, 
+      rgba(255, 255, 255, 0.35) 30%,
+      rgba(255, 255, 255, 0.5) 50%,
+      rgba(255, 255, 255, 0.35) 70%,
+      transparent 100%
+    );
+    z-index: 10;
+  }
+
+  /* Left edge subtle */
+  .hero-glass-card::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 10%;
+    bottom: 40%;
+    width: 1px;
+    background: linear-gradient(180deg, 
+      rgba(255, 255, 255, 0.2) 0%, 
+      rgba(255, 255, 255, 0.08) 100%
+    );
+    z-index: 10;
+  }
+
+  /* Inner warm glow overlay */
+  .hero-glass-glow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 60%;
+    height: 50%;
+    background: radial-gradient(ellipse at 20% 20%, rgba(255, 160, 60, 0.12), transparent 60%);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* ==========================================
+     BUTTONS - Premium Mobile
+     ========================================== */
+  .hero-btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 14px 20px;
+    background: rgba(255, 255, 255, 0.95);
+    color: #0a0a14;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    border-radius: 12px;
+    border: 2px solid #f97316;
+    box-shadow: 
+      0 4px 15px rgba(249, 115, 22, 0.25),
+      inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    transition: all 0.3s ease;
+    text-decoration: none;
+  }
+
+  .hero-btn-primary:hover {
+    background: #fff;
+    box-shadow: 
+      0 6px 25px rgba(249, 115, 22, 0.35),
+      inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    transform: translateY(-1px);
+  }
+
+  .hero-btn-primary svg {
+    width: 14px;
+    height: 14px;
+    color: #f97316;
+  }
+
+  .hero-btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 14px 20px;
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(10px);
+    color: rgba(255, 255, 255, 0.8);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    transition: all 0.3s ease;
+    text-decoration: none;
+  }
+
+  .hero-btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.25);
+  }
+
+  .hero-btn-secondary svg {
+    width: 14px;
+    height: 14px;
+    opacity: 0.7;
+  }
+
+  /* Buttons stack on mobile */
+  .hero-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 16px;
+  }
 }
 
-/* ---- VISUALIZER ---- */
-/* Add a glow to the center */
-.hero-visualizer-glow {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 300px;
-  height: 300px;
-  background: radial-gradient(circle, rgba(0, 240, 255, 0.15) 0%, transparent 70%);
-  filter: blur(60px);
-  z-index: 0;
-  pointer-events: none;
+/* ==========================================
+   DESKTOP - Keep existing styles
+   ========================================== */
+@media (min-width: 641px) {
+  .hero-glass-card {
+    /* Desktop uses inline styles from component */
+  }
+  
+  .hero-cards-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .hero-buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    margin-top: 16px;
+  }
 }

@@ -57,23 +57,23 @@
 /* Mobile */
 @media (max-width: 767px) {
   .curved-loop-wrap {
-    padding: 0.5rem 0;
+    padding: 1rem 0;
   }
   
   .curved-loop-svg {
-    aspect-ratio: 1440 / 120;
+    aspect-ratio: 1440 / 180;
   }
   
   .curved-loop-text {
-    font-size: 2rem;
-    letter-spacing: 0.05em;
+    font-size: 3.5rem;
+    letter-spacing: 0.03em;
   }
 }
 
 /* Small mobile */
 @media (max-width: 480px) {
   .curved-loop-text {
-    font-size: 1.5rem;
+    font-size: 3rem;
   }
 }
 

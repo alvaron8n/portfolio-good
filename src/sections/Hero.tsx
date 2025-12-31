@@ -3,38 +3,76 @@ import { motion, useScroll, useTransform } from 'framer-motion'
 import { MagneticButton } from '../components/ui/MagneticButton'
 import { content } from '../content/content'
 import heroVideo from '../lib/KLING 2.mp4'
+import '../styles/hero.css'
 
 // ============================================
 // GLASS PANEL - Premium Apple/Stripe style
 // ============================================
-function GlassPanel({ children, className = '' }: { children: React.ReactNode; className?: string }) {
+function GlassPanel({ 
+  children, 
+  className = '',
+  variant = 'default'
+}: { 
+  children: React.ReactNode
+  className?: string
+  variant?: 'headline' | 'cta' | 'default'
+}) {
+  const variantClass = variant === 'headline' 
+    ? 'hero-glass-card--headline' 
+    : variant === 'cta' 
+    ? 'hero-glass-card--cta' 
+    : ''
+
   return (
-    <div
-      className={`relative rounded-2xl overflow-hidden ${className}`}
-      style={{
-        background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%)',
-        backdropFilter: 'blur(24px) saturate(200%)',
-        WebkitBackdropFilter: 'blur(24px) saturate(200%)',
-        border: '1px solid rgba(255, 255, 255, 0.15)',
-        boxShadow: `
-          0 8px 32px rgba(0, 0, 0, 0.25),
-          inset 0 1px 0 rgba(255, 255, 255, 0.1),
-          inset 0 -1px 0 rgba(0, 0, 0, 0.1)
-        `,
-      }}
-    >
-      {/* Top edge highlight */}
-      <div 
-        className="absolute inset-x-0 top-0 h-px"
-        style={{ background: 'linear-gradient(90deg, transparent 10%, rgba(255,255,255,0.25) 50%, transparent 90%)' }}
-      />
-      {/* Left edge subtle highlight */}
-      <div 
-        className="absolute inset-y-0 left-0 w-px"
-        style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.15) 0%, transparent 100%)' }}
-      />
-      {children}
+    <div className={`hero-glass-card relative rounded-2xl overflow-hidden ${variantClass} ${className}`}>
+      {/* Inner warm glow - visible on mobile */}
+      <div className="hero-glass-glow" />
+      
+      {/* Desktop styles via inline (mobile overridden by CSS) */}
+      <style>{`
+        @media (min-width: 641px) {
+          .hero-glass-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%);
+            backdrop-filter: blur(24px) saturate(200%);
+            -webkit-backdrop-filter: blur(24px) saturate(200%);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.1), inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+          }
+          .hero-glass-card--headline { padding: 1.25rem; }
+          .hero-glass-card--cta { padding: 1.25rem; }
+          .hero-glass-glow { display: none; }
+        }
+        @media (min-width: 1024px) {
+          .hero-glass-card--headline { padding: 1.5rem; }
+          .hero-glass-card--cta { padding: 1.25rem; }
+        }
+      `}</style>
+      
+      {/* Content */}
+      <div className="relative z-10">
+        {children}
+      </div>
     </div>
+  )
+}
+
+// ============================================
+// ICONS for buttons
+// ============================================
+function SearchIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="11" cy="11" r="8" />
+      <path d="m21 21-4.35-4.35" />
+    </svg>
+  )
+}
+
+function ChatIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+    </svg>
   )
 }
 
@@ -57,7 +95,7 @@ export function Hero() {
   return (
     <section 
       ref={sectionRef} 
-      className="hero-section min-h-[100dvh] relative overflow-hidden flex items-end pb-12 md:pb-16 lg:pb-20"
+      className="hero-section min-h-[100dvh] relative overflow-hidden flex items-end pb-8 md:pb-10 lg:pb-12"
     >
       {/* Video Background */}
       <motion.div className="absolute inset-0 z-0" style={{ scale }}>
@@ -68,7 +106,7 @@ export function Hero() {
         <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/50" />
       </motion.div>
 
-      {/* Watermark */}
+      {/* Watermark - Desktop */}
       <motion.span 
         className="absolute top-28 right-6 lg:right-10 z-20 hidden md:block text-[10px] tracking-[0.2em] text-white/20 uppercase"
         style={{ fontFamily: "'Montserrat', sans-serif" }}
@@ -81,15 +119,15 @@ export function Hero() {
 
       {/* Content - Bottom Left */}
       <div className="relative z-10 w-full px-4 md:px-8 lg:px-12">
-        <motion.div className="max-w-xl" style={{ opacity, y }}>
+        <motion.div className="max-w-lg hero-cards-wrapper" style={{ opacity, y }}>
           
-          {/* Card 1: Headline - Compact */}
+          {/* Card 1: Headline */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
           >
-            <GlassPanel className="p-4 md:p-5 lg:p-6">
+            <GlassPanel variant="headline">
               {/* Badge */}
               <div className="inline-flex items-center gap-2 mb-3 md:mb-4">
                 <span className="relative flex h-1.5 w-1.5">
@@ -97,70 +135,70 @@ export function Hero() {
                   <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-400"></span>
                 </span>
                 <span 
-                  className="text-[9px] md:text-[10px] uppercase tracking-[0.1em] text-white/45"
+                  className="text-[10px] md:text-[10px] uppercase tracking-[0.12em] text-white/50"
                   style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 500 }}
                 >
                   {hero.badge}
                 </span>
               </div>
 
-              {/* Headline - 2 líneas, Space Grotesk */}
+              {/* Headline - 3 lines */}
               <h1 style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                <span 
-                  className="block text-lg sm:text-xl md:text-2xl lg:text-3xl uppercase tracking-tight leading-[1.1] text-white font-bold"
-                >
-                  Sistemas que te devuelven
+                <span className="block text-[1rem] sm:text-lg md:text-2xl lg:text-3xl xl:text-4xl uppercase tracking-tight leading-[1.15] text-white font-bold">
+                  Sistemas que te
                 </span>
-                
-                <span 
-                  className="block text-lg sm:text-xl md:text-2xl lg:text-3xl uppercase tracking-tight leading-[1.1] mt-0.5 font-bold"
-                >
-                  <span className="text-white">el </span>
-                  <span 
-                    style={{ 
-                      background: 'linear-gradient(135deg, #ea580c 0%, #f97316 35%, #fb923c 70%, #fbbf24 100%)',
-                      WebkitBackgroundClip: 'text',
-                      WebkitTextFillColor: 'transparent',
-                      filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.3))',
-                    }}
-                  >
-                    TIEMPO.
-                  </span>
+                <span className="block text-[1rem] sm:text-lg md:text-2xl lg:text-3xl xl:text-4xl uppercase tracking-tight leading-[1.15] text-white font-bold mt-1">
+                  devuelven el
+                </span>
+                <span className="block mt-1">
+                  <span className="hero-tiempo text-[1.1rem] sm:text-lg md:text-2xl lg:text-3xl xl:text-4xl">TIEMPO.</span>
                 </span>
               </h1>
             </GlassPanel>
           </motion.div>
 
-          {/* Card 2: Subheadline + CTAs - Compact */}
+          {/* Card 2: Subheadline + CTAs */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.12, ease: [0.25, 0.1, 0.25, 1] }}
-            className="mt-2.5 md:mt-3"
           >
-            <GlassPanel className="p-4 md:p-5 max-w-md">
+            <GlassPanel variant="cta" className="max-w-md">
               <p 
-                className="text-xs md:text-sm text-white/50 leading-relaxed mb-4"
+                className="text-[12px] sm:text-xs md:text-sm text-white/60 leading-relaxed"
                 style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 400 }}
               >
                 {hero.subheadline}
               </p>
 
-              <div className="flex items-center gap-3">
+              {/* Buttons */}
+              <div className="hero-buttons">
+                {/* Primary - Mobile uses CSS classes */}
                 <MagneticButton strength={0.1}>
+                  <a href={hero.cta.href} className="hero-btn-primary sm:hidden">
+                    <SearchIcon />
+                    {hero.cta.label}
+                  </a>
+                  {/* Desktop button */}
                   <a
                     href={hero.cta.href}
-                    className="inline-block px-5 py-2.5 bg-white text-[#0a0a14] font-semibold uppercase tracking-wider text-[9px] md:text-[10px] rounded-lg hover:bg-cyan-400 transition-colors duration-300"
+                    className="hidden sm:inline-block px-5 py-2.5 bg-white text-[#0a0a14] font-semibold uppercase tracking-wider text-[10px] rounded-lg hover:bg-orange-400 hover:text-white transition-colors duration-300"
                     style={{ fontFamily: "'Space Grotesk', sans-serif" }}
                   >
                     {hero.cta.label}
                   </a>
                 </MagneticButton>
                 
+                {/* Secondary - Mobile uses CSS classes */}
                 <MagneticButton strength={0.08}>
+                  <a href={hero.secondaryCta.href} className="hero-btn-secondary sm:hidden">
+                    <ChatIcon />
+                    {hero.secondaryCta.label}
+                  </a>
+                  {/* Desktop button */}
                   <a
                     href={hero.secondaryCta.href}
-                    className="inline-block px-3 py-2.5 text-white/40 hover:text-white text-[9px] md:text-[10px] uppercase tracking-wider transition-colors duration-300"
+                    className="hidden sm:inline-block px-3 py-2.5 text-white/50 hover:text-white text-[10px] uppercase tracking-wider transition-colors duration-300"
                     style={{ fontFamily: "'Space Grotesk', sans-serif" }}
                   >
                     {hero.secondaryCta.label}

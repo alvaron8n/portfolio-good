@@ -1,5 +1,5 @@
-import { useRef, useState, useEffect } from 'react'
-import { motion, useMotionValue, useSpring, useTransform, useMotionTemplate, AnimatePresence } from 'framer-motion'
+import { useRef, useState } from 'react'
+import { motion, useMotionValue, useSpring, useTransform, useMotionTemplate } from 'framer-motion'
 import { Section } from '../components/Section'
 import { Container } from '../components/Container'
 import { content } from '../content/content'
@@ -12,11 +12,6 @@ function EpicManifestoCard() {
   const { socialProof } = content.home
   const cardRef = useRef<HTMLDivElement>(null)
   const [isHovered, setIsHovered] = useState(false)
-  const [isMounted, setIsMounted] = useState(false)
-  
-  useEffect(() => {
-    setIsMounted(true)
-  }, [])
   
   // Mouse tracking
   const mouseX = useMotionValue(0.5)
@@ -89,7 +84,7 @@ function EpicManifestoCard() {
     
     // Split by keywords while preserving them
     const parts: { text: string; isKeyword: boolean }[] = []
-    let remaining = text
+    let remaining: string = text
     
     keywords.forEach(keyword => {
       const regex = new RegExp(`(${keyword})`, 'gi')
@@ -296,7 +291,7 @@ export function SocialProof() {
     <Section className="epic-section">
       {/* Curved marquee */}
       <motion.div
-        className="mb-24"
+        className="mb-12 md:mb-24"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}

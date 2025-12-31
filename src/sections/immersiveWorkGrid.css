@@ -1,5 +1,5 @@
 /* ============================================
-   IMMERSIVE WORK GRID - Premium Zoom Effect
+   IMMERSIVE WORK GRID - Bento Layout + Zoom
    ============================================ */
 
 .immersive-section {
@@ -35,20 +35,30 @@
 
 .immersive-heading {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-size: clamp(1.25rem, 4vw, 2.5rem);
   font-weight: 700;
-  line-height: 1.1;
+  line-height: 1.3;
   letter-spacing: -0.02em;
   color: rgba(255, 255, 255, 0.95);
   margin: 0;
+  padding: 0 1rem;
 }
 
 .immersive-accent {
+  display: block;
   font-family: 'BBH Bartle', 'Space Grotesk', sans-serif;
+  font-size: clamp(1.4rem, 5vw, 3rem);
   background: linear-gradient(135deg, #ea580c 0%, #f97316 50%, #fbbf24 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  margin: 0.15em 0;
+}
+
+@media (max-width: 480px) {
+  .immersive-accent {
+    font-size: 1.3rem;
+  }
 }
 
 /* ==========================================
@@ -66,32 +76,133 @@
 }
 
 /* ==========================================
-   GRID LAYOUT
+   BENTO GRID - DESKTOP
    ========================================== */
 .immersive-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(3, 1fr);
+  grid-template-columns: 1fr 1.2fr 0.8fr 1fr;
+  grid-template-rows: 1fr 1.4fr 1fr;
   gap: 12px;
-  width: 85vw;
-  height: 80vh;
-  max-width: 1400px;
-  max-height: 900px;
+  width: 92vw;
+  height: 85vh;
+  max-width: 1600px;
+  max-height: 950px;
   transform-origin: center center;
   will-change: transform;
+  padding: 10px;
 }
 
+/* Bento positioning - Desktop */
+.immersive-item:nth-child(1) {
+  grid-column: 1;
+  grid-row: 1 / 3;
+}
+
+.immersive-item:nth-child(2) {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.immersive-item:nth-child(3) {
+  grid-column: 3 / 5;
+  grid-row: 1;
+}
+
+.immersive-item:nth-child(4) {
+  grid-column: 4;
+  grid-row: 2;
+}
+
+/* CENTER - spans middle */
+.immersive-item--center {
+  grid-column: 2 / 4 !important;
+  grid-row: 2 !important;
+}
+
+.immersive-item:nth-child(6) {
+  grid-column: 1;
+  grid-row: 3;
+}
+
+.immersive-item:nth-child(7) {
+  grid-column: 2;
+  grid-row: 3;
+}
+
+.immersive-item:nth-child(8) {
+  grid-column: 3;
+  grid-row: 3;
+}
+
+.immersive-item:nth-child(9) {
+  grid-column: 4;
+  grid-row: 3;
+}
+
+/* ==========================================
+   BENTO GRID - MOBILE (3 columns)
+   ========================================== */
 @media (max-width: 768px) {
-  .immersive-grid {
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(4, 1fr);
-    gap: 8px;
-    width: 92vw;
-    height: 85vh;
+  .immersive-wrapper {
+    height: 100svh;
   }
-  
+
+  .immersive-grid {
+    grid-template-columns: 1fr 1.3fr 1fr;
+    grid-template-rows: 0.8fr 1.2fr 0.8fr;
+    gap: 8px;
+    width: 96vw;
+    height: 75svh;
+    max-width: none;
+    max-height: none;
+    padding: 5px;
+  }
+
+  /* Mobile bento layout */
+  .immersive-item:nth-child(1) {
+    grid-column: 1;
+    grid-row: 1 / 3;
+  }
+
+  .immersive-item:nth-child(2) {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .immersive-item:nth-child(3) {
+    grid-column: 3;
+    grid-row: 1;
+  }
+
+  .immersive-item:nth-child(4) {
+    grid-column: 3;
+    grid-row: 2;
+  }
+
+  /* CENTER on mobile */
   .immersive-item--center {
-    grid-column: span 2;
+    grid-column: 2 !important;
+    grid-row: 2 !important;
+  }
+
+  .immersive-item:nth-child(6) {
+    grid-column: 1;
+    grid-row: 3;
+  }
+
+  .immersive-item:nth-child(7) {
+    grid-column: 2;
+    grid-row: 3;
+  }
+
+  .immersive-item:nth-child(8) {
+    grid-column: 3;
+    grid-row: 3;
+  }
+
+  /* Hide last item on mobile */
+  .immersive-item:nth-child(9) {
+    display: none;
   }
 }
 
@@ -103,10 +214,14 @@
   overflow: hidden;
   border-radius: 16px;
   will-change: transform, opacity, filter;
-  
-  /* Glassmorphism subtle border */
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.06);
   background: rgba(16, 16, 24, 0.5);
+}
+
+@media (max-width: 768px) {
+  .immersive-item {
+    border-radius: 12px;
+  }
 }
 
 .immersive-item img {
@@ -127,10 +242,16 @@
 .immersive-item--center {
   z-index: 10;
   border-radius: 20px;
-  border: 1px solid rgba(249, 115, 22, 0.3);
+  border: 1px solid rgba(249, 115, 22, 0.25);
   box-shadow: 
     0 30px 60px rgba(0, 0, 0, 0.5),
-    0 0 80px rgba(249, 115, 22, 0.1);
+    0 0 60px rgba(249, 115, 22, 0.08);
+}
+
+@media (max-width: 768px) {
+  .immersive-item--center {
+    border-radius: 14px;
+  }
 }
 
 /* ==========================================
@@ -142,12 +263,12 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding: 2rem;
+  padding: 1.5rem;
   background: linear-gradient(
     0deg,
     rgba(10, 10, 15, 0.95) 0%,
-    rgba(10, 10, 15, 0.6) 40%,
-    transparent 70%
+    rgba(10, 10, 15, 0.5) 50%,
+    transparent 100%
   );
   opacity: 1;
   transition: opacity 0.4s ease;
@@ -155,51 +276,57 @@
 
 @media (min-width: 768px) {
   .immersive-overlay {
-    padding: 2.5rem;
+    padding: 2rem;
   }
 }
 
 /* Tag */
 .immersive-tag {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   font-weight: 500;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--color-primary, #f97316);
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.5rem;
 }
 
 /* Title */
 .immersive-title {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: clamp(1.25rem, 3vw, 2rem);
+  font-size: clamp(1rem, 2.5vw, 1.75rem);
   font-weight: 700;
   color: #fff;
-  margin: 0 0 0.5rem;
+  margin: 0 0 0.35rem;
   line-height: 1.2;
 }
 
 /* Description */
 .immersive-text {
   font-family: 'Montserrat', sans-serif;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   color: rgba(255, 255, 255, 0.6);
-  margin: 0 0 1.25rem;
-  line-height: 1.5;
+  margin: 0 0 1rem;
+  line-height: 1.4;
+}
+
+@media (max-width: 768px) {
+  .immersive-text {
+    display: none;
+  }
 }
 
 /* CTA Button */
 .immersive-cta {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.4rem;
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 0.85rem;
+  font-size: 0.75rem;
   font-weight: 600;
   color: #0a0a0f;
   background: linear-gradient(135deg, #f97316 0%, #fbbf24 100%);
-  padding: 0.75rem 1.25rem;
+  padding: 0.6rem 1rem;
   border-radius: 8px;
   text-decoration: none;
   transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
@@ -212,6 +339,8 @@
 }
 
 .immersive-cta svg {
+  width: 14px;
+  height: 14px;
   transition: transform 0.3s ease;
 }
 
