@@ -1,43 +1,14 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
+import { createPortal } from 'react-dom'
 import { Outlet, Link, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion'
+import gsap from 'gsap'
 import { Container } from '../components/Container'
 import { Logo } from '../components/Logo'
 import { content } from '../content/content'
 
 // ============================================
-// PAGE TRANSITION VARIANTS
-// ============================================
-const pageVariants = {
-  initial: { 
-    opacity: 0, 
-    y: 20,
-    filter: 'blur(10px)'
-  },
-  enter: { 
-    opacity: 1, 
-    y: 0,
-    filter: 'blur(0px)',
-    transition: {
-      duration: 0.5,
-      ease: [0.25, 0.46, 0.45, 0.94] as const,
-      when: 'beforeChildren' as const,
-      staggerChildren: 0.1
-    }
-  },
-  exit: { 
-    opacity: 0, 
-    scale: 0.98,
-    filter: 'blur(5px)',
-    transition: {
-      duration: 0.3,
-      ease: [0.25, 0.46, 0.45, 0.94] as const
-    }
-  }
-}
-
-// ============================================
-// ANIMATED NAV LINK WITH WRITING UNDERLINE
+// ANIMATED NAV LINK
 // ============================================
 function NavLink({ href, label, isActive }: { href: string; label: string; isActive: boolean }) {
   return (
@@ -45,20 +16,15 @@ function NavLink({ href, label, isActive }: { href: string; label: string; isAct
       to={href}
       className="relative font-mono text-xs uppercase tracking-wider py-2 px-4 rounded transition-all duration-300 group overflow-hidden"
     >
-      {/* Hover background */}
-      <span className="absolute inset-0 bg-cyan-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-      
-      {/* Active Bracket Indicators */}
+      <span className="absolute inset-0 bg-orange-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
       {isActive && (
         <>
-          <span className="absolute top-0 left-0 w-2 h-2 border-t border-l border-cyan-400" />
-          <span className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-cyan-400" />
+          <span className="absolute top-0 left-0 w-2 h-2 border-t border-l border-orange-500" />
+          <span className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-orange-500" />
         </>
       )}
-
-      {/* Text */}
       <span className={`relative z-10 transition-colors duration-300 ${
-        isActive ? 'text-cyan-400' : 'text-white/60 group-hover:text-white'
+        isActive ? 'text-orange-500' : 'text-white/60 group-hover:text-white'
       }`}>
         {isActive ? `> ${label}` : label}
       </span>
@@ -72,10 +38,9 @@ function NavLink({ href, label, isActive }: { href: string; label: string; isAct
 function ScrollProgress() {
   const { scrollYProgress } = useScroll()
   const scaleX = useTransform(scrollYProgress, [0, 1], [0, 1])
-
   return (
     <motion.div 
-      className="absolute bottom-0 left-0 right-0 h-[1px] bg-cyan-400 origin-left shadow-[0_0_10px_rgba(34,211,238,0.5)]"
+      className="absolute bottom-0 left-0 right-0 h-[1px] bg-orange-500 origin-left shadow-[0_0_10px_rgba(249,115,22,0.5)]"
       style={{ scaleX }}
     />
   )
@@ -86,53 +51,267 @@ function ScrollProgress() {
 // ============================================
 function HamburgerIcon({ isOpen }: { isOpen: boolean }) {
   return (
-    <div className="w-6 h-6 flex flex-col justify-center items-center gap-1.5">
-      <motion.span
-        animate={{ rotate: isOpen ? 45 : 0, y: isOpen ? 6 : 0 }}
-        transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
-        className="w-6 h-0.5 bg-current rounded-full origin-center"
+    <div className="w-6 h-5 flex flex-col justify-center items-center relative">
+      <span
+        className={`absolute w-6 h-0.5 bg-orange-500 rounded-full transition-all duration-300 ease-out ${
+          isOpen ? 'rotate-45 top-1/2 -translate-y-1/2' : 'top-0'
+        }`}
       />
-      <motion.span
-        animate={{ opacity: isOpen ? 0 : 1, scaleX: isOpen ? 0 : 1 }}
-        transition={{ duration: 0.2 }}
-        className="w-6 h-0.5 bg-current rounded-full"
+      <span
+        className={`absolute w-6 h-0.5 bg-orange-500 rounded-full top-1/2 -translate-y-1/2 transition-all duration-200 ${
+          isOpen ? 'opacity-0 scale-0' : 'opacity-100 scale-100'
+        }`}
       />
-      <motion.span
-        animate={{ rotate: isOpen ? -45 : 0, y: isOpen ? -6 : 0 }}
-        transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
-        className="w-6 h-0.5 bg-current rounded-full origin-center"
+      <span
+        className={`absolute w-6 h-0.5 bg-orange-500 rounded-full transition-all duration-300 ease-out ${
+          isOpen ? '-rotate-45 top-1/2 -translate-y-1/2' : 'bottom-0'
+        }`}
       />
     </div>
   )
 }
 
 // ============================================
-// CONTEXT-AWARE HEADER
+// MOBILE MENU CONTENT - PREMIUM MINIMAL DESIGN
+// ============================================
+function MobileMenuContent({ onClose }: { onClose: () => void }) {
+  const location = useLocation()
+  const containerRef = useRef<HTMLDivElement>(null)
+  const linksRef = useRef<HTMLUListElement>(null)
+
+  useEffect(() => {
+    if (!containerRef.current || !linksRef.current) return
+
+    const ctx = gsap.context(() => {
+      // Animate the accent line
+      gsap.fromTo('.menu-accent-line',
+        { scaleX: 0 },
+        { scaleX: 1, duration: 1, ease: 'power4.out', delay: 0.3 }
+      )
+
+      // Animate nav links with elegant stagger
+      gsap.fromTo(linksRef.current?.children || [],
+        { y: 40, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.6, stagger: 0.1, ease: 'power3.out', delay: 0.2 }
+      )
+
+      // Animate CTA
+      gsap.fromTo('.menu-cta',
+        { y: 30, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.5, ease: 'power3.out', delay: 0.6 }
+      )
+
+    }, containerRef)
+
+    return () => ctx.revert()
+  }, [])
+
+  return (
+    <div 
+      ref={containerRef}
+      className="absolute inset-0 flex flex-col overflow-hidden bg-white"
+    >
+      {/* Subtle gradient overlay */}
+      <div 
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background: 'linear-gradient(180deg, rgba(249,115,22,0.03) 0%, transparent 40%, rgba(249,115,22,0.02) 100%)'
+        }}
+      />
+
+      {/* Header */}
+      <div className="relative flex items-center justify-between px-6 py-5">
+        <div className="flex items-center gap-3">
+          <span className="text-2xl font-bold tracking-tight text-gray-900">ÁF</span>
+          <div className="w-px h-6 bg-gray-200" />
+          <span className="text-xs font-medium text-orange-500 tracking-widest uppercase">Menú</span>
+        </div>
+        <button
+          onClick={onClose}
+          className="w-11 h-11 flex items-center justify-center rounded-full border border-gray-200 text-gray-400 active:bg-gray-50 transition-colors"
+          aria-label="Cerrar menú"
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+            <path d="M18 6L6 18M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      {/* Orange accent line */}
+      <div className="px-6">
+        <div 
+          className="menu-accent-line h-px origin-left"
+          style={{ background: 'linear-gradient(90deg, #f97316 0%, #fbbf24 50%, transparent 100%)' }}
+        />
+      </div>
+
+      {/* Navigation Links */}
+      <nav className="relative flex-1 flex flex-col justify-center px-6">
+        <ul ref={linksRef} className="space-y-1">
+          {content.nav.map((item) => {
+            const isActive = location.pathname === item.href
+            return (
+              <li key={item.href}>
+                <Link
+                  to={item.href}
+                  onClick={onClose}
+                  className="group relative flex items-center py-5 transition-all duration-300"
+                >
+                  {/* Active indicator */}
+                  {isActive && (
+                    <motion.div 
+                      layoutId="activeNavMobile"
+                      className="absolute left-0 w-1 h-8 rounded-full bg-gradient-to-b from-orange-500 to-amber-500"
+                      transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+                    />
+                  )}
+                  
+                  <span 
+                    className={`text-3xl font-semibold tracking-tight transition-all duration-300 ${
+                      isActive 
+                        ? 'text-gray-900 pl-5' 
+                        : 'text-gray-400 group-active:text-gray-600'
+                    }`}
+                    style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+                  >
+                    {item.label}
+                  </span>
+
+                  {/* Arrow on active */}
+                  {isActive && (
+                    <svg 
+                      className="ml-auto w-5 h-5 text-orange-500"
+                      viewBox="0 0 24 24" 
+                      fill="none" 
+                      stroke="currentColor" 
+                      strokeWidth="2"
+                    >
+                      <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                  )}
+                </Link>
+
+                {/* Separator line */}
+                <div className="h-px bg-gray-100" />
+              </li>
+            )
+          })}
+        </ul>
+      </nav>
+
+      {/* Bottom CTA */}
+      <div className="menu-cta relative px-6 pb-8 pt-4">
+        <a
+          href={content.site.calendarUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={onClose}
+          className="group flex items-center justify-between w-full px-6 py-5 rounded-2xl text-white transition-all duration-300 active:scale-[0.98]"
+          style={{ 
+            background: 'linear-gradient(135deg, #f97316 0%, #ea580c 100%)',
+          }}
+        >
+          <div className="flex flex-col">
+            <span className="text-[10px] font-medium text-white/70 uppercase tracking-wider">Agenda una llamada</span>
+            <span className="text-lg font-semibold">Hablemos de tu proyecto</span>
+          </div>
+          <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
+            <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+          </div>
+        </a>
+
+        {/* Status */}
+        <div className="flex items-center justify-center gap-2 mt-5">
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+          </span>
+          <span className="text-xs text-gray-400">Disponible para nuevos proyectos</span>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// ============================================
+// MOBILE MENU PORTAL
+// ============================================
+function MobileMenuPortal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden'
+      document.body.style.position = 'fixed'
+      document.body.style.width = '100%'
+      document.body.style.top = `-${window.scrollY}px`
+    } else {
+      const scrollY = document.body.style.top
+      document.body.style.overflow = ''
+      document.body.style.position = ''
+      document.body.style.width = ''
+      document.body.style.top = ''
+      if (scrollY) {
+        window.scrollTo(0, parseInt(scrollY || '0') * -1)
+      }
+    }
+    return () => {
+      document.body.style.overflow = ''
+      document.body.style.position = ''
+      document.body.style.width = ''
+      document.body.style.top = ''
+    }
+  }, [isOpen])
+
+  if (!mounted) return null
+
+  return createPortal(
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div
+          key="mobile-menu"
+          className="fixed inset-0 z-[9999]"
+          initial={{ clipPath: 'circle(0% at calc(100% - 40px) 40px)' }}
+          animate={{ clipPath: 'circle(150% at calc(100% - 40px) 40px)' }}
+          exit={{ clipPath: 'circle(0% at calc(100% - 40px) 40px)' }}
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <MobileMenuContent onClose={onClose} />
+        </motion.div>
+      )}
+    </AnimatePresence>,
+    document.body
+  )
+}
+
+// ============================================
+// HEADER
 // ============================================
 function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
   const location = useLocation()
 
-  // Detect scroll
+  const closeMobileMenu = useCallback(() => {
+    setMobileMenuOpen(false)
+  }, [])
+
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50)
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  // Close menu on route change
   useEffect(() => {
     setMobileMenuOpen(false)
   }, [location.pathname])
 
-  // Lock body scroll when menu open
-  useEffect(() => {
-    document.body.style.overflow = mobileMenuOpen ? 'hidden' : ''
-    return () => { document.body.style.overflow = '' }
-  }, [mobileMenuOpen])
-
-  // Determine if we're on a project page for breadcrumb
   const isProjectPage = location.pathname.startsWith('/proyectos/') && location.pathname !== '/proyectos'
 
   return (
@@ -141,149 +320,83 @@ function Header() {
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
-        className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-full max-w-5xl px-4"
+        className="fixed top-4 left-1/2 -translate-x-1/2 z-[100] w-full max-w-5xl px-4"
       >
         <nav
           className={`relative flex items-center justify-between px-4 rounded border transition-all duration-500 ${
             isScrolled
-              ? 'h-14 border-cyan-900/30 bg-[#030304]/80 shadow-[0_0_20px_rgba(0,0,0,0.5)]'
-              : 'h-16 border-white/5 bg-[#030304]/60'
+              ? 'h-14 border-cyan-900/30 bg-[#030304]/90 shadow-[0_0_20px_rgba(0,0,0,0.5)]'
+              : 'h-16 border-white/5 bg-[#030304]/70'
           }`}
-          style={{
-            backdropFilter: 'blur(12px)',
-            WebkitBackdropFilter: 'blur(12px)',
-          }}
+          style={{ backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)' }}
         >
-          {/* Tech Decor */}
+          {/* Corner decorations */}
           <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-cyan-500/50" />
           <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-cyan-500/50" />
           <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-cyan-500/50" />
           <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-cyan-500/50" />
 
-          {/* Logo Section */}
+          {/* Logo */}
           <div className="flex items-center gap-4">
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Logo />
-            </motion.div>
-            
-            {/* System Status Indicator */}
+            <Logo />
             <div className="hidden md:flex items-center gap-2 px-3 py-1 border-l border-white/10">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
               <span className="text-[10px] font-mono text-emerald-500/80 tracking-widest">ONLINE</span>
             </div>
           </div>
 
-          {/* Breadcrumb for project pages */}
+          {/* Breadcrumb */}
           {isProjectPage && (
             <Link
               to="/proyectos"
               className="hidden md:flex items-center gap-2 px-3 py-1.5 text-xs font-mono text-cyan-400 hover:text-cyan-300 transition-colors border border-cyan-900/30 rounded bg-cyan-950/10"
             >
-              <span className="text-[10px]">{`<`}</span>
+              <span>{`<`}</span>
               <span>RETURN_TO_BASE</span>
             </Link>
           )}
 
-          {/* Main Nav - Hidden on project pages to save space */}
+          {/* Desktop Nav */}
           {!isProjectPage && (
             <ul className="hidden md:flex items-center gap-1">
               {content.nav.map((item) => (
                 <li key={item.href}>
-                  <NavLink
-                    href={item.href}
-                    label={item.label}
-                    isActive={location.pathname === item.href}
-                  />
+                  <NavLink href={item.href} label={item.label} isActive={location.pathname === item.href} />
                 </li>
               ))}
             </ul>
           )}
 
-          <div className="flex items-center gap-4">
-            {/* CTA */}
-            <div className="hidden md:block">
-              <a
-                href={content.site.calendarUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group relative inline-flex items-center gap-2 px-5 py-2 overflow-hidden font-mono text-xs font-bold text-black bg-cyan-400 hover:bg-cyan-300 transition-colors clip-path-slant"
-                style={{ clipPath: 'polygon(10% 0, 100% 0, 100% 100%, 0% 100%)' }}
-              >
-                <span>INITIATE_CONTACT</span>
-                <span className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500" />
-              </a>
-            </div>
+          {/* Right side */}
+          <div className="flex items-center gap-3">
+            {/* Desktop CTA */}
+            <a
+              href={content.site.calendarUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden md:inline-flex items-center gap-2 px-5 py-2 font-mono text-xs font-bold text-black bg-cyan-400 hover:bg-cyan-300 transition-colors"
+              style={{ clipPath: 'polygon(10% 0, 100% 0, 100% 100%, 0% 100%)' }}
+            >
+              INITIATE_CONTACT
+            </a>
 
-            {/* Mobile Menu Button - 44px tap target */}
-            <motion.button
-              whileTap={{ scale: 0.9 }}
-              className="md:hidden p-3 min-w-[44px] min-h-[44px] flex items-center justify-center text-cyan-400 hover:text-cyan-300 transition-colors"
+            {/* Mobile Menu Button */}
+            <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              aria-label="Toggle menu"
+              className="md:hidden flex items-center justify-center w-12 h-12 -mr-2 text-cyan-400 active:text-cyan-300"
+              aria-label={mobileMenuOpen ? 'Cerrar menú' : 'Abrir menú'}
+              aria-expanded={mobileMenuOpen}
             >
               <HamburgerIcon isOpen={mobileMenuOpen} />
-            </motion.button>
+            </button>
           </div>
 
-          {/* Progress bar when scrolled */}
           {isScrolled && <ScrollProgress />}
         </nav>
-
-        {/* Mobile Menu - Full opaque backdrop */}
-        <AnimatePresence>
-          {mobileMenuOpen && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.25 }}
-              className="md:hidden fixed inset-0 z-40 bg-[#050508] pt-24"
-            >
-              <nav className="flex flex-col items-center justify-center min-h-[60vh] gap-8 px-6">
-                <ul className="flex flex-col items-center gap-6">
-                  {content.nav.map((item, index) => (
-                    <motion.li
-                      key={item.href}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 10 }}
-                      transition={{ delay: index * 0.1, duration: 0.4 }}
-                    >
-                      <Link
-                        to={item.href}
-                        onClick={() => setMobileMenuOpen(false)}
-                        className={`text-4xl font-display font-bold tracking-tight transition-colors ${
-                          location.pathname === item.href
-                            ? 'text-white'
-                            : 'text-white/30 hover:text-white'
-                        }`}
-                      >
-                        {item.label}
-                      </Link>
-                    </motion.li>
-                  ))}
-                </ul>
-
-                <motion.a
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.4 }}
-                  href={content.site.calendarUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-3 px-8 py-4 rounded-full bg-violet-600 text-white font-semibold text-lg"
-                >
-                  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <rect x="3" y="4" width="18" height="18" rx="2" />
-                    <path d="M16 2v4M8 2v4M3 10h18" />
-                  </svg>
-                  Reservar llamada
-                </motion.a>
-              </nav>
-            </motion.div>
-          )}
-        </AnimatePresence>
       </motion.header>
+
+      {/* Mobile Menu */}
+      <MobileMenuPortal isOpen={mobileMenuOpen} onClose={closeMobileMenu} />
     </>
   )
 }
@@ -300,8 +413,6 @@ function ScrollToTop() {
     return () => window.removeEventListener('scroll', toggle)
   }, [])
 
-  const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' })
-
   return (
     <AnimatePresence>
       {isVisible && (
@@ -309,8 +420,8 @@ function ScrollToTop() {
           initial={{ opacity: 0, scale: 0.8, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.8, y: 20 }}
-          onClick={scrollToTop}
-          className="fixed bottom-6 right-6 z-50 w-12 h-12 rounded-full bg-white/5 backdrop-blur-md border border-white/10 text-white/70 hover:text-white hover:bg-white/10 transition-all duration-300 flex items-center justify-center"
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          className="fixed bottom-6 right-6 z-50 w-12 h-12 rounded-full bg-white/5 backdrop-blur-md border border-white/10 text-white/70 hover:text-white hover:bg-white/10 transition-all flex items-center justify-center"
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
           aria-label="Volver arriba"
@@ -325,19 +436,16 @@ function ScrollToTop() {
 }
 
 // ============================================
-// FOOTER - MINIMAL
+// FOOTER
 // ============================================
 function Footer() {
   return (
     <footer className="border-t border-white/10 bg-[#050508] relative overflow-hidden">
-      {/* Tech Grid Background */}
       <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:20px_20px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_0%,black,transparent)] pointer-events-none" />
 
       <div className="py-16 relative z-10">
         <Container>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-12 border-b border-white/5 pb-12 mb-12">
-            
-            {/* Column 1: Identity */}
             <div className="md:col-span-2 flex flex-col items-start gap-6">
               <Logo />
               <p className="font-mono text-xs text-white/40 max-w-xs leading-relaxed">
@@ -345,12 +453,9 @@ function Footer() {
                 {`// LOCATION: MADRID, ES`}<br/>
                 {`// VERSION: 2026.1.0`}
               </p>
-              <p className="text-sm text-white/60 max-w-sm">
-                {content.footer.tagline}
-              </p>
+              <p className="text-sm text-white/60 max-w-sm">{content.footer.tagline}</p>
             </div>
 
-            {/* Column 2: Quick Links */}
             <div className="flex flex-col gap-4">
               <h4 className="font-mono text-xs text-cyan-500 uppercase tracking-widest mb-2">Navigation</h4>
               {content.nav.map((item) => (
@@ -365,7 +470,6 @@ function Footer() {
               ))}
             </div>
 
-            {/* Column 3: Connect */}
             <div className="flex flex-col gap-4">
               <h4 className="font-mono text-xs text-cyan-500 uppercase tracking-widest mb-2">Connect_Node</h4>
               {content.footer.links.map((link) => (
@@ -383,7 +487,6 @@ function Footer() {
             </div>
           </div>
 
-          {/* Bottom Bar */}
           <div className="flex flex-col md:flex-row items-center justify-between gap-4 font-mono text-[10px] text-white/30 uppercase tracking-wider">
             <span>{content.footer.copyright}</span>
             <span className="flex items-center gap-2">
@@ -398,12 +501,11 @@ function Footer() {
 }
 
 // ============================================
-// MAIN LAYOUT WITH PAGE TRANSITIONS
+// LAYOUT
 // ============================================
 export function Layout() {
   const location = useLocation()
 
-  // Scroll to top on route change
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [location.pathname])
@@ -411,11 +513,9 @@ export function Layout() {
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
-      
       <main className="flex-1">
         <Outlet />
       </main>
-
       <Footer />
       <ScrollToTop />
     </div>
