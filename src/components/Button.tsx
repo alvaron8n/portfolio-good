@@ -47,6 +47,7 @@ const variantStyles: Record<ButtonVariant, string> = {
     shadow-[0_0_30px_rgba(249,115,22,0.3)]
     hover:shadow-[0_0_40px_rgba(249,115,22,0.5)]
     border border-white/10
+    background-size: 200% 200%
   `,
   glow: `
     bg-gradient-to-r from-emerald-500 to-emerald-400
@@ -56,17 +57,17 @@ const variantStyles: Record<ButtonVariant, string> = {
     border border-emerald-400/50
   `,
   brand: `
-    bg-gradient-to-r from-orange-600 to-amber-500
+    bg-gradient-to-r from-orange-600 via-orange-500 to-amber-400
     text-white font-semibold
     shadow-[0_4px_24px_rgba(249,115,22,0.35)]
     hover:shadow-[0_8px_32px_rgba(249,115,22,0.5)]
-    hover:from-orange-500 hover:to-amber-400
     border border-orange-400/30
+    hover:border-orange-400/50
   `,
 }
 
 const sizeStyles: Record<ButtonSize, string> = {
-  sm: 'px-5 py-2.5 text-sm gap-2 min-h-[44px]',
+  sm: 'px-5 py-2.5 text-sm gap-2 min-h-[44px]', /* Enhanced for touch targets */
   md: 'px-6 py-3 text-base gap-2 min-h-[48px]',
   lg: 'px-8 py-4 text-lg gap-3 min-h-[56px]',
 }
@@ -87,8 +88,8 @@ export function Button({
   const baseStyles = `
     relative inline-flex items-center justify-center
     font-display font-semibold rounded-xl
-    transition-all duration-300 ease-out
-    focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 focus-visible:ring-offset-[#050508]
+    transition-all duration-250 ease-out
+    focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0f]
     disabled:opacity-50 disabled:pointer-events-none
     overflow-hidden
   `
@@ -202,7 +203,7 @@ export function IconButton({
     ${sizeMap[size]}
     inline-flex items-center justify-center
     rounded-xl
-    transition-all duration-300
+    transition-all duration-250
     focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500
   `
 

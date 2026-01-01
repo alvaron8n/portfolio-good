@@ -5,294 +5,201 @@ import { Container } from '../components/Container'
 import { Button } from '../components/Button'
 import { content } from '../content/content'
 import { HeroParallax, ParallaxHeader } from '../components/ui/hero-parallax'
+import { ServicesBackdrop } from '../components/ui/ServicesBackdrop'
 
 // ============================================
-// UNIFIED SERVICE DATA - Single source of truth
+// BRAND COLORS
 // ============================================
-const servicesData = {
-  parallaxCards: [
-    // ROW 1: AUTOMATIZACIÓN (5 cards) - Orange tones
-    { title: 'Workflows n8n', category: 'Automatización', thumbnail: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80&auto=format', color: '#f97316' },
-    { title: 'Integraciones API', category: 'Automatización', thumbnail: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&q=80&auto=format', color: '#f97316' },
-    { title: 'Dashboards', category: 'Automatización', thumbnail: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80&auto=format', color: '#f97316' },
-    { title: 'Procesos 24/7', category: 'Automatización', thumbnail: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800&q=80&auto=format', color: '#f97316' },
-    { title: 'Zero Errores', category: 'Automatización', thumbnail: 'https://images.unsplash.com/photo-1518186285589-2f7649de83e0?w=800&q=80&auto=format', color: '#f97316' },
-    // ROW 2: DESARROLLO IA (5 cards) - Amber tones
-    { title: 'IA Copilot', category: 'Desarrollo IA', thumbnail: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&q=80&auto=format', color: '#fb923c' },
-    { title: 'CRM a Medida', category: 'Desarrollo IA', thumbnail: 'https://images.unsplash.com/photo-1551434678-e076c223a692?w=800&q=80&auto=format', color: '#fb923c' },
-    { title: 'React + TypeScript', category: 'Desarrollo IA', thumbnail: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&q=80&auto=format', color: '#fb923c' },
-    { title: 'Supabase Backend', category: 'Desarrollo IA', thumbnail: 'https://images.unsplash.com/photo-1544383835-bda2bc66a55d?w=800&q=80&auto=format', color: '#fb923c' },
-    { title: 'Software en Semanas', category: 'Desarrollo IA', thumbnail: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&q=80&auto=format', color: '#fb923c' },
-    // ROW 3: WEB (5 cards) - Deep orange tones
-    { title: 'Webs Premium', category: 'Web', thumbnail: 'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=800&q=80&auto=format', color: '#ea580c' },
-    { title: '+60% Conversiones', category: 'Web', thumbnail: 'https://images.unsplash.com/photo-1553484771-371a605b060b?w=800&q=80&auto=format', color: '#ea580c' },
-    { title: 'SEO Técnico', category: 'Web', thumbnail: 'https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=800&q=80&auto=format', color: '#ea580c' },
-    { title: 'UI/UX Design', category: 'Web', thumbnail: 'https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?w=800&q=80&auto=format', color: '#ea580c' },
-    { title: 'Core Web Vitals', category: 'Web', thumbnail: 'https://images.unsplash.com/photo-1613909207039-6b173b755cc1?w=800&q=80&auto=format', color: '#ea580c' },
-  ],
-  // Unified theme - all orange
-  theme: {
-    primary: '#f97316',
-    secondary: '#fb923c', 
-    accent: '#ea580c',
-    light: '#fed7aa',
-  }
+const brandTheme = {
+  primary: '#f97316',      // Orange 500
+  primaryLight: '#fb923c', // Orange 400
+  primaryDark: '#ea580c',  // Orange 600
+  accent: '#10b981',       // Emerald 500
 }
 
 // ============================================
-// HOW I WORK SECTION
+// SERVICE CARDS DATA - With Unsplash Images (BRAND COLORS)
 // ============================================
-const workProcess = [
-  { step: '01', title: 'Diagnóstico', desc: 'Analizamos tu situación actual y detectamos cuellos de botella.' },
-  { step: '02', title: 'Diseño', desc: 'Creamos un plan técnico adaptado a tus necesidades y presupuesto.' },
-  { step: '03', title: 'Implementación', desc: 'Desarrollamos, probamos e iteramos hasta tener un sistema robusto.' },
+const serviceCards = [
+  // ROW 1: AUTOMATIZACIÓN (5 cards)
+  {
+    title: 'Workflows n8n',
+    category: 'Automatización',
+    thumbnail: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80&auto=format',
+    color: brandTheme.primary,
+  },
+  {
+    title: 'Integraciones API',
+    category: 'Automatización',
+    thumbnail: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&q=80&auto=format',
+    color: brandTheme.primary,
+  },
+  {
+    title: 'Dashboards',
+    category: 'Automatización',
+    thumbnail: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80&auto=format',
+    color: brandTheme.primary,
+  },
+  {
+    title: 'Procesos 24/7',
+    category: 'Automatización',
+    thumbnail: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800&q=80&auto=format',
+    color: brandTheme.primary,
+  },
+  {
+    title: 'Zero Errores',
+    category: 'Automatización',
+    thumbnail: 'https://images.unsplash.com/photo-1518186285589-2f7649de83e0?w=800&q=80&auto=format',
+    color: brandTheme.primary,
+  },
+
+  // ROW 2: DESARROLLO IA (5 cards)
+  {
+    title: 'IA Copilot',
+    category: 'Desarrollo IA',
+    thumbnail: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&q=80&auto=format',
+    color: brandTheme.primaryLight,
+  },
+  {
+    title: 'CRM a Medida',
+    category: 'Desarrollo IA',
+    thumbnail: 'https://images.unsplash.com/photo-1551434678-e076c223a692?w=800&q=80&auto=format',
+    color: brandTheme.primaryLight,
+  },
+  {
+    title: 'React + TypeScript',
+    category: 'Desarrollo IA',
+    thumbnail: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&q=80&auto=format',
+    color: brandTheme.primaryLight,
+  },
+  {
+    title: 'Supabase Backend',
+    category: 'Desarrollo IA',
+    thumbnail: 'https://images.unsplash.com/photo-1544383835-bda2bc66a55d?w=800&q=80&auto=format',
+    color: brandTheme.primaryLight,
+  },
+  {
+    title: 'Software en Semanas',
+    category: 'Desarrollo IA',
+    thumbnail: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&q=80&auto=format',
+    color: brandTheme.primaryLight,
+  },
+
+  // ROW 3: WEB + BRANDING (5 cards)
+  {
+    title: 'Webs Premium',
+    category: 'Web',
+    thumbnail: 'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=800&q=80&auto=format',
+    color: brandTheme.accent,
+  },
+  {
+    title: '+60% Conversiones',
+    category: 'Web',
+    thumbnail: 'https://images.unsplash.com/photo-1553484771-371a605b060b?w=800&q=80&auto=format',
+    color: brandTheme.accent,
+  },
+  {
+    title: 'Identidad Visual',
+    category: 'Branding',
+    thumbnail: 'https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=800&q=80&auto=format',
+    color: brandTheme.primaryDark,
+  },
+  {
+    title: 'UI/UX Design',
+    category: 'Web',
+    thumbnail: 'https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?w=800&q=80&auto=format',
+    color: brandTheme.accent,
+  },
+  {
+    title: 'Brand Guidelines',
+    category: 'Branding',
+    thumbnail: 'https://images.unsplash.com/photo-1613909207039-6b173b755cc1?w=800&q=80&auto=format',
+    color: brandTheme.primaryDark,
+  },
 ]
 
-function HowIWorkSection() {
-  return (
-    <Section className="relative bg-[#080810] py-16 lg:py-20">
-      <Container>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-12"
-        >
-          <span className="inline-block text-xs font-mono uppercase tracking-[0.2em] text-orange-400/80 mb-3">
-            Proceso
-          </span>
-          <h2 className="text-2xl md:text-3xl font-bold text-white">
-            Cómo trabajo
-          </h2>
-        </motion.div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-          {workProcess.map((item, index) => (
-            <motion.div
-              key={item.step}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.15 }}
-              className="relative p-6 rounded-2xl bg-white/[0.02] border border-white/[0.06] hover:border-orange-500/20 transition-colors duration-300"
-            >
-              <span 
-                className="text-4xl font-bold mb-4 block"
-                style={{ color: `${servicesData.theme.primary}30` }}
-              >
-                {item.step}
-              </span>
-              <h3 className="text-lg font-semibold text-white mb-2">{item.title}</h3>
-              <p className="text-sm text-white/50 leading-relaxed">{item.desc}</p>
-            </motion.div>
-          ))}
-        </div>
-      </Container>
-    </Section>
-  )
-}
-
 // ============================================
-// FAQ SECTION
+// ACCORDION ITEM (MOBILE)
 // ============================================
-const faqItems = [
-  { q: '¿Cuánto tiempo lleva un proyecto típico?', a: 'Depende de la complejidad. Una automatización simple puede estar lista en 1-2 semanas, mientras que un software a medida suele llevar 4-8 semanas.' },
-  { q: '¿Qué pasa si algo falla después de la entrega?', a: 'Ofrezco soporte post-lanzamiento y todos los proyectos incluyen documentación detallada. Además, el código siempre es tuyo.' },
-  { q: '¿Trabajas con empresas de cualquier tamaño?', a: 'Principalmente con PYMEs y startups que buscan escalar sin aumentar costes operativos. Si tu equipo tiene más de 50 personas, hablemos.' },
-  { q: '¿Necesito conocimientos técnicos?', a: 'No. Mi trabajo es traducir tus necesidades de negocio a soluciones técnicas que funcionen, sin jerga innecesaria.' },
-]
-
-function FAQItem({ item, isOpen, onToggle, index }: { 
-  item: typeof faqItems[0]
+function MobileAccordionCard({
+  service,
+  index,
+  isOpen,
+  onToggle,
+}: {
+  service: (typeof content.services.items)[number]
+  index: number
   isOpen: boolean
   onToggle: () => void
-  index: number 
 }) {
   return (
-    <motion.div
+    <motion.article
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.4, delay: index * 0.1 }}
-      className="border-b border-white/[0.06] last:border-b-0"
+      viewport={{ once: true, margin: '-30px' }}
+      transition={{ duration: 0.4, delay: index * 0.08 }}
+      className="svc-accordion-card"
     >
+      {/* Header - Always visible */}
       <button
         onClick={onToggle}
+        className="svc-accordion-header"
         aria-expanded={isOpen}
-        className="w-full py-5 flex items-center justify-between text-left group min-h-[56px]"
       >
-        <span className="text-base font-medium text-white group-hover:text-orange-300 transition-colors pr-4">
-          {item.q}
-        </span>
+        <div className="svc-accordion-header__left">
+          <span className="svc-accordion-number">{service.number}</span>
+          <div>
+            <h3 className="svc-accordion-title">{service.title}</h3>
+            <p className="svc-accordion-tagline">{service.tagline}</p>
+          </div>
+        </div>
         <motion.span
-          animate={{ rotate: isOpen ? 45 : 0 }}
-          transition={{ duration: 0.2 }}
-          className="text-orange-400 text-xl flex-shrink-0"
+          className="svc-accordion-chevron"
+          animate={{ rotate: isOpen ? 180 : 0 }}
+          transition={{ duration: 0.25 }}
         >
-          +
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
         </motion.span>
       </button>
+
+      {/* Content - Collapsible */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="overflow-hidden"
+            transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
+            className="svc-accordion-content"
           >
-            <p className="pb-5 text-sm text-white/50 leading-relaxed pr-8">
-              {item.a}
-            </p>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.div>
-  )
-}
-
-function FAQSection() {
-  const [openIndex, setOpenIndex] = useState<number | null>(0)
-
-  return (
-    <Section className="relative bg-[#080810] py-16 lg:py-20">
-      <Container>
-        <div className="max-w-2xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="text-center mb-10"
-          >
-            <span className="inline-block text-xs font-mono uppercase tracking-[0.2em] text-orange-400/80 mb-3">
-              FAQ
-            </span>
-            <h2 className="text-2xl md:text-3xl font-bold text-white">
-              Preguntas frecuentes
-            </h2>
-          </motion.div>
-
-          <div className="bg-white/[0.02] rounded-2xl border border-white/[0.06] p-6">
-            {faqItems.map((item, index) => (
-              <FAQItem
-                key={index}
-                item={item}
-                index={index}
-                isOpen={openIndex === index}
-                onToggle={() => setOpenIndex(openIndex === index ? null : index)}
-              />
-            ))}
-          </div>
-        </div>
-      </Container>
-    </Section>
-  )
-}
-
-// ============================================
-// MOBILE SERVICE CARD (with Accordion)
-// ============================================
-function MobileServiceCard({
-  service,
-  index,
-  isExpanded,
-  onToggle,
-}: {
-  service: (typeof content.services.items)[number]
-  index: number
-  isExpanded: boolean
-  onToggle: () => void
-}) {
-  const { theme } = servicesData
-
-  return (
-    <motion.article
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-50px' }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
-      className="group relative rounded-2xl overflow-hidden border border-white/[0.06] bg-[#0c0c18]"
-    >
-      {/* Header - Always visible */}
-      <button
-        onClick={onToggle}
-        aria-expanded={isExpanded}
-        className="w-full p-5 flex items-start justify-between text-left min-h-[80px]"
-      >
-        <div className="flex-1 pr-4">
-          <div className="flex items-center gap-3 mb-1">
-            <span 
-              className="text-xs font-mono px-2 py-0.5 rounded"
-              style={{ background: `${theme.primary}15`, color: theme.secondary }}
-            >
-              {service.number}
-            </span>
-            <h3 className="text-lg font-bold text-white">{service.title}</h3>
-          </div>
-          <p className="text-sm" style={{ color: theme.secondary }}>
-            {service.tagline}
-          </p>
-        </div>
-        <motion.div
-          animate={{ rotate: isExpanded ? 180 : 0 }}
-          transition={{ duration: 0.3 }}
-          className="mt-1 flex-shrink-0"
-          style={{ color: theme.primary }}
-        >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-          </svg>
-        </motion.div>
-      </button>
-
-      {/* Expandable Content */}
-      <AnimatePresence>
-        {isExpanded && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: 'easeInOut' }}
-            className="overflow-hidden"
-          >
-            <div className="px-5 pb-5 pt-0">
-              <p className="text-sm text-white/45 leading-relaxed mb-4">
-                {service.description}
-              </p>
-
-              {/* Benefits - max 3 */}
-              <ul className="space-y-2 mb-4">
-                {service.benefits.slice(0, 3).map((benefit, i) => (
-                  <li key={i} className="flex items-start gap-2 text-sm text-white/60">
-                    <span style={{ color: theme.secondary }}>✓</span>
+            <div className="svc-accordion-content__inner">
+              <p className="svc-accordion-desc">{service.description}</p>
+              
+              {/* Benefits */}
+              <ul className="svc-accordion-benefits">
+                {service.benefits.map((benefit, i) => (
+                  <li key={i} className="svc-accordion-benefit">
+                    <svg className="svc-benefit-check" viewBox="0 0 20 20" fill="none">
+                      <path d="M6 10l3 3 5-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
                     <span>{typeof benefit === 'string' ? benefit : benefit.text}</span>
                   </li>
                 ))}
               </ul>
 
               {/* Tags */}
-              <div className="flex flex-wrap gap-2 mb-4">
-                {service.tags.slice(0, 4).map((tag) => (
-                  <span
-                    key={tag}
-                    className="px-2.5 py-1 text-[11px] font-medium rounded-lg"
-                    style={{
-                      background: `${theme.primary}10`,
-                      color: theme.secondary,
-                      border: `1px solid ${theme.primary}20`,
-                    }}
-                  >
-                    {tag}
-                  </span>
+              <div className="svc-accordion-tags">
+                {service.tags.map((tag) => (
+                  <span key={tag} className="svc-tag">{tag}</span>
                 ))}
               </div>
 
               {/* CTA */}
               <Button href={service.cta.href} variant="secondary" size="sm">
                 {service.cta.label}
-                <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
               </Button>
@@ -300,12 +207,133 @@ function MobileServiceCard({
           </motion.div>
         )}
       </AnimatePresence>
+
+      <style>{`
+        .svc-accordion-card {
+          background: rgba(16, 16, 24, 0.6);
+          border: 1px solid rgba(255, 255, 255, 0.06);
+          border-radius: 16px;
+          overflow: hidden;
+          backdrop-filter: blur(8px);
+        }
+        
+        .svc-accordion-header {
+          width: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 16px 18px;
+          background: transparent;
+          border: none;
+          cursor: pointer;
+          text-align: left;
+          min-height: 72px;
+        }
+        
+        .svc-accordion-header__left {
+          display: flex;
+          align-items: center;
+          gap: 14px;
+        }
+        
+        .svc-accordion-number {
+          width: 36px;
+          height: 36px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 10px;
+          font-size: 13px;
+          font-weight: 700;
+          background: rgba(249, 115, 22, 0.12);
+          color: ${brandTheme.primaryLight};
+          border: 1px solid rgba(249, 115, 22, 0.25);
+          flex-shrink: 0;
+        }
+        
+        .svc-accordion-title {
+          font-size: 16px;
+          font-weight: 600;
+          color: white;
+          margin: 0 0 2px 0;
+          font-family: var(--font-display);
+        }
+        
+        .svc-accordion-tagline {
+          font-size: 13px;
+          color: ${brandTheme.primaryLight};
+          margin: 0;
+          line-height: 1.3;
+        }
+        
+        .svc-accordion-chevron {
+          color: rgba(255, 255, 255, 0.4);
+          flex-shrink: 0;
+        }
+        
+        .svc-accordion-content {
+          overflow: hidden;
+        }
+        
+        .svc-accordion-content__inner {
+          padding: 0 18px 20px 68px;
+        }
+        
+        .svc-accordion-desc {
+          font-size: 14px;
+          color: rgba(255, 255, 255, 0.55);
+          line-height: 1.6;
+          margin: 0 0 16px 0;
+        }
+        
+        .svc-accordion-benefits {
+          list-style: none;
+          padding: 0;
+          margin: 0 0 16px 0;
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+        }
+        
+        .svc-accordion-benefit {
+          display: flex;
+          align-items: flex-start;
+          gap: 8px;
+          font-size: 13px;
+          color: rgba(255, 255, 255, 0.65);
+        }
+        
+        .svc-benefit-check {
+          width: 16px;
+          height: 16px;
+          color: ${brandTheme.primary};
+          flex-shrink: 0;
+          margin-top: 1px;
+        }
+        
+        .svc-accordion-tags {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 6px;
+          margin-bottom: 16px;
+        }
+        
+        .svc-tag {
+          padding: 4px 10px;
+          font-size: 11px;
+          font-weight: 500;
+          border-radius: 6px;
+          background: rgba(249, 115, 22, 0.1);
+          color: ${brandTheme.primaryLight};
+          border: 1px solid rgba(249, 115, 22, 0.2);
+        }
+      `}</style>
     </motion.article>
   )
 }
 
 // ============================================
-// DESKTOP SERVICE CARD (Premium)
+// DESKTOP SERVICE CARD (PREMIUM)
 // ============================================
 function DesktopServiceCard({
   service,
@@ -314,238 +342,257 @@ function DesktopServiceCard({
   service: (typeof content.services.items)[number]
   index: number
 }) {
-  const { theme } = servicesData
-
   return (
     <motion.article
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-50px' }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
-      className="group relative rounded-2xl overflow-hidden border border-white/[0.06] bg-[#0c0c18]/80 backdrop-blur-sm p-7 hover:border-orange-500/20 transition-all duration-300"
+      whileHover={{ y: -4 }}
+      className="svc-desktop-card group"
     >
       {/* Number badge */}
-      <div
-        className="absolute top-6 right-6 w-11 h-11 rounded-xl flex items-center justify-center text-base font-bold"
-        style={{
-          background: `${theme.primary}12`,
-          border: `1px solid ${theme.primary}25`,
-          color: theme.secondary,
-        }}
-      >
-        {service.number}
-      </div>
+      <div className="svc-desktop-number">{service.number}</div>
 
       {/* Content */}
-      <div className="pr-14">
-        <h3 className="text-xl font-bold text-white mb-2">{service.title}</h3>
-        <p className="text-sm font-medium mb-4" style={{ color: theme.secondary }}>
-          {service.tagline}
-        </p>
-        <p className="text-white/50 leading-relaxed mb-5 text-[15px]">
-          {service.description}
-        </p>
+      <div className="svc-desktop-content">
+        <h3 className="svc-desktop-title">{service.title}</h3>
+        <p className="svc-desktop-tagline">{service.tagline}</p>
+        <p className="svc-desktop-desc">{service.description}</p>
 
-        {/* Benefits - max 3 */}
-        <ul className="space-y-2 mb-5">
-          {service.benefits.slice(0, 3).map((benefit, i) => (
-            <li key={i} className="flex items-start gap-2 text-sm text-white/60">
-              <span style={{ color: theme.secondary }}>✓</span>
+        {/* Benefits */}
+        <ul className="svc-desktop-benefits">
+          {service.benefits.map((benefit, i) => (
+            <li key={i} className="svc-desktop-benefit">
+              <svg className="svc-desktop-check" viewBox="0 0 20 20" fill="none">
+                <path d="M6 10l3 3 5-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
               <span>{typeof benefit === 'string' ? benefit : benefit.text}</span>
             </li>
           ))}
         </ul>
 
         {/* Tags */}
-        <div className="flex flex-wrap gap-2 mb-5">
+        <div className="svc-desktop-tags">
           {service.tags.map((tag) => (
-            <span
-              key={tag}
-              className="px-3 py-1.5 text-xs font-medium rounded-lg"
-              style={{
-                background: `${theme.primary}08`,
-                color: theme.light,
-                border: `1px solid ${theme.primary}15`,
-              }}
-            >
-              {tag}
-            </span>
+            <span key={tag} className="svc-desktop-tag">{tag}</span>
           ))}
         </div>
 
-        {/* CTA - Always visible */}
+        {/* CTA */}
         <Button href={service.cta.href} variant="secondary" size="sm">
           {service.cta.label}
-          <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
           </svg>
         </Button>
       </div>
 
       {/* Hover glow */}
-      <div
-        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-2xl"
-        style={{
-          background: `radial-gradient(ellipse at 30% 0%, ${theme.primary}08 0%, transparent 50%)`,
-        }}
-      />
+      <div className="svc-desktop-glow" />
+
+      <style>{`
+        .svc-desktop-card {
+          position: relative;
+          padding: 32px;
+          background: rgba(16, 16, 24, 0.5);
+          border: 1px solid rgba(255, 255, 255, 0.06);
+          border-radius: 20px;
+          overflow: hidden;
+          backdrop-filter: blur(12px);
+          transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+        
+        .svc-desktop-card:hover {
+          border-color: rgba(249, 115, 22, 0.25);
+          box-shadow: 0 8px 40px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(249, 115, 22, 0.1);
+        }
+        
+        .svc-desktop-number {
+          position: absolute;
+          top: 24px;
+          right: 24px;
+          width: 48px;
+          height: 48px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 14px;
+          font-size: 16px;
+          font-weight: 700;
+          background: rgba(249, 115, 22, 0.1);
+          color: ${brandTheme.primaryLight};
+          border: 1px solid rgba(249, 115, 22, 0.25);
+        }
+        
+        .svc-desktop-content {
+          padding-right: 64px;
+        }
+        
+        .svc-desktop-title {
+          font-size: 24px;
+          font-weight: 700;
+          color: white;
+          margin: 0 0 8px 0;
+          font-family: var(--font-display);
+        }
+        
+        .svc-desktop-tagline {
+          font-size: 15px;
+          font-weight: 500;
+          color: ${brandTheme.primaryLight};
+          margin: 0 0 16px 0;
+        }
+        
+        .svc-desktop-desc {
+          font-size: 15px;
+          color: rgba(255, 255, 255, 0.5);
+          line-height: 1.7;
+          margin: 0 0 20px 0;
+        }
+        
+        .svc-desktop-benefits {
+          list-style: none;
+          padding: 0;
+          margin: 0 0 20px 0;
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+        }
+        
+        .svc-desktop-benefit {
+          display: flex;
+          align-items: flex-start;
+          gap: 10px;
+          font-size: 14px;
+          color: rgba(255, 255, 255, 0.65);
+        }
+        
+        .svc-desktop-check {
+          width: 18px;
+          height: 18px;
+          color: ${brandTheme.primary};
+          flex-shrink: 0;
+          margin-top: 1px;
+        }
+        
+        .svc-desktop-tags {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 8px;
+          margin-bottom: 24px;
+        }
+        
+        .svc-desktop-tag {
+          padding: 6px 14px;
+          font-size: 12px;
+          font-weight: 500;
+          border-radius: 8px;
+          background: rgba(249, 115, 22, 0.08);
+          color: ${brandTheme.primaryLight};
+          border: 1px solid rgba(249, 115, 22, 0.18);
+          transition: all 0.2s;
+        }
+        
+        .svc-desktop-card:hover .svc-desktop-tag {
+          background: rgba(249, 115, 22, 0.12);
+          border-color: rgba(249, 115, 22, 0.25);
+        }
+        
+        .svc-desktop-glow {
+          position: absolute;
+          inset: 0;
+          background: radial-gradient(ellipse at 30% 0%, rgba(249, 115, 22, 0.06) 0%, transparent 50%);
+          opacity: 0;
+          transition: opacity 0.4s;
+          pointer-events: none;
+        }
+        
+        .svc-desktop-card:hover .svc-desktop-glow {
+          opacity: 1;
+        }
+      `}</style>
     </motion.article>
   )
 }
 
 // ============================================
-// CTA SECTION (Premium Card)
-// ============================================
-function CTASection() {
-  const { theme } = servicesData
-  
-  const trustPoints = [
-    { icon: '⚡', text: 'Respuesta en menos de 24h' },
-    { icon: '🤝', text: 'Sin compromiso ni letra pequeña' },
-    { icon: '📋', text: 'Plan accionable tras la llamada' },
-  ]
-
-  return (
-    <Section className="relative overflow-hidden bg-[#080810] py-16 lg:py-20">
-      <Container>
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="relative max-w-2xl mx-auto"
-        >
-          {/* Glass card */}
-          <div 
-            className="relative rounded-3xl p-8 md:p-10 text-center overflow-hidden"
-            style={{
-              background: 'rgba(16, 16, 24, 0.6)',
-              backdropFilter: 'blur(20px)',
-              border: '1px solid rgba(255, 255, 255, 0.08)',
-              boxShadow: `0 0 60px ${theme.primary}10, inset 0 1px 0 rgba(255,255,255,0.05)`,
-            }}
-          >
-            {/* Background glow */}
-            <div
-              className="absolute inset-0 -z-10 opacity-30"
-              style={{
-                background: `radial-gradient(ellipse at 50% 0%, ${theme.primary}20 0%, transparent 60%)`,
-              }}
-            />
-
-            <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3">
-              {content.services.cta.title}
-            </h2>
-            <p className="text-white/50 mb-8 max-w-md mx-auto">
-              {content.services.cta.subtitle}
-            </p>
-
-            {/* Trust points */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 mb-8">
-              {trustPoints.map((point, i) => (
-                <div key={i} className="flex items-center gap-2 text-sm text-white/60">
-                  <span className="text-base">{point.icon}</span>
-                  <span>{point.text}</span>
-                </div>
-              ))}
-            </div>
-
-            {/* CTA Button */}
-            <Button href={content.services.cta.button.href} variant="brand" size="lg">
-              {content.services.cta.button.label}
-              <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
-            </Button>
-          </div>
-        </motion.div>
-      </Container>
-    </Section>
-  )
-}
-
-// ============================================
-// SERVICES PAGE
+// SERVICES PAGE (MAIN)
 // ============================================
 export function ServicesPage() {
-  const [expandedMobileCard, setExpandedMobileCard] = useState<number | null>(0)
+  const [openAccordion, setOpenAccordion] = useState<number>(0)
 
   return (
     <>
-      {/* Desktop: Hero Parallax (reduced height) */}
-      <div className="hidden lg:block">
+      {/* Premium animated backdrop */}
+      <ServicesBackdrop />
+
+      {/* Desktop: Hero Parallax */}
+      <div className="hidden lg:block relative z-10">
         <HeroParallax
-          services={servicesData.parallaxCards}
+          services={serviceCards}
           header={
             <ParallaxHeader
-              title={content.services.hero.title}
-              subtitle={content.services.hero.subtitle}
+              title="Soluciones que escalan tu negocio"
+              subtitle="Automatización, desarrollo a medida e IA para eliminar el caos operativo y generar resultados medibles."
             />
           }
         />
       </div>
 
       {/* Mobile: Simple Header + Accordion Cards */}
-      <Section className="lg:hidden relative overflow-hidden bg-[#080810] pt-24 pb-10">
+      <Section className="lg:hidden relative overflow-hidden pt-24 pb-8" style={{ background: 'transparent' }}>
         <Container>
-          {/* Header - no eyebrow duplication */}
+          {/* Header - NO duplication */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
             className="mb-8"
           >
-            <h1 className="text-3xl sm:text-4xl font-bold text-white mb-3">
-              {content.services.hero.title}
+            <h1 
+              className="text-2xl sm:text-3xl font-bold text-white mb-3"
+              style={{ fontFamily: 'var(--font-display)' }}
+            >
+              Soluciones que escalan tu negocio
             </h1>
-            <p className="text-base text-white/50 max-w-lg">
-              {content.services.hero.subtitle}
+            <p className="text-sm sm:text-base text-white/50 max-w-md leading-relaxed">
+              Automatización, desarrollo a medida e IA para eliminar el caos operativo.
             </p>
           </motion.div>
 
-          {/* Mobile Service Cards - Accordion */}
+          {/* Mobile Accordion Cards */}
           <div className="space-y-3">
             {content.services.items.map((service, index) => (
-              <MobileServiceCard 
-                key={service.id} 
-                service={service} 
+              <MobileAccordionCard
+                key={service.id}
+                service={service}
                 index={index}
-                isExpanded={expandedMobileCard === index}
-                onToggle={() => setExpandedMobileCard(expandedMobileCard === index ? null : index)}
+                isOpen={openAccordion === index}
+                onToggle={() => setOpenAccordion(openAccordion === index ? -1 : index)}
               />
             ))}
           </div>
         </Container>
-
-        {/* Background effect */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden -z-10">
-          <div
-            className="absolute -top-[20%] -left-[20%] w-[300px] h-[300px] rounded-full"
-            style={{
-              background: `radial-gradient(circle, ${servicesData.theme.primary}12 0%, transparent 60%)`,
-              filter: 'blur(60px)',
-            }}
-          />
-        </div>
       </Section>
 
       {/* Service Details Section (Desktop - after parallax) */}
-      <Section className="hidden lg:block relative bg-[#080810] py-16">
+      <Section className="hidden lg:block relative py-20" style={{ background: 'transparent' }}>
         <Container>
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-12"
+            transition={{ duration: 0.5 }}
+            className="text-center mb-14"
           >
-            <span className="inline-block text-xs font-mono uppercase tracking-[0.2em] text-orange-400/80 mb-3">
-              En detalle
-            </span>
-            <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">
-              Servicios principales
+            <h2 
+              className="text-3xl md:text-4xl font-bold text-white mb-4"
+              style={{ fontFamily: 'var(--font-display)' }}
+            >
+              Detalle de servicios
             </h2>
-            <p className="text-white/50 max-w-xl mx-auto">
+            <p className="text-white/45 max-w-xl mx-auto text-base">
               Cada servicio está diseñado para devolverte tiempo y generar resultados medibles.
             </p>
           </motion.div>
@@ -559,14 +606,63 @@ export function ServicesPage() {
         </Container>
       </Section>
 
-      {/* How I Work Section */}
-      <HowIWorkSection />
+      {/* CTA Section - BRAND ORANGE */}
+      <Section className="relative overflow-hidden py-16 lg:py-20" style={{ background: 'transparent' }}>
+        <Container>
+          <motion.div
+            className="relative text-center max-w-xl mx-auto"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            {/* Glass card */}
+            <div className="svc-cta-card">
+              <h2 
+                className="text-xl sm:text-2xl lg:text-3xl font-bold text-white mb-3"
+                style={{ fontFamily: 'var(--font-display)' }}
+              >
+                ¿Hablamos de tu proyecto?
+              </h2>
+              <p className="text-white/50 mb-6 text-sm sm:text-base max-w-md mx-auto">
+                Cuéntame qué necesitas y te propongo soluciones sin compromiso.
+              </p>
+              <Button href={content.services.cta.button.href} variant="brand" size="lg">
+                Agendar llamada
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </Button>
+            </div>
+          </motion.div>
+        </Container>
 
-      {/* FAQ Section */}
-      <FAQSection />
-
-      {/* CTA Section (Premium) */}
-      <CTASection />
+        <style>{`
+          .svc-cta-card {
+            background: rgba(16, 16, 24, 0.6);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 40px 32px;
+            position: relative;
+            overflow: hidden;
+          }
+          
+          .svc-cta-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at 50% 0%, rgba(249, 115, 22, 0.1) 0%, transparent 60%);
+            pointer-events: none;
+          }
+          
+          @media (min-width: 640px) {
+            .svc-cta-card {
+              padding: 56px 48px;
+            }
+          }
+        `}</style>
+      </Section>
     </>
   )
 }
