@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import type { ReactNode } from 'react'
 
-type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'gradient' | 'glow'
+type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'gradient' | 'glow' | 'brand'
 type ButtonSize = 'sm' | 'md' | 'lg'
 
 interface ButtonProps {
@@ -21,12 +21,12 @@ interface ButtonProps {
 
 const variantStyles: Record<ButtonVariant, string> = {
   primary: `
-    bg-gradient-to-r from-violet-600 to-violet-500 
+    bg-gradient-to-r from-orange-600 to-orange-500 
     text-white 
-    shadow-[0_0_20px_rgba(139,92,246,0.3)]
-    hover:shadow-[0_0_30px_rgba(139,92,246,0.4)]
-    hover:from-violet-500 hover:to-violet-400
-    border border-violet-500/50
+    shadow-[0_0_20px_rgba(249,115,22,0.3)]
+    hover:shadow-[0_0_30px_rgba(249,115,22,0.4)]
+    hover:from-orange-500 hover:to-orange-400
+    border border-orange-500/50
   `,
   secondary: `
     bg-white/[0.05] 
@@ -42,13 +42,11 @@ const variantStyles: Record<ButtonVariant, string> = {
     hover:bg-white/[0.05]
   `,
   gradient: `
-    bg-gradient-to-r from-violet-600 via-purple-500 to-cyan-500
+    bg-gradient-to-r from-orange-600 via-orange-500 to-amber-500
     text-white
-    shadow-[0_0_30px_rgba(139,92,246,0.3)]
-    hover:shadow-[0_0_40px_rgba(139,92,246,0.5)]
+    shadow-[0_0_30px_rgba(249,115,22,0.3)]
+    hover:shadow-[0_0_40px_rgba(249,115,22,0.5)]
     border border-white/10
-    background-size: 200% 200%
-    animate-gradient
   `,
   glow: `
     bg-gradient-to-r from-emerald-500 to-emerald-400
@@ -57,10 +55,18 @@ const variantStyles: Record<ButtonVariant, string> = {
     hover:shadow-[0_8px_30px_rgba(16,185,129,0.5)]
     border border-emerald-400/50
   `,
+  brand: `
+    bg-gradient-to-r from-orange-600 to-amber-500
+    text-white font-semibold
+    shadow-[0_4px_24px_rgba(249,115,22,0.35)]
+    hover:shadow-[0_8px_32px_rgba(249,115,22,0.5)]
+    hover:from-orange-500 hover:to-amber-400
+    border border-orange-400/30
+  `,
 }
 
 const sizeStyles: Record<ButtonSize, string> = {
-  sm: 'px-5 py-2.5 text-sm gap-2 min-h-[44px]', /* Enhanced for touch targets */
+  sm: 'px-5 py-2.5 text-sm gap-2 min-h-[44px]',
   md: 'px-6 py-3 text-base gap-2 min-h-[48px]',
   lg: 'px-8 py-4 text-lg gap-3 min-h-[56px]',
 }
@@ -82,7 +88,7 @@ export function Button({
     relative inline-flex items-center justify-center
     font-display font-semibold rounded-xl
     transition-all duration-300 ease-out
-    focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 focus-visible:ring-offset-[#050508]
+    focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 focus-visible:ring-offset-[#050508]
     disabled:opacity-50 disabled:pointer-events-none
     overflow-hidden
   `
@@ -197,15 +203,16 @@ export function IconButton({
     inline-flex items-center justify-center
     rounded-xl
     transition-all duration-300
-    focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-500
+    focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500
   `
 
   const variantMap: Record<ButtonVariant, string> = {
-    primary: 'bg-violet-600 text-white hover:bg-violet-500 shadow-lg shadow-violet-500/20',
+    primary: 'bg-orange-600 text-white hover:bg-orange-500 shadow-lg shadow-orange-500/20',
     secondary: 'bg-white/5 text-white border border-white/10 hover:bg-white/10',
     ghost: 'text-white/60 hover:text-white hover:bg-white/5',
-    gradient: 'bg-gradient-to-r from-violet-600 to-cyan-500 text-white',
+    gradient: 'bg-gradient-to-r from-orange-600 to-amber-500 text-white',
     glow: 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/30',
+    brand: 'bg-gradient-to-r from-orange-600 to-amber-500 text-white shadow-lg shadow-orange-500/30',
   }
 
   const Component = href ? (external ? 'a' : Link) : 'button'
