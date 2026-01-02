@@ -45,7 +45,7 @@ const categoryIcons: Record<string, React.ReactNode> = {
 }
 
 // ============================================
-// ANIMATED MESH GRADIENT BACKGROUND
+// ANIMATED MESH GRADIENT BACKGROUND - PREMIUM
 // ============================================
 function MeshGradientBg() {
   return (
@@ -53,73 +53,207 @@ function MeshGradientBg() {
       {/* Base gradient */}
       <div 
         className="absolute inset-0"
-        style={{ background: 'linear-gradient(135deg, #0a0a12 0%, #0c0c18 50%, #0a0a14 100%)' }}
+        style={{ background: 'linear-gradient(135deg, #08080c 0%, #0c0c14 40%, #0a0a12 100%)' }}
       />
       
-      {/* Animated orbs */}
+      {/* Large animated gradient orbs - más visibles */}
       <motion.div
-        className="absolute w-[600px] h-[600px] rounded-full blur-[120px]"
+        className="absolute w-[800px] h-[800px] rounded-full"
         style={{
-          background: 'radial-gradient(circle, rgba(249, 115, 22, 0.12) 0%, transparent 70%)',
-          top: '-10%',
-          left: '-10%',
+          background: 'radial-gradient(circle, rgba(249, 115, 22, 0.18) 0%, rgba(249, 115, 22, 0.05) 40%, transparent 70%)',
+          top: '-20%',
+          left: '-15%',
+          filter: 'blur(80px)',
         }}
         animate={{
-          x: [0, 100, 50, 0],
-          y: [0, 50, 100, 0],
+          x: [0, 120, 60, 0],
+          y: [0, 80, 120, 0],
+          scale: [1, 1.3, 1.1, 1],
+        }}
+        transition={{ duration: 25, repeat: Infinity, ease: 'easeInOut' }}
+      />
+      
+      <motion.div
+        className="absolute w-[700px] h-[700px] rounded-full"
+        style={{
+          background: 'radial-gradient(circle, rgba(6, 182, 212, 0.15) 0%, rgba(6, 182, 212, 0.04) 40%, transparent 70%)',
+          top: '10%',
+          right: '-10%',
+          filter: 'blur(60px)',
+        }}
+        animate={{
+          x: [0, -100, -50, 0],
+          y: [0, 100, 50, 0],
           scale: [1, 1.2, 0.9, 1],
         }}
-        transition={{ duration: 20, repeat: Infinity, ease: 'easeInOut' }}
+        transition={{ duration: 22, repeat: Infinity, ease: 'easeInOut', delay: 3 }}
       />
       
       <motion.div
-        className="absolute w-[500px] h-[500px] rounded-full blur-[100px]"
+        className="absolute w-[500px] h-[500px] rounded-full"
         style={{
-          background: 'radial-gradient(circle, rgba(6, 182, 212, 0.1) 0%, transparent 70%)',
-          top: '20%',
-          right: '-5%',
+          background: 'radial-gradient(circle, rgba(139, 92, 246, 0.12) 0%, transparent 60%)',
+          bottom: '5%',
+          left: '25%',
+          filter: 'blur(50px)',
         }}
         animate={{
-          x: [0, -80, -40, 0],
-          y: [0, 80, 40, 0],
-          scale: [1, 0.9, 1.1, 1],
+          x: [0, 80, -40, 0],
+          y: [0, -60, 30, 0],
+          scale: [1, 1.25, 0.9, 1],
         }}
-        transition={{ duration: 18, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
-      />
-      
-      <motion.div
-        className="absolute w-[400px] h-[400px] rounded-full blur-[80px]"
-        style={{
-          background: 'radial-gradient(circle, rgba(139, 92, 246, 0.08) 0%, transparent 70%)',
-          bottom: '10%',
-          left: '30%',
-        }}
-        animate={{
-          x: [0, 60, -30, 0],
-          y: [0, -40, 20, 0],
-          scale: [1, 1.15, 0.95, 1],
-        }}
-        transition={{ duration: 15, repeat: Infinity, ease: 'easeInOut', delay: 4 }}
+        transition={{ duration: 18, repeat: Infinity, ease: 'easeInOut', delay: 5 }}
       />
 
-      {/* Subtle grid overlay */}
+      {/* Floating tech icons - decorativos */}
+      <motion.div
+        className="absolute text-4xl opacity-10"
+        style={{ top: '15%', left: '10%' }}
+        animate={{ 
+          y: [0, -20, 0], 
+          rotate: [0, 10, 0],
+          opacity: [0.08, 0.15, 0.08],
+        }}
+        transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+      >
+        ⚡
+      </motion.div>
+      
+      <motion.div
+        className="absolute text-5xl opacity-10"
+        style={{ top: '25%', right: '15%' }}
+        animate={{ 
+          y: [0, 25, 0], 
+          rotate: [0, -15, 0],
+          opacity: [0.06, 0.12, 0.06],
+        }}
+        transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
+      >
+        🧠
+      </motion.div>
+      
+      <motion.div
+        className="absolute text-3xl opacity-10"
+        style={{ bottom: '30%', left: '8%' }}
+        animate={{ 
+          y: [0, -15, 0], 
+          x: [0, 10, 0],
+          opacity: [0.05, 0.1, 0.05],
+        }}
+        transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
+      >
+        💻
+      </motion.div>
+
+      <motion.div
+        className="absolute text-4xl opacity-10"
+        style={{ bottom: '20%', right: '12%' }}
+        animate={{ 
+          y: [0, 20, 0], 
+          rotate: [0, -10, 0],
+          opacity: [0.07, 0.13, 0.07],
+        }}
+        transition={{ duration: 9, repeat: Infinity, ease: 'easeInOut', delay: 3 }}
+      >
+        🚀
+      </motion.div>
+
+      {/* Floating geometric shapes */}
+      <motion.div
+        className="absolute w-32 h-32 border border-orange-500/10 rounded-full"
+        style={{ top: '20%', left: '20%' }}
+        animate={{ 
+          rotate: [0, 360],
+          scale: [1, 1.1, 1],
+        }}
+        transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+      />
+
+      <motion.div
+        className="absolute w-20 h-20 border border-cyan-500/10 rounded-lg"
+        style={{ top: '40%', right: '25%' }}
+        animate={{ 
+          rotate: [0, -360],
+          scale: [1, 0.9, 1],
+        }}
+        transition={{ duration: 15, repeat: Infinity, ease: 'linear' }}
+      />
+
+      <motion.div
+        className="absolute w-16 h-16 bg-gradient-to-br from-orange-500/5 to-transparent rounded-lg"
+        style={{ bottom: '35%', left: '15%' }}
+        animate={{ 
+          rotate: [0, 180, 360],
+          y: [0, -30, 0],
+        }}
+        transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
+      />
+
+      {/* Animated lines / rays */}
+      <motion.div
+        className="absolute w-px h-40 origin-top"
+        style={{ 
+          top: '10%', 
+          left: '30%',
+          background: 'linear-gradient(to bottom, rgba(249, 115, 22, 0.2), transparent)',
+        }}
+        animate={{ 
+          scaleY: [0, 1, 0],
+          opacity: [0, 0.5, 0],
+        }}
+        transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 0 }}
+      />
+
+      <motion.div
+        className="absolute w-px h-32 origin-top"
+        style={{ 
+          top: '15%', 
+          right: '35%',
+          background: 'linear-gradient(to bottom, rgba(6, 182, 212, 0.2), transparent)',
+        }}
+        animate={{ 
+          scaleY: [0, 1, 0],
+          opacity: [0, 0.4, 0],
+        }}
+        transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
+      />
+
+      {/* Grid overlay - más visible */}
       <div
-        className="absolute inset-0 opacity-30"
+        className="absolute inset-0 opacity-40"
         style={{
           backgroundImage: `
-            linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px)
+            linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px)
           `,
-          backgroundSize: '80px 80px',
-          maskImage: 'radial-gradient(ellipse 80% 60% at 50% 40%, black, transparent)',
+          backgroundSize: '60px 60px',
+          maskImage: 'radial-gradient(ellipse 80% 70% at 50% 30%, black, transparent)',
+        }}
+      />
+
+      {/* Dot pattern */}
+      <div
+        className="absolute inset-0 opacity-20"
+        style={{
+          backgroundImage: 'radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px)',
+          backgroundSize: '30px 30px',
+          maskImage: 'radial-gradient(ellipse 60% 50% at 30% 40%, black, transparent)',
         }}
       />
 
       {/* Noise texture */}
       <div 
-        className="absolute inset-0 opacity-[0.03]"
+        className="absolute inset-0 opacity-[0.04]"
         style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
+        }}
+      />
+
+      {/* Vignette effect */}
+      <div 
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background: 'radial-gradient(ellipse 80% 60% at 50% 50%, transparent 0%, rgba(8, 8, 12, 0.4) 100%)',
         }}
       />
     </div>
@@ -394,13 +528,14 @@ function VisionCard({ text, index }: { text: string; index: number }) {
 export function AboutPage() {
   const { about } = content
 
-  // ProfileCard skills
+  // ProfileCard skills - con logos oficiales
   const profileSkills = [
-    { name: 'n8n', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg' },
+    { name: 'n8n', icon: 'https://n8n.io/favicon.ico' },
     { name: 'React', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg' },
     { name: 'TypeScript', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg' },
+    { name: 'Claude', icon: 'https://www.anthropic.com/favicon.ico' },
+    { name: 'Cursor', icon: 'https://www.cursor.com/favicon.ico' },
     { name: 'Figma', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg' },
-    { name: 'OpenAI', icon: <SiOpenai className="w-4 h-4 text-emerald-400" /> },
   ]
 
   const socialLinks = [
@@ -412,10 +547,64 @@ export function AboutPage() {
   return (
     <>
       {/* ============================================
-          HERO SECTION - Sin foto, con mesh gradient
+          HERO SECTION - Premium animated background
           ============================================ */}
       <section className="relative min-h-[85vh] flex items-center overflow-hidden">
         <MeshGradientBg />
+
+        {/* Floating code snippets - decorativos */}
+        <motion.div
+          className="absolute hidden lg:block text-[10px] font-mono text-cyan-400/20 whitespace-pre"
+          style={{ top: '18%', left: '5%' }}
+          animate={{ 
+            y: [0, -15, 0], 
+            opacity: [0.15, 0.25, 0.15],
+          }}
+          transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
+        >
+{`const automate = async () => {
+  await n8n.trigger();
+  return profit;
+}`}
+        </motion.div>
+
+        <motion.div
+          className="absolute hidden lg:block text-[10px] font-mono text-orange-400/15 whitespace-pre"
+          style={{ bottom: '25%', right: '5%' }}
+          animate={{ 
+            y: [0, 12, 0], 
+            opacity: [0.12, 0.2, 0.12],
+          }}
+          transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut', delay: 3 }}
+        >
+{`function optimize(roi) {
+  return roi * 10;
+}`}
+        </motion.div>
+
+        {/* Floating particles */}
+        {[...Array(6)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-1 h-1 rounded-full bg-orange-400/30"
+            style={{ 
+              top: `${20 + i * 12}%`, 
+              left: `${10 + i * 15}%`,
+            }}
+            animate={{ 
+              y: [0, -30, 0],
+              x: [0, 15, 0],
+              opacity: [0.2, 0.5, 0.2],
+              scale: [1, 1.5, 1],
+            }}
+            transition={{ 
+              duration: 6 + i * 0.5, 
+              repeat: Infinity, 
+              ease: 'easeInOut',
+              delay: i * 0.8,
+            }}
+          />
+        ))}
 
         {/* Fade-out bottom */}
         <div 
@@ -452,13 +641,13 @@ export function AboutPage() {
                 {about.hero.title}
               </span>
               <span 
-                className="block text-3xl md:text-4xl lg:text-5xl font-bold mt-2"
+                className="block text-xl md:text-2xl lg:text-3xl font-bold mt-3"
                 style={{ 
                   fontFamily: "'BBH Bartle', 'Space Grotesk', sans-serif",
                   background: 'linear-gradient(135deg, #ea580c 0%, #f97316 40%, #fbbf24 100%)',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
-                  filter: 'drop-shadow(0 0 30px rgba(249, 115, 22, 0.4))',
+                  filter: 'drop-shadow(0 0 20px rgba(249, 115, 22, 0.3))',
                 }}
               >
                 {about.hero.titleAccent}
@@ -538,7 +727,7 @@ export function AboutPage() {
                   Vengo del
                 </span>
                 <span 
-                  className="block text-3xl md:text-4xl font-bold"
+                  className="block text-2xl md:text-3xl font-bold"
                   style={{ 
                     fontFamily: "'BBH Bartle', 'Space Grotesk', sans-serif",
                     background: 'linear-gradient(135deg, #ea580c 0%, #f97316 50%, #fbbf24 100%)',
@@ -549,7 +738,7 @@ export function AboutPage() {
                   negocio real.
                 </span>
                 <span 
-                  className="block text-lg md:text-xl text-white/50 mt-2"
+                  className="block text-base md:text-lg text-white/50 mt-1"
                   style={{ fontFamily: "'Montserrat', sans-serif" }}
                 >
                   No solo de tutoriales.
