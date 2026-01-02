@@ -50,6 +50,7 @@
   --color-primary-dark: #ea580c;      /* Orange 600 */
   --color-primary-light: #fb923c;     /* Orange 400 */
   --color-primary-bright: #fbbf24;    /* Amber/Yellow end */
+  --color-orange: #f97316;            /* Alias for primary */
   
   /* Secondary Accent - Emerald (complementary to orange) */
   --color-secondary: #10b981;         /* Emerald 500 */

@@ -37,7 +37,7 @@ export function CTA() {
   const { cta } = content.home
 
   return (
-    <section className="relative py-10 md:py-14 overflow-hidden bg-[#050508]">
+    <section className="relative py-14 md:py-20 overflow-hidden bg-[#050508]">
       {/* Efectos de fondo - más sutiles */}
       <GridPattern size={80} color="rgba(249, 115, 22, 0.02)" />
       <Constellation nodeCount={8} color="rgba(249, 115, 22, 0.15)" />

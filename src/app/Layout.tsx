@@ -325,23 +325,23 @@ function Header() {
         <nav
           className={`relative flex items-center justify-between px-4 rounded border transition-all duration-500 ${
             isScrolled
-              ? 'h-11 border-cyan-900/20 bg-[#030304]/95 shadow-[0_0_15px_rgba(0,0,0,0.4)]'
+              ? 'h-11 border-orange-900/20 bg-[#030304]/95 shadow-[0_0_15px_rgba(0,0,0,0.4)]'
               : 'h-12 border-white/[0.04] bg-[#030304]/80'
           }`}
           style={{ backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)' }}
         >
-          {/* Corner decorations - más finos */}
-          <div className="absolute top-0 left-0 w-1.5 h-1.5 border-t border-l border-cyan-500/40" />
-          <div className="absolute top-0 right-0 w-1.5 h-1.5 border-t border-r border-cyan-500/40" />
-          <div className="absolute bottom-0 left-0 w-1.5 h-1.5 border-b border-l border-cyan-500/40" />
-          <div className="absolute bottom-0 right-0 w-1.5 h-1.5 border-b border-r border-cyan-500/40" />
+          {/* Corner decorations */}
+          <div className="absolute top-0 left-0 w-1.5 h-1.5 border-t border-l border-orange-500/40" />
+          <div className="absolute top-0 right-0 w-1.5 h-1.5 border-t border-r border-orange-500/40" />
+          <div className="absolute bottom-0 left-0 w-1.5 h-1.5 border-b border-l border-orange-500/40" />
+          <div className="absolute bottom-0 right-0 w-1.5 h-1.5 border-b border-r border-orange-500/40" />
 
           {/* Logo */}
           <div className="flex items-center gap-4">
             <Logo />
             <div className="hidden md:flex items-center gap-2 px-3 py-1 border-l border-white/10">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-              <span className="text-[10px] font-mono text-emerald-500/80 tracking-widest">ONLINE</span>
+              <span className="text-[10px] font-mono text-emerald-500/80 tracking-widest">DISPONIBLE</span>
             </div>
           </div>
 
@@ -349,10 +349,10 @@ function Header() {
           {isProjectPage && (
             <Link
               to="/proyectos"
-              className="hidden md:flex items-center gap-2 px-3 py-1.5 text-xs font-mono text-cyan-400 hover:text-cyan-300 transition-colors border border-cyan-900/30 rounded bg-cyan-950/10"
+              className="hidden md:flex items-center gap-2 px-3 py-1.5 text-xs font-mono text-orange-400 hover:text-orange-300 transition-colors border border-orange-900/30 rounded bg-orange-950/10"
             >
               <span>{`<`}</span>
-              <span>RETURN_TO_BASE</span>
+              <span>VOLVER</span>
             </Link>
           )}
 
@@ -374,16 +374,15 @@ function Header() {
               href={content.site.calendarUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden md:inline-flex items-center gap-2 px-5 py-2 font-mono text-xs font-bold text-black bg-cyan-400 hover:bg-cyan-300 transition-colors"
-              style={{ clipPath: 'polygon(10% 0, 100% 0, 100% 100%, 0% 100%)' }}
+              className="hidden md:inline-flex items-center gap-2 px-5 py-2 font-mono text-xs font-bold text-black bg-orange-400 hover:bg-orange-300 transition-colors rounded-lg"
             >
-              INITIATE_CONTACT
+              HABLEMOS
             </a>
 
             {/* Mobile Menu Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden flex items-center justify-center w-12 h-12 -mr-2 text-cyan-400 active:text-cyan-300"
+              className="md:hidden flex items-center justify-center w-12 h-12 -mr-2 text-orange-400 active:text-orange-300"
               aria-label={mobileMenuOpen ? 'Cerrar menú' : 'Abrir menú'}
               aria-expanded={mobileMenuOpen}
             >
@@ -449,29 +448,28 @@ function Footer() {
             <div className="md:col-span-2 flex flex-col items-start gap-6">
               <Logo />
               <p className="font-mono text-xs text-white/40 max-w-xs leading-relaxed">
-                {`// SYSTEM STATUS: OPTIMAL`}<br/>
-                {`// LOCATION: MADRID, ES`}<br/>
-                {`// VERSION: 2026.1.0`}
+                Automatización · Desarrollo · IA<br/>
+                Madrid, España
               </p>
               <p className="text-sm text-white/60 max-w-sm">{content.footer.tagline}</p>
             </div>
 
             <div className="flex flex-col gap-4">
-              <h4 className="font-mono text-xs text-cyan-500 uppercase tracking-widest mb-2">Navigation</h4>
+              <h4 className="font-mono text-xs text-orange-500 uppercase tracking-widest mb-2">Navegación</h4>
               {content.nav.map((item) => (
                 <Link
                   key={item.href}
                   to={item.href}
                   className="text-sm text-white/50 hover:text-white transition-colors flex items-center gap-2 group"
                 >
-                  <span className="w-1 h-1 bg-white/20 group-hover:bg-cyan-400 transition-colors" />
+                  <span className="w-1 h-1 bg-white/20 group-hover:bg-orange-400 transition-colors" />
                   {item.label}
                 </Link>
               ))}
             </div>
 
             <div className="flex flex-col gap-4">
-              <h4 className="font-mono text-xs text-cyan-500 uppercase tracking-widest mb-2">Connect_Node</h4>
+              <h4 className="font-mono text-xs text-orange-500 uppercase tracking-widest mb-2">Conectar</h4>
               {content.footer.links.map((link) => (
                 <a
                   key={link.label}
@@ -480,7 +478,7 @@ function Footer() {
                   rel="noopener noreferrer"
                   className="text-sm text-white/50 hover:text-white transition-colors flex items-center gap-2 group"
                 >
-                  <span className="text-[10px] text-white/20 group-hover:text-cyan-400 font-mono transition-colors">0{link.href.length % 9}</span>
+                  <span className="text-[10px] text-white/20 group-hover:text-orange-400 font-mono transition-colors">→</span>
                   {link.label}
                 </a>
               ))}
@@ -490,8 +488,8 @@ function Footer() {
           <div className="flex flex-col md:flex-row items-center justify-between gap-4 font-mono text-[10px] text-white/30 uppercase tracking-wider">
             <span>{content.footer.copyright}</span>
             <span className="flex items-center gap-2">
-              <span className="w-2 h-2 border border-white/20 rounded-full" />
-              All Systems Operational
+              <span className="w-2 h-2 rounded-full bg-emerald-500/60" />
+              Disponible para proyectos
             </span>
           </div>
         </Container>

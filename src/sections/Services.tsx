@@ -99,7 +99,7 @@ export function Services() {
   const { services } = content.home
 
   return (
-    <Section id="servicios" className="py-12 md:py-16 relative">
+    <Section id="servicios" className="py-14 md:py-20 relative">
       <Container>
         {/* Header - Compacto y alineado */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-10 md:mb-12">

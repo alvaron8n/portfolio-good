@@ -29,7 +29,7 @@
   height: 60%;
   background: radial-gradient(
     ellipse at center,
-    rgba(0, 240, 255, 0.08) 0%,
+    rgba(249, 115, 22, 0.08) 0%,
     transparent 60%
   );
   filter: blur(80px);
@@ -43,7 +43,7 @@
   height: 40%;
   background: radial-gradient(
     ellipse at center,
-    rgba(112, 0, 255, 0.05) 0%,
+    rgba(251, 191, 36, 0.05) 0%,
     transparent 60%
   );
   filter: blur(60px);
@@ -68,7 +68,7 @@
   display: inline-block;
   font-family: var(--font-mono);
   font-size: 0.75rem;
-  color: var(--color-cyan);
+  color: var(--color-orange);
   text-transform: uppercase;
   letter-spacing: 0.15em;
   margin-bottom: 1rem;
@@ -115,9 +115,9 @@
 
 .contact-card:hover {
   background: rgba(255, 255, 255, 0.04);
-  border-color: var(--color-cyan);
+  border-color: rgba(249, 115, 22, 0.4);
   transform: translateY(-2px);
-  box-shadow: var(--shadow-glow-cyan);
+  box-shadow: 0 8px 30px rgba(249, 115, 22, 0.15);
 }
 
 /* Badge */
@@ -127,11 +127,11 @@
   right: 1rem;
   padding: 0.25rem 0.75rem;
   border-radius: 9999px;
-  background: rgba(0, 240, 255, 0.1);
-  border: 1px solid rgba(0, 240, 255, 0.2);
+  background: rgba(249, 115, 22, 0.1);
+  border: 1px solid rgba(249, 115, 22, 0.25);
   font-family: var(--font-mono);
   font-size: 0.65rem;
-  color: var(--color-cyan);
+  color: #fb923c;
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
@@ -191,7 +191,7 @@
 }
 
 .contact-card:hover .contact-card-arrow {
-  color: var(--color-cyan);
+  color: #fb923c;
   transform: translateX(2px);
 }
 
@@ -304,6 +304,19 @@
     opacity: 1;
     transform: translateX(0);
   }
+}
+
+/* ---- ACCENT TEXT ---- */
+.contact-accent {
+  text-align: center;
+  margin-top: 2.5rem;
+  font-family: 'BBH Bartle', var(--font-display);
+  font-size: 2rem;
+  background: linear-gradient(135deg, #ea580c 0%, #f97316 40%, #fbbf24 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  opacity: 0.7;
 }
 
 /* ---- REDUCED MOTION ---- */
