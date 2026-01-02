@@ -129,12 +129,12 @@ export function StatCard({
   value, 
   label, 
   icon,
-  color = 'violet' 
+  color = 'orange' 
 }: { 
   value: string
   label: string
   icon?: ReactNode
-  color?: 'violet' | 'cyan' | 'emerald'
+  color?: 'violet' | 'cyan' | 'emerald' | 'orange'
 }) {
   const colors = {
     violet: {
@@ -151,6 +151,11 @@ export function StatCard({
       text: '#10B981',
       glow: 'rgba(16, 185, 129, 0.2)',
       border: 'rgba(16, 185, 129, 0.3)',
+    },
+    orange: {
+      text: '#fb923c',
+      glow: 'rgba(249, 115, 22, 0.2)',
+      border: 'rgba(249, 115, 22, 0.3)',
     },
   }
 

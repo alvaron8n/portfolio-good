@@ -170,7 +170,7 @@ function MeshGradientBg() {
       />
 
       <motion.div
-        className="absolute w-20 h-20 border border-cyan-500/10 rounded-lg"
+        className="absolute w-20 h-20 border border-orange-500/10 rounded-lg"
         style={{ top: '40%', right: '25%' }}
         animate={{ 
           rotate: [0, -360],
@@ -300,8 +300,8 @@ function ToolCard({ category, index }: { category: { name: string; items: readon
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.4, delay: index * 0.08 }}
       whileHover={{ 
-        borderColor: 'rgba(6, 182, 212, 0.3)',
-        boxShadow: '0 0 30px rgba(6, 182, 212, 0.1)',
+        borderColor: 'rgba(249, 115, 22, 0.3)',
+        boxShadow: '0 0 30px rgba(249, 115, 22, 0.1)',
       }}
     >
       <div className="flex items-center gap-2.5 mb-4">
@@ -316,7 +316,6 @@ function ToolCard({ category, index }: { category: { name: string; items: readon
       <div className="flex flex-wrap gap-2">
         {category.items.map((tool, i) => (
           <motion.div
-            key={tool}
             className="group/tool flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium text-white/70 hover:text-white transition-all duration-200"
             style={{
               background: 'rgba(255, 255, 255, 0.04)',
@@ -324,13 +323,13 @@ function ToolCard({ category, index }: { category: { name: string; items: readon
             }}
             whileHover={{ 
               background: 'rgba(255, 255, 255, 0.08)',
-              borderColor: 'rgba(6, 182, 212, 0.3)',
+              borderColor: 'rgba(249, 115, 22, 0.3)',
             }}
             initial={{ opacity: 0, scale: 0.9 }}
             animate={isInView ? { opacity: 1, scale: 1 } : {}}
             transition={{ duration: 0.2, delay: index * 0.08 + i * 0.02 }}
           >
-            <span className="text-cyan-400 text-sm opacity-70 group-hover/tool:opacity-100">
+            <span className="text-orange-400 text-sm opacity-70 group-hover/tool:opacity-100">
               {toolIcons[tool] || <HiOutlineCog />}
             </span>
             <span>{tool}</span>
@@ -387,11 +386,11 @@ function TimelineItem({ item, index, isLast }: {
         {icons[index % icons.length]}
       </motion.div>
 
-      <GlassCard className="p-5 group hover:border-cyan-500/30 transition-all duration-300">
-        <span className="text-[10px] font-bold text-cyan-400 uppercase tracking-widest">
+      <GlassCard className="p-5 group hover:border-orange-500/30 transition-all duration-300">
+        <span className="text-[10px] font-bold text-orange-400 uppercase tracking-widest">
           {item.period}
         </span>
-        <h3 className="text-lg font-semibold text-white mt-1.5 mb-0.5 group-hover:text-cyan-300 transition-colors">
+        <h3 className="text-lg font-semibold text-white mt-1.5 mb-0.5 group-hover:text-orange-300 transition-colors">
           {item.role}
         </h3>
         <p className="text-xs text-white/40 mb-2">{item.company}</p>
@@ -402,7 +401,7 @@ function TimelineItem({ item, index, isLast }: {
             {item.highlights.map((h, i) => (
               <span 
                 key={i} 
-                className="text-[10px] px-2 py-1 rounded-full bg-cyan-500/10 text-cyan-400/80 border border-cyan-500/20"
+                className="text-[10px] px-2 py-1 rounded-full bg-orange-500/10 text-orange-400/80 border border-orange-500/20"
               >
                 {h}
               </span>
@@ -554,7 +553,7 @@ export function AboutPage() {
 
         {/* Floating code snippets - decorativos */}
         <motion.div
-          className="absolute hidden lg:block text-[10px] font-mono text-cyan-400/20 whitespace-pre"
+          className="absolute hidden lg:block text-[10px] font-mono text-orange-400/20 whitespace-pre"
           style={{ top: '18%', left: '5%' }}
           animate={{ 
             y: [0, -15, 0], 
