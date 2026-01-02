@@ -107,13 +107,13 @@ export function Hero() {
               {/* Headline - 2 líneas */}
               <h1 style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
                 <span 
-                  className="block text-lg sm:text-xl md:text-2xl lg:text-3xl uppercase tracking-tight leading-[1.1] text-white font-bold"
+                  className="block text-2xl sm:text-2xl md:text-3xl lg:text-4xl uppercase tracking-tight leading-[1.1] text-white font-bold"
                 >
                   {hero.headline.line1}
                 </span>
                 
                 <span 
-                  className="block text-lg sm:text-xl md:text-2xl lg:text-3xl uppercase tracking-tight leading-[1.1] mt-0.5 font-bold"
+                  className="block text-2xl sm:text-2xl md:text-3xl lg:text-4xl uppercase tracking-tight leading-[1.1] mt-0.5 font-bold"
                 >
                   <span className="text-white">Menos caos. </span>
                   <span 
@@ -140,7 +140,7 @@ export function Hero() {
           >
             <GlassPanel className="p-4 md:p-5 max-w-md">
               <p 
-                className="text-xs md:text-sm text-white/50 leading-relaxed mb-4"
+                className="text-sm md:text-base text-white/50 leading-relaxed mb-4"
                 style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 400 }}
               >
                 {hero.subheadline}
@@ -162,7 +162,7 @@ export function Hero() {
                     href={hero.secondaryCta.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-block px-3 py-2.5 text-white/40 hover:text-white text-[9px] md:text-[10px] uppercase tracking-wider transition-colors duration-300"
+                    className="inline-block px-3 py-2.5 text-white/40 hover:text-white text-[11px] md:text-xs uppercase tracking-wider transition-colors duration-300"
                     style={{ fontFamily: "'Space Grotesk', sans-serif" }}
                   >
                     {hero.secondaryCta.label}
@@ -172,7 +172,7 @@ export function Hero() {
 
               {/* Microcopy */}
               <p 
-                className="text-[9px] md:text-[10px] text-white/30 leading-relaxed"
+                className="text-[11px] md:text-xs text-white/30 leading-relaxed"
                 style={{ fontFamily: "'Montserrat', sans-serif" }}
               >
                 {hero.microcopy}
