@@ -1,0 +1,286 @@
+/* ============================================
+   EFFECTS & PATTERNS - Premium Visual Effects
+   ============================================ */
+
+/* ===========================================
+   ANIMATED GRID PATTERN
+   =========================================== */
+.pattern-grid {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(249, 115, 22, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(249, 115, 22, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 80% 50% at 50% 50%, black 40%, transparent 100%);
+  animation: gridPulse 8s ease-in-out infinite;
+}
+
+@keyframes gridPulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.7; }
+}
+
+/* ===========================================
+   FLOATING SHAPES
+   =========================================== */
+.floating-shapes {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.floating-shape {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.15;
+  animation: float 20s ease-in-out infinite;
+}
+
+.floating-shape--orange {
+  background: linear-gradient(135deg, #ea580c, #f97316);
+  width: 300px;
+  height: 300px;
+  top: 10%;
+  right: 10%;
+  animation-delay: 0s;
+}
+
+.floating-shape--amber {
+  background: linear-gradient(135deg, #f59e0b, #fbbf24);
+  width: 200px;
+  height: 200px;
+  bottom: 20%;
+  left: 5%;
+  animation-delay: -5s;
+}
+
+.floating-shape--small {
+  background: #f97316;
+  width: 100px;
+  height: 100px;
+  top: 60%;
+  right: 30%;
+  animation-delay: -10s;
+  filter: blur(40px);
+}
+
+@keyframes float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(30px, -30px) scale(1.05); }
+  50% { transform: translate(-20px, 20px) scale(0.95); }
+  75% { transform: translate(20px, 30px) scale(1.02); }
+}
+
+/* ===========================================
+   ACCENT TEXT - BBH Bartle + Orange Gradient
+   =========================================== */
+.accent-text {
+  font-family: 'BBH Bartle', 'Space Grotesk', sans-serif;
+  background: linear-gradient(135deg, #ea580c 0%, #f97316 40%, #fb923c 70%, #fbbf24 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 700;
+  display: inline;
+}
+
+.accent-text--glow {
+  filter: drop-shadow(0 0 20px rgba(249, 115, 22, 0.4));
+}
+
+/* ===========================================
+   GLASS CARD ENHANCED
+   =========================================== */
+.glass-card-enhanced {
+  background: rgba(16, 16, 24, 0.6);
+  backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.glass-card-enhanced::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(249, 115, 22, 0.05) 0%, transparent 50%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.glass-card-enhanced:hover::before {
+  opacity: 1;
+}
+
+.glass-card-enhanced:hover {
+  border-color: rgba(249, 115, 22, 0.2);
+  transform: translateY(-4px);
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.3),
+    0 0 60px rgba(249, 115, 22, 0.08);
+}
+
+/* ===========================================
+   NUMBER BADGE ANIMATED
+   =========================================== */
+.number-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(249, 115, 22, 0.15) 0%, rgba(249, 115, 22, 0.05) 100%);
+  border: 1px solid rgba(249, 115, 22, 0.3);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  font-weight: 600;
+  color: #f97316;
+  position: relative;
+  overflow: hidden;
+}
+
+.number-badge::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, transparent 40%, rgba(249, 115, 22, 0.2) 50%, transparent 60%);
+  transform: translateX(-100%);
+  animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* ===========================================
+   SECTION DIVIDER
+   =========================================== */
+.section-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(249, 115, 22, 0.3), transparent);
+  margin: 0 auto;
+  max-width: 200px;
+}
+
+/* ===========================================
+   PULSE DOT
+   =========================================== */
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #10b981;
+  position: relative;
+}
+
+.pulse-dot::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  background: #10b981;
+  opacity: 0.4;
+  animation: pulse 2s ease-out infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 0.4; }
+  100% { transform: scale(2); opacity: 0; }
+}
+
+/* ===========================================
+   GEOMETRIC BACKGROUND
+   =========================================== */
+.geo-bg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.geo-bg svg {
+  position: absolute;
+  opacity: 0.03;
+}
+
+.geo-bg .hex-1 {
+  top: 10%;
+  left: 5%;
+  width: 200px;
+  animation: rotate 30s linear infinite;
+}
+
+.geo-bg .hex-2 {
+  bottom: 15%;
+  right: 10%;
+  width: 150px;
+  animation: rotate 25s linear infinite reverse;
+}
+
+.geo-bg .circle-1 {
+  top: 50%;
+  right: 5%;
+  width: 100px;
+  animation: float 15s ease-in-out infinite;
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* ===========================================
+   CTA GLOW EFFECT
+   =========================================== */
+.cta-glow {
+  position: relative;
+}
+
+.cta-glow::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 600px;
+  height: 600px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(249, 115, 22, 0.15) 0%, transparent 70%);
+  pointer-events: none;
+  animation: ctaGlow 4s ease-in-out infinite;
+}
+
+@keyframes ctaGlow {
+  0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
+  50% { opacity: 0.8; transform: translate(-50%, -50%) scale(1.1); }
+}
+
+/* ===========================================
+   RESPONSIVE ADJUSTMENTS
+   =========================================== */
+@media (max-width: 768px) {
+  .floating-shape--orange { width: 150px; height: 150px; }
+  .floating-shape--amber { width: 100px; height: 100px; }
+  .floating-shape--small { width: 60px; height: 60px; }
+  .pattern-grid { background-size: 40px 40px; }
+  .number-badge { width: 40px; height: 40px; font-size: 12px; }
+}
+
+/* ===========================================
+   REDUCED MOTION
+   =========================================== */
+@media (prefers-reduced-motion: reduce) {
+  .floating-shape,
+  .pattern-grid,
+  .number-badge::after,
+  .geo-bg svg,
+  .cta-glow::before {
+    animation: none;
+  }
+}
