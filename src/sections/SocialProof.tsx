@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from 'react'
-import { motion, useMotionValue, useSpring, useTransform, useMotionTemplate, AnimatePresence } from 'framer-motion'
+import { motion, useMotionValue, useSpring, useTransform, useMotionTemplate } from 'framer-motion'
 import { Section } from '../components/Section'
 import { Container } from '../components/Container'
 import { content } from '../content/content'
@@ -12,10 +12,9 @@ function EpicManifestoCard() {
   const { socialProof } = content.home
   const cardRef = useRef<HTMLDivElement>(null)
   const [isHovered, setIsHovered] = useState(false)
-  const [isMounted, setIsMounted] = useState(false)
   
   useEffect(() => {
-    setIsMounted(true)
+    // Component mounted
   }, [])
   
   // Mouse tracking
@@ -84,12 +83,12 @@ function EpicManifestoCard() {
 
   // Parse quote to highlight keywords
   const renderQuoteText = () => {
-    const text = socialProof.quote.text
+    const text = socialProof.quote.text as string
     const keywords = ['IA', 'persona']
     
     // Split by keywords while preserving them
     const parts: { text: string; isKeyword: boolean }[] = []
-    let remaining = text
+    let remaining: string = text
     
     keywords.forEach(keyword => {
       const regex = new RegExp(`(${keyword})`, 'gi')
@@ -292,11 +291,13 @@ function EpicManifestoCard() {
 }
 
 export function SocialProof() {
+  const { socialProof } = content.home
+  
   return (
     <Section className="epic-section">
       {/* Curved marquee */}
       <motion.div
-        className="mb-24"
+        className="mb-16 md:mb-24"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
@@ -313,6 +314,17 @@ export function SocialProof() {
 
       <Container>
         <div className="max-w-5xl mx-auto">
+          {/* Collaboration text */}
+          <motion.p
+            className="text-center text-white/50 text-sm md:text-base mb-12 md:mb-16 max-w-2xl mx-auto leading-relaxed"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            {socialProof.text}
+          </motion.p>
+          
           <EpicManifestoCard />
         </div>
       </Container>

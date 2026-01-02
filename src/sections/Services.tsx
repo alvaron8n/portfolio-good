@@ -37,7 +37,7 @@ function ServiceCard({
           background: useMotionTemplate`
             radial-gradient(
               650px circle at ${mouseX}px ${mouseY}px,
-              rgba(0, 240, 255, 0.1),
+              rgba(249, 115, 22, 0.1),
               transparent 80%
             )
           `
@@ -49,7 +49,7 @@ function ServiceCard({
           background: useMotionTemplate`
             radial-gradient(
               400px circle at ${mouseX}px ${mouseY}px,
-              rgba(0, 240, 255, 0.4),
+              rgba(249, 115, 22, 0.4),
               transparent 40%
             )
           `,
@@ -60,10 +60,10 @@ function ServiceCard({
 
       <div className="relative h-full p-8 flex flex-col z-10">
         <div className="flex items-start justify-between mb-8">
-          <span className="font-mono text-[10px] text-cyan-400 border border-cyan-500/20 bg-cyan-500/5 rounded px-2 py-1">
+          <span className="font-mono text-[10px] text-orange-400 border border-orange-500/20 bg-orange-500/5 rounded px-2 py-1">
             {service.number}
           </span>
-          <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white/40 group-hover:text-cyan-400 group-hover:bg-cyan-500/10 transition-colors duration-300">
+          <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white/40 group-hover:text-orange-400 group-hover:bg-orange-500/10 transition-colors duration-300">
              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                <path d="M12 2L2 7L12 12L22 7L12 2Z" />
                <path d="M2 17L12 22L22 17" />
@@ -72,7 +72,7 @@ function ServiceCard({
           </div>
         </div>
 
-        <h3 className="font-display text-2xl font-bold text-white mb-4 group-hover:text-cyan-50 transition-colors">
+        <h3 className="font-display text-2xl font-bold text-white mb-4 group-hover:text-orange-50 transition-colors">
           {service.title}
         </h3>
         
@@ -127,12 +127,12 @@ export function Services() {
             <MagneticButton strength={0.2}>
               <Link
                 to={services.cta.href}
-                className="group flex items-center gap-3 text-sm font-mono uppercase tracking-wider text-cyan-400 hover:text-cyan-300 transition-colors"
+                className="group flex items-center gap-3 text-sm font-mono uppercase tracking-wider text-orange-400 hover:text-orange-300 transition-colors"
               >
                 {services.cta.label}
                 <span className="relative flex h-3 w-3">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-3 w-3 bg-cyan-500"></span>
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-orange-500"></span>
                 </span>
               </Link>
             </MagneticButton>

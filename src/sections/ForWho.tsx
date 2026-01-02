@@ -60,7 +60,7 @@ export function ForWho() {
             whileInView="visible"
             viewport={{ once: true, margin: "-50px" }}
           >
-            {forWho.items.map((item, index) => (
+            {forWho.items.map((item: string, index: number) => (
               <motion.li
                 key={index}
                 className="forwho-list-item"

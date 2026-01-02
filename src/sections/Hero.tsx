@@ -90,7 +90,7 @@ export function Hero() {
             transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
           >
             <GlassPanel className="p-4 md:p-5 lg:p-6">
-              {/* Badge */}
+              {/* Badge / Eyebrow */}
               <div className="inline-flex items-center gap-2 mb-3 md:mb-4">
                 <span className="relative flex h-1.5 w-1.5">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-60"></span>
@@ -100,22 +100,22 @@ export function Hero() {
                   className="text-[9px] md:text-[10px] uppercase tracking-[0.1em] text-white/45"
                   style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 500 }}
                 >
-                  {hero.badge}
+                  {hero.eyebrow}
                 </span>
               </div>
 
-              {/* Headline - 2 líneas, Space Grotesk */}
+              {/* Headline - 2 líneas */}
               <h1 style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
                 <span 
                   className="block text-lg sm:text-xl md:text-2xl lg:text-3xl uppercase tracking-tight leading-[1.1] text-white font-bold"
                 >
-                  Sistemas que te devuelven
+                  {hero.headline.line1}
                 </span>
                 
                 <span 
                   className="block text-lg sm:text-xl md:text-2xl lg:text-3xl uppercase tracking-tight leading-[1.1] mt-0.5 font-bold"
                 >
-                  <span className="text-white">el </span>
+                  <span className="text-white">Menos caos. </span>
                   <span 
                     style={{ 
                       background: 'linear-gradient(135deg, #ea580c 0%, #f97316 35%, #fb923c 70%, #fbbf24 100%)',
@@ -124,14 +124,14 @@ export function Hero() {
                       filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.3))',
                     }}
                   >
-                    TIEMPO.
+                    Mejor ROI.
                   </span>
                 </span>
               </h1>
             </GlassPanel>
           </motion.div>
 
-          {/* Card 2: Subheadline + CTAs - Compact */}
+          {/* Card 2: Subheadline + CTAs */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -146,11 +146,11 @@ export function Hero() {
                 {hero.subheadline}
               </p>
 
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-3 mb-3">
                 <MagneticButton strength={0.1}>
                   <a
                     href={hero.cta.href}
-                    className="inline-block px-5 py-2.5 bg-white text-[#0a0a14] font-semibold uppercase tracking-wider text-[9px] md:text-[10px] rounded-lg hover:bg-cyan-400 transition-colors duration-300"
+                    className="inline-block px-5 py-2.5 bg-white text-[#0a0a14] font-semibold uppercase tracking-wider text-[9px] md:text-[10px] rounded-lg hover:bg-orange-400 transition-colors duration-300"
                     style={{ fontFamily: "'Space Grotesk', sans-serif" }}
                   >
                     {hero.cta.label}
@@ -160,6 +160,8 @@ export function Hero() {
                 <MagneticButton strength={0.08}>
                   <a
                     href={hero.secondaryCta.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="inline-block px-3 py-2.5 text-white/40 hover:text-white text-[9px] md:text-[10px] uppercase tracking-wider transition-colors duration-300"
                     style={{ fontFamily: "'Space Grotesk', sans-serif" }}
                   >
@@ -167,6 +169,14 @@ export function Hero() {
                   </a>
                 </MagneticButton>
               </div>
+
+              {/* Microcopy */}
+              <p 
+                className="text-[9px] md:text-[10px] text-white/30 leading-relaxed"
+                style={{ fontFamily: "'Montserrat', sans-serif" }}
+              >
+                {hero.microcopy}
+              </p>
             </GlassPanel>
           </motion.div>
 

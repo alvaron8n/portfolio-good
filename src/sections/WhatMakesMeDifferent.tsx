@@ -48,7 +48,7 @@ export function WhatMakesMeDifferent() {
             whileInView="visible"
             viewport={{ once: true, margin: "-50px" }}
           >
-            {whatMakesMeDifferent.items.map((item, index) => (
+            {whatMakesMeDifferent.items.map((item: { title: string; description: string }, index: number) => (
               <motion.article
                 key={index}
                 className="different-item"
@@ -72,7 +72,7 @@ export function WhatMakesMeDifferent() {
               {whatMakesMeDifferent.notDo.title}
             </h3>
             <ul className="different-notdo-list">
-              {whatMakesMeDifferent.notDo.items.map((item, index) => (
+              {whatMakesMeDifferent.notDo.items.map((item: string, index: number) => (
                 <motion.li
                   key={index}
                   className="different-notdo-item"

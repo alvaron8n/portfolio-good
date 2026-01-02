@@ -1,5 +1,5 @@
 import { useRef, useEffect, useState } from 'react'
-import { motion, useMotionValue, useSpring, useTransform, type PanInfo } from 'framer-motion'
+import { motion, useMotionValue, useSpring, type PanInfo } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { Section } from '../components/Section'
 import { Container } from '../components/Container'
@@ -33,8 +33,8 @@ function DraggableCarousel() {
   const dragConstraintLeft = -(totalWidth - containerWidth) - 50 // Extra padding
   const dragConstraintRight = 50
 
-  const handleDragEnd = (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
-    // Optional: Add snap logic here if needed, for now free scroll with friction feels better for "Physics"
+  const handleDragEnd = (_event: MouseEvent | TouchEvent | PointerEvent, _info: PanInfo) => {
+    // Optional: Add snap logic here if needed
   }
 
   return (
@@ -52,8 +52,6 @@ function DraggableCarousel() {
             key={project.slug} 
             project={project} 
             index={index} 
-            containerX={springX} 
-            containerWidth={containerWidth}
           />
         ))}
       </motion.div>
@@ -64,31 +62,10 @@ function DraggableCarousel() {
 function CarouselItem({ 
   project, 
   index, 
-  containerX,
-  containerWidth
 }: { 
   project: typeof content.home.projects.items[number]
   index: number
-  containerX: any
-  containerWidth: number
 }) {
-  // Logic to determine distance from center
-  const itemX = index * (CARD_WIDTH + CARD_GAP)
-  // We approximate the center position based on drag x
-  // This is a simplification for visual effect
-  
-  // Transform mapped to the container's X position
-  // When the item is near the "center" of the view (relative to drag), it scales up
-  const range = [-(itemX + CARD_WIDTH + 200), -(itemX), -(itemX - 200)]
-  const outputScale = [0.9, 1, 0.9]
-  const outputOpacity = [0.5, 1, 0.5]
-  const outputBlur = ["4px", "0px", "4px"]
-  
-  // Note: Precise centering with drag requires reading the exact offset. 
-  // For simplicity and performance, we'll use a simpler hover effect for focus 
-  // and rely on the drag physics for the "feel".
-  // Real-time scale on drag can be expensive if not careful.
-  
   return (
     <motion.div
       className="flex-shrink-0 relative group"
@@ -99,7 +76,7 @@ function CarouselItem({
       transition={{ duration: 0.3 }}
     >
       <Link to={`/proyectos/${project.slug}`} className="block h-full">
-        <GlassCard className="h-[450px] flex flex-col overflow-hidden transition-all duration-500 hover:border-cyan-500/40">
+        <GlassCard className="h-[450px] flex flex-col overflow-hidden transition-all duration-500 hover:border-orange-500/40">
           {/* Image Area */}
           <div className="h-1/2 relative overflow-hidden bg-black/20">
              <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0F] to-transparent z-10" />
@@ -117,10 +94,10 @@ function CarouselItem({
 
           {/* Content Area */}
           <div className="flex-1 p-6 flex flex-col relative z-20">
-            <span className="text-cyan-400 text-xs font-mono uppercase tracking-widest mb-2 block">
+            <span className="text-orange-400 text-xs font-mono uppercase tracking-widest mb-2 block">
               {project.category}
             </span>
-            <h3 className="font-display text-2xl text-white mb-3 leading-tight group-hover:text-cyan-100 transition-colors">
+            <h3 className="font-display text-2xl text-white mb-3 leading-tight group-hover:text-orange-100 transition-colors">
               {project.title}
             </h3>
             <p className="text-sm text-white/50 leading-relaxed line-clamp-3 mb-4">
@@ -156,7 +133,7 @@ export function FeaturedProjects() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <span className="font-mono text-xs text-cyan-500 uppercase tracking-widest mb-2 block">
+            <span className="font-mono text-xs text-orange-500 uppercase tracking-widest mb-2 block">
               Selected Works
             </span>
             <h2 className="heading-lg text-white">

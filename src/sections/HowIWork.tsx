@@ -47,7 +47,7 @@ export function HowIWork() {
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
         >
-          {howIWork.steps.map((step, index) => (
+          {howIWork.steps.map((step: { number: string; title: string; description: string }, index: number) => (
             <motion.div
               key={step.number}
               className="howiwork-step"

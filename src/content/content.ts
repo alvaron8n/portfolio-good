@@ -4,18 +4,17 @@ export const content = {
   // ============================================
   site: {
     name: 'Álvaro Fernández',
-    role: 'Automatización & Desarrollo de Software',
+    role: 'Automatización, IA & Desarrollo Web',
     tagline: 'Tecnología que trabaja por ti.',
     availability: 'Disponible para nuevos proyectos',
     whatsappUrl: 'https://wa.me/34684005952',
     email: 'alferpri@gmail.com',
     phone: '+34 684 005 952',
-    location: 'España',
+    location: 'España (trabajo en remoto)',
     calendarUrl: 'https://cal.com/alvarofp/15min',
     social: {
       linkedin: 'https://linkedin.com/in/alvarofp',
       github: 'https://github.com/alvarofp',
-      behance: 'https://behance.net/alvarofp',
     },
   },
 
@@ -26,112 +25,152 @@ export const content = {
     { label: 'Inicio', href: '/' },
     { label: 'Servicios', href: '/servicios' },
     { label: 'Proyectos', href: '/proyectos' },
+    { label: 'Sobre mí', href: '/sobre-mi' },
     { label: 'Contacto', href: '/contacto' },
   ],
 
   // ============================================
-  // HOME
+  // HOME - NUEVO COPY FINAL 2026
   // ============================================
   home: {
     hero: {
-      badge: 'Disponible Q1 2025',
-      line1: 'Sistemas que te',
-      line2: 'devuelven el tiempo.',
-      subheadline: 'Ayudo a empresas a eliminar el trabajo manual repetitivo mediante automatización inteligente y desarrollo a medida.',
+      eyebrow: 'Disponible para nuevos proyectos',
+      headline: {
+        line1: 'Tecnología que trabaja por ti.',
+        line2: 'Menos caos. Mejor ROI.',
+      },
+      subheadline: 'Automatizo procesos, construyo herramientas con IA y diseño webs que convierten. Sin vender humo: si no aporta, no se hace.',
       cta: {
-        label: 'Ver cómo trabajo',
-        href: '/proyectos/crm-automatizacion',
+        label: 'Ver proyectos reales',
+        href: '/proyectos',
       },
       secondaryCta: {
-        label: 'Hablemos',
-        href: 'https://cal.com/alvarofp/15min',
+        label: 'Cuéntame tu caso',
+        href: 'https://wa.me/34684005952',
       },
-      techStack: 'n8n ✦ React ✦ Supabase ✦ OpenAI ✦ TypeScript',
+      microcopy: 'Dame contexto por WhatsApp o email y te preparo una propuesta clara. Sin compromiso, sin llamada fría.',
     },
 
     socialProof: {
-      intro: 'Colaborando con empresas que valoran la eficiencia',
-      logos: [
-        { name: 'Flama Studio' },
-        { name: 'Bohemian' },
-        { name: 'Alba Plata' },
-        { name: 'Urban 33' },
-      ],
+      text: 'Actualmente colaboro con Flama Studios y trabajo con equipos que valoran la eficiencia y el trabajo bien hecho.',
       quote: {
-        text: 'La IA no te quitará el trabajo, lo hará una persona que la utilice.',
+        text: 'La IA no te va a quitar el trabajo. Lo hará alguien que sepa usarla.',
         author: 'Álvaro Fernández',
       },
     },
 
-    about: {
-      headline: 'No es magia, es ingeniería.',
-      description: 'Vengo del mundo del marketing, donde vi de primera mano cuánto talento se desperdicia en tareas administrativas. Hoy, combino esa visión de negocio con desarrollo técnico para crear sistemas que funcionan de verdad, sin promesas vacías.',
+    whatIDo: {
+      title: 'Lo que hago (sin palabras vacías)',
+      items: [
+        {
+          id: 'menos-trabajo',
+          number: '01',
+          title: 'Menos trabajo manual',
+          description: 'Si algo se repite, lo automatizo. Si no se puede automatizar, lo simplifico. El objetivo: que tu equipo deje de pegar datos y copiar excels.',
+        },
+        {
+          id: 'mas-claridad',
+          number: '02',
+          title: 'Más claridad para decidir',
+          description: 'Datos organizados, procesos limpios y sistemas que no se rompen cuando el negocio crece.',
+        },
+        {
+          id: 'diseno-convierte',
+          number: '03',
+          title: 'Diseño que convierte',
+          description: 'Bonito sí, pero sobre todo: que se entienda, que dé confianza y que convierta visitas en clientes.',
+        },
+      ],
+    },
+
+    aboutMini: {
+      title: 'No es magia. Es experiencia (y obsesión por hacerlo bien).',
+      paragraphs: [
+        'Antes de dedicarme a esto, tuve dos negocios propios: una marca de ropa (Impale Clothing, 1.800 seguidores) y un ecommerce de zapatillas que llevé 4 años (6.800 seguidores, facturación real).',
+        'Eso me enseñó algo que no se aprende en ningún curso: la tecnología solo vale si mejora el negocio.',
+        'Hoy mezclo esa visión con código, IA y diseño para construir sistemas que ahorran tiempo, reducen errores y ayudan a vender más.',
+      ],
       cta: {
-        label: 'Conoce mi historia',
+        label: 'Mi historia completa',
         href: '/sobre-mi',
       },
     },
 
     services: {
       title: 'Cómo puedo ayudarte',
-      subtitle: 'Soluciones técnicas diseñadas para resolver problemas de negocio reales.',
+      subtitle: 'Soluciones enfocadas a impacto real: tiempo, dinero y retorno de inversión.',
       items: [
         {
           id: 'automatizacion',
           number: '01',
-          title: 'Automatización de Procesos',
-          description: 'Conecto tus herramientas actuales para que los datos fluyan solos. Facturación, onboarding de clientes o reportes, sin intervención humana.',
+          title: 'Automatización',
+          description: 'Conecto tus herramientas para que los datos fluyan solos. Leads, facturas, onboarding... sin copiar y pegar.',
           tags: ['n8n', 'Make', 'APIs'],
         },
         {
-          id: 'desarrollo-ia',
+          id: 'software-ia',
           number: '02',
-          title: 'Desarrollo & IA',
-          description: 'Creo herramientas a medida cuando el software estándar se queda corto. Potenciadas con IA para hacerlas más inteligentes y fáciles de usar.',
+          title: 'Software & IA a medida',
+          description: 'Herramientas internas, dashboards o asistentes inteligentes adaptados a tu negocio.',
           tags: ['React', 'Node.js', 'LLMs'],
         },
         {
-          id: 'web',
+          id: 'webs',
           number: '03',
-          title: 'Desarrollo Web',
-          description: 'Sitios web rápidos y optimizados que no solo se ven bien, sino que están construidos para convertir visitantes en clientes.',
+          title: 'Webs que convierten',
+          description: 'Sitios rápidos, claros y optimizados para SEO. Diseño + código, sin plantillas genéricas.',
           tags: ['Next.js', 'Tailwind', 'SEO'],
         },
         {
-          id: 'consultoria',
+          id: 'branding',
           number: '04',
-          title: 'Consultoría Técnica',
-          description: 'Auditoría de tus procesos actuales y hoja de ruta para digitalizar tu negocio sin gastar en herramientas innecesarias.',
-          tags: ['Estrategia', 'Arquitectura'],
+          title: 'Diseño & Branding',
+          description: 'Identidad visual coherente: logos, sistemas visuales y piezas gráficas que refuerzan tu marca.',
+          tags: ['Figma', 'Branding', 'UI'],
         },
       ],
       cta: {
-        label: 'Explorar todos los servicios',
+        label: 'Ver todos los servicios',
         href: '/servicios',
       },
     },
 
+    fit: {
+      title: 'Antes de escribirme, mira si encajamos',
+      fits: [
+        'Tienes un negocio en marcha y quieres optimizar (tiempo, ventas, procesos)',
+        'Valoras la calidad y prefieres hacerlo bien a hacerlo "ya"',
+        'Quieres claridad: qué hacer, por qué y cómo medir si funciona',
+        'Te interesa la IA aplicada de verdad, no por moda',
+      ],
+      notFits: [
+        'Buscas "barato" por encima de todo',
+        'Necesitas urgencias constantes cada semana',
+        'Quieres features por capricho sin objetivo de negocio',
+      ],
+    },
+
     projects: {
-      title: 'Trabajo Reciente',
-      subtitle: 'Resultados tangibles en entornos reales.',
+      title: 'Trabajo reciente',
+      subtitle: 'Casos reales, problemas concretos, resultados que importan.',
       items: [
         {
-          slug: 'crm-automatizacion',
-          title: 'Automatización CRM Inmobiliario',
+          slug: 'crm-social-path',
+          title: 'CRM Social Path',
           category: 'Automatización',
-          result: 'Ahorro de 20h/semana en gestión administrativa',
+          result: 'De información dispersa a control total del negocio',
         },
         {
-          slug: 'webs-locales',
-          title: 'Plataforma de Reservas',
-          category: 'Desarrollo Web',
-          result: '+60% en conversión de reservas directas',
+          slug: 'web-bohemian',
+          title: 'Web Bohemian Málaga',
+          category: 'Web + SEO',
+          result: 'De 0 web a mejor imagen y más reservas',
         },
         {
-          slug: 'branding',
-          title: 'Identidad Corporativa Tech',
-          category: 'Branding',
-          result: 'Rediseño completo de marca y sistema visual',
+          slug: 'web-pillarbox',
+          title: 'Web Pillarbox',
+          category: 'Web B2B',
+          result: 'Multipágina clara para vender servicios a empresas',
         },
       ],
       cta: {
@@ -141,14 +180,57 @@ export const content = {
     },
 
     cta: {
-      headline: '¿Empezamos?',
-      subheadline: 'Si sientes que tu empresa podría ser más eficiente, probablemente tengas razón. Tengamos una charla breve para explorar posibilidades.',
-      button: {
-        label: 'Agendar llamada exploratoria',
+      headline: 'Si tu negocio va a mil... tu sistema debería ayudarte, no frenarte.',
+      subheadline: 'Cuéntame qué haces y dónde se te va el tiempo. Te digo en claro si puedo ayudarte y por dónde empezaría.',
+      whatsapp: {
+        label: 'Escríbeme por WhatsApp',
+        href: 'https://wa.me/34684005952',
+      },
+      calendar: {
+        label: 'O agenda 15 min',
         href: 'https://cal.com/alvarofp/15min',
       },
-      emailText: 'O escríbeme directamente a',
+      emailText: '¿Prefieres email?',
       email: 'alferpri@gmail.com',
+    },
+
+    // Legacy sections (for other components)
+    forWho: {
+      title: '¿Para quién trabajo?',
+      intro: 'Empresas y profesionales que quieren usar tecnología para crecer.',
+      items: [
+        'Negocios locales que quieren digitalizar procesos',
+        'Startups que necesitan herramientas internas',
+        'Agencias que buscan apoyo técnico',
+        'Profesionales que quieren automatizar tareas repetitivas',
+      ],
+    },
+
+    howIWork: {
+      title: 'Cómo trabajo',
+      steps: [
+        { number: '01', title: 'Escucho', description: 'Entiendo tu negocio y tus objetivos.' },
+        { number: '02', title: 'Propongo', description: 'Te presento opciones claras con pros y contras.' },
+        { number: '03', title: 'Ejecuto', description: 'Desarrollo la solución con comunicación constante.' },
+        { number: '04', title: 'Entrego', description: 'Te dejo todo documentado y funcionando.' },
+      ],
+    },
+
+    whatMakesMeDifferent: {
+      title: 'Qué me diferencia',
+      items: [
+        { title: 'Visión de negocio', description: 'Vengo del mundo real, no solo de tutoriales.' },
+        { title: 'Comunicación clara', description: 'Te explico todo sin jerga técnica.' },
+        { title: 'Sistemas ordenados', description: 'Lo que hago queda documentado y usable.' },
+      ],
+      notDo: {
+        title: 'Lo que no hago',
+        items: [
+          'Proyectos urgentes sin planificación',
+          'Trabajos sin contrato ni briefing claro',
+          'Diseños "que ya veremos sobre la marcha"',
+        ],
+      },
     },
   },
 
@@ -156,8 +238,8 @@ export const content = {
   // FOOTER
   // ============================================
   footer: {
-    tagline: 'Diseñando el futuro del trabajo.',
-    copyright: '© 2025 Álvaro Fernández. Todos los derechos reservados.',
+    tagline: 'Sistemas que te devuelven el tiempo.',
+    copyright: '© 2026 Álvaro Fernández. Todos los derechos reservados.',
     links: [
       { label: 'LinkedIn', href: 'https://linkedin.com/in/alvarofp' },
       { label: 'GitHub', href: 'https://github.com/alvarofp' },
@@ -166,12 +248,12 @@ export const content = {
   },
 
   // ============================================
-  // SERVICIOS PAGE
+  // SERVICIOS PAGE (se mantiene similar)
   // ============================================
   services: {
     hero: {
       title: 'Servicios',
-      subtitle: 'Soluciones técnicas para escalar tu negocio sin aumentar el caos.',
+      subtitle: 'Menos caos. Más claridad. Mejor retorno.',
     },
     items: [
       {
@@ -181,49 +263,79 @@ export const content = {
         tagline: 'Deja que los robots hagan el trabajo repetitivo.',
         description: 'Diseño e implemento flujos de trabajo automatizados que conectan tus aplicaciones existentes. El objetivo es eliminar el error humano y liberar a tu equipo de tareas de bajo valor.',
         benefits: [
-          { text: 'Reducción drástica de errores manuales', icon: 'check' },
+          { text: 'Menos tareas manuales y menos errores', icon: 'check' },
           { text: 'Procesos operativos 24/7', icon: 'clock' },
-          { text: 'Escalabilidad sin contratar más personal', icon: 'growth' },
+          { text: 'Escalas sin tener que meter más manos', icon: 'growth' },
         ],
         tags: ['n8n', 'Make', 'Webhooks', 'APIs'],
         stats: { value: '20h+', label: 'ahorradas por semana (media)' },
-        cta: { label: 'Ver ejemplo', href: '/proyectos/crm-automatizacion' },
+        cta: { label: 'Ver caso: CRM Social Path', href: '/proyectos/crm-social-path' },
       },
       {
-        id: 'desarrollo-ia',
+        id: 'software-ia',
         number: '02',
-        title: 'Desarrollo de Software & IA',
-        tagline: 'Herramientas a medida para problemas específicos.',
-        description: 'Desarrollo aplicaciones web internas y externas integrando Inteligencia Artificial para potenciar sus capacidades. Desde dashboards de gestión hasta asistentes inteligentes.',
+        title: 'Software & IA a medida',
+        tagline: 'Herramientas hechas para TU flujo (no al revés).',
+        description: 'Construyo aplicaciones y herramientas internas o externas con IA aplicada: asistentes, clasificación de leads, dashboards, extracción de datos... Siempre con un objetivo medible.',
         benefits: [
-          { text: 'Software adaptado 100% a tu flujo', icon: 'target' },
-          { text: 'Integración con modelos LLM (GPT, Claude)', icon: 'cpu' },
-          { text: 'Propiedad total del código y los datos', icon: 'lock' },
+          { text: 'Software adaptado a tu forma de trabajar', icon: 'target' },
+          { text: 'IA integrada (GPT, Claude) donde realmente aporta', icon: 'cpu' },
+          { text: 'Código y datos bajo tu control', icon: 'lock' },
         ],
         tags: ['React', 'TypeScript', 'Node.js', 'Supabase', 'OpenAI'],
         stats: { value: '100%', label: 'adaptado a tu negocio' },
-        cta: { label: 'Ver ejemplo', href: '/proyectos/crm-automatizacion' },
+        cta: { label: 'Ver ejemplo', href: '/proyectos' },
       },
       {
         id: 'web',
         number: '03',
-        title: 'Desarrollo Web de Alto Rendimiento',
-        tagline: 'Tu presencia digital, optimizada.',
-        description: 'Sitios web corporativos y landing pages diseñados para la velocidad y la conversión. Código limpio, SEO técnico impecable y una experiencia de usuario fluida.',
+        title: 'Desarrollo Web de alto rendimiento',
+        tagline: 'Tu web tiene que dar confianza y convertir.',
+        description: 'Web corporativa o landing: clara, rápida, responsive y con una narrativa que vende sin gritar. Diseño con intención + código limpio + SEO técnico.',
         benefits: [
-          { text: 'Carga instantánea y optimización Core Web Vitals', icon: 'speed' },
-          { text: 'Estructura optimizada para SEO', icon: 'search' },
+          { text: 'Carga rápida y experiencia fluida', icon: 'speed' },
+          { text: 'Estructura pensada para SEO', icon: 'search' },
           { text: 'Diseño responsive y accesible', icon: 'mobile' },
         ],
         tags: ['Next.js', 'Astro', 'Tailwind CSS', 'Framer Motion'],
         stats: { value: '< 1s', label: 'tiempo de carga' },
-        cta: { label: 'Ver ejemplo', href: '/proyectos/webs-locales' },
+        cta: { label: 'Ver caso: Bohemian Málaga', href: '/proyectos/web-bohemian' },
+      },
+      {
+        id: 'branding',
+        number: '04',
+        title: 'Diseño & Branding',
+        tagline: 'Tu marca tiene que verse tan profesional como tu trabajo.',
+        description: 'Creo identidades visuales coherentes y piezas gráficas que refuerzan la percepción de tu negocio. Desde logos hasta sistemas visuales completos.',
+        benefits: [
+          { text: 'Imagen profesional y memorable', icon: 'star' },
+          { text: 'Coherencia visual en todos los puntos de contacto', icon: 'grid' },
+          { text: 'Materiales listos para usar (digital y print)', icon: 'folder' },
+        ],
+        tags: ['Identidad visual', 'Logos', 'Diseño gráfico', 'Branding'],
+        stats: { value: '∞', label: 'aplicaciones de marca' },
+        cta: { label: 'Ver proyectos de diseño', href: '/proyectos' },
+      },
+      {
+        id: 'diagnostico',
+        number: '05',
+        title: 'Diagnóstico & Roadmap',
+        tagline: 'Si no sabes qué necesitas, lo aterrizamos juntos.',
+        description: 'A veces el problema no es "hacer una automatización": es ordenar prioridades. Esto es una sesión práctica para identificar cuellos de botella y sacar un plan por fases.',
+        benefits: [
+          { text: 'Claridad: qué hacer primero', icon: 'target' },
+          { text: 'Plan realista por fases', icon: 'list' },
+          { text: 'Herramientas justas (sin comprar por comprar)', icon: 'check' },
+        ],
+        tags: ['Estrategia', 'Consultoría', 'Roadmap'],
+        stats: { value: '1h', label: 'sesión de diagnóstico' },
+        cta: { label: 'Hablemos', href: 'https://cal.com/alvarofp/15min' },
       },
     ],
     cta: {
       title: '¿Dudas sobre qué necesitas?',
-      subtitle: 'A veces el problema no es evidente. Analicemos tu caso sin compromiso.',
-      button: { label: 'Solicitar auditoría breve', href: 'https://cal.com/alvarofp/15min' },
+      subtitle: 'Cuéntame tu caso y te digo por dónde empezaría. Sin compromiso.',
+      button: { label: 'Escríbeme por WhatsApp', href: 'https://wa.me/34684005952' },
     },
   },
 
@@ -233,7 +345,7 @@ export const content = {
   projects: {
     hero: {
       title: 'Proyectos',
-      subtitle: 'Una selección de trabajos recientes y casos de éxito.',
+      subtitle: 'Casos reales, problemas concretos, resultados que importan.',
     },
     categories: [
       { id: 'all', label: 'Todos' },
@@ -243,27 +355,27 @@ export const content = {
     ],
     items: [
       {
-        slug: 'crm-automatizacion',
-        title: 'Automatización CRM Inmobiliario',
+        slug: 'crm-social-path',
+        title: 'CRM Social Path',
         category: 'automatizacion',
         categoryLabel: 'Automatización',
-        shortDesc: 'Gestión automática de leads y contratos.',
+        shortDesc: 'De información dispersa a control total del negocio.',
         featured: true,
       },
       {
-        slug: 'webs-locales',
-        title: 'Plataforma de Reservas',
+        slug: 'web-bohemian',
+        title: 'Web Bohemian Málaga',
         category: 'web',
-        categoryLabel: 'Web App',
-        shortDesc: 'Sistema de reservas para negocios locales.',
+        categoryLabel: 'Web + SEO',
+        shortDesc: 'De 0 web a mejor imagen y más reservas.',
         featured: true,
       },
       {
-        slug: 'branding',
-        title: 'Rebranding Tech Startup',
-        category: 'branding',
-        categoryLabel: 'Branding',
-        shortDesc: 'Identidad visual para empresa SaaS.',
+        slug: 'web-pillarbox',
+        title: 'Web Pillarbox',
+        category: 'web',
+        categoryLabel: 'Web B2B',
+        shortDesc: 'Multipágina clara para vender servicios a empresas.',
         featured: true,
       },
     ],
@@ -275,12 +387,12 @@ export const content = {
   contact: {
     hero: {
       title: 'Contacto',
-      subtitle: 'Inicia la conversación.',
+      subtitle: 'Cuéntame qué estás construyendo (o qué te está frenando).',
     },
     methods: [
-      { type: 'calendar', label: 'Agendar videollamada', href: 'https://cal.com/alvarofp/15min', primary: true, description: 'La forma más rápida de conocernos.' },
-      { type: 'email', label: 'Enviar email', href: 'mailto:alferpri@gmail.com', primary: false, description: 'Para consultas detalladas.' },
-      { type: 'whatsapp', label: 'WhatsApp', href: 'https://wa.me/34684005952', primary: false, description: 'Mensajes directos.' },
+      { type: 'whatsapp', label: 'Escribir por WhatsApp', href: 'https://wa.me/34684005952', primary: true, description: 'La forma más rápida. Me das contexto y te respondo directo.' },
+      { type: 'email', label: 'alferpri@gmail.com', href: 'mailto:alferpri@gmail.com', primary: false, description: 'Si prefieres explicarte con más detalle o adjuntar info.' },
+      { type: 'calendar', label: 'Agendar llamada', href: 'https://cal.com/alvarofp/15min', primary: false, description: 'Si ya tienes claro lo que necesitas y quieres ir al grano.' },
     ],
   },
 
@@ -290,72 +402,72 @@ export const content = {
   about: {
     hero: {
       title: 'Sobre mí',
-      subtitle: 'Ingeniería, diseño y negocio.',
+      subtitle: 'Negocio, diseño y tecnología. Con IA aplicada de verdad.',
     },
     intro: {
-      line1: 'Desarrollador Full Stack &',
-      line2: 'Especialista en Automatización.',
-      headline: 'Mi objetivo es simplificar lo complejo.',
+      headline: 'La versión corta: vengo del negocio real, no solo de tutoriales.',
       paragraphs: [
-        'Comencé mi carrera en el marketing digital, gestionando campañas y analizando métricas. Rápidamente me di cuenta de que la verdadera ventaja competitiva no estaba en gastar más en anuncios, sino en operar de manera más eficiente.',
-        'Esa frustración con las tareas manuales y repetitivas me llevó al mundo del código. Aprendí a programar para construir las herramientas que yo mismo necesitaba. Lo que empezó como scripts sencillos evolucionó hacia sistemas complejos de automatización y desarrollo de software completo.',
-        'Hoy, ayudo a empresas a implementar esa misma eficiencia. No soy solo un desarrollador que recibe tickets; soy un consultor técnico que entiende tus objetivos de negocio y construye la tecnología necesaria para alcanzarlos.',
+        'Con 18 años monté mi primera marca de ropa: Impale Clothing. Diseñaba todo en Photoshop, gestionaba pedidos, trataba con clientes y colaboraba con grupos de rap y batallas de gallos por Extremadura. Llegué a 1.800 seguidores y una comunidad fiel. Lo dejé cuando empecé segundo de bachillerato porque no podía con todo.',
+        'Un año después arranqué un ecommerce de zapatillas. Dropshipping con Shopify, proveedores, atención al cliente, contenido, promociones... Lo llevé yo solo durante 4 años (2020-2024). Creé una comunidad de 6.800 seguidores haciendo batallas de outfits, sorteos y colaboraciones con influencers. Facturé bien. Aprendí mejor.',
+        'Esos dos negocios me enseñaron algo que no viene en ningún curso: la tecnología solo vale si mejora el negocio. No se trata de usar herramientas bonitas, se trata de vender más, perder menos tiempo y tener control.',
+        'Hoy combino esa visión de negocio con código, IA y diseño. No soy el típico perfil técnico que solo sabe programar. Vengo de ventas, de marketing, de diseño gráfico. Y eso me permite ver lo que muchos devs no ven: el problema real del cliente.',
+      ],
+    },
+    principles: {
+      title: 'Cómo pienso cuando trabajo contigo',
+      items: [
+        { title: 'Criterio de negocio', description: 'La tecnología es una herramienta, no un fin. Si algo no mejora resultados, no lo hago.' },
+        { title: 'Diseño con intención', description: 'Bonito sí, pero sobre todo claro, usable y orientado a conversión.' },
+        { title: 'Sistemas y orden', description: 'Lo dejo documentado y usable. Que no dependas de mí para siempre.' },
+        { title: 'Comunicación clara', description: 'Te explico todo en humano. Sin jerga innecesaria, sin hacerme el listo.' },
       ],
     },
     skills: {
-      title: 'Stack Tecnológico',
+      title: 'Herramientas con las que trabajo',
       categories: [
-        {
-          name: 'Core',
-          items: ['JavaScript/TypeScript', 'React', 'Node.js', 'Python'],
-        },
-        {
-          name: 'Automatización',
-          items: ['n8n', 'Make', 'Zapier', 'Webhooks', 'REST APIs'],
-        },
-        {
-          name: 'Base de Datos & Backend',
-          items: ['Supabase', 'PostgreSQL', 'Firebase', 'Serverless Functions'],
-        },
-        {
-          name: 'Herramientas',
-          items: ['Git', 'Docker', 'Figma', 'VS Code', 'Cursor'],
-        },
+        { name: 'Automatización', items: ['n8n', 'Make', 'Webhooks', 'APIs'] },
+        { name: 'Desarrollo', items: ['React', 'TypeScript', 'Node.js', 'Supabase'] },
+        { name: 'IA', items: ['OpenAI (GPT)', 'Claude', 'Integraciones LLM'] },
+        { name: 'Web', items: ['Next.js', 'Astro', 'Tailwind CSS', 'Framer Motion'] },
+        { name: 'Diseño', items: ['Figma', 'Photoshop', 'Illustrator'] },
+        { name: 'Otras', items: ['Git', 'Notion', 'Shopify'] },
       ],
     },
     experience: {
       title: 'Trayectoria',
       items: [
-        {
-          period: '2023 - Presente',
-          role: 'Consultor Independiente',
-          company: 'Freelance',
-          description: 'Desarrollo de soluciones a medida y automatización para PYMES y Startups.',
-        },
-        {
-          period: '2021 - 2023',
-          role: 'Responsable de Tecnología & Marketing',
-          company: 'Agencia Digital',
-          description: 'Lideré la transformación digital interna e implementación de CRM.',
-        },
+        { period: '2024 - Presente', role: 'Freelance', company: 'Automatización, desarrollo web e IA', description: 'Para empresas y agencias. Colaboración activa con Flama Studios.' },
+        { period: '2020 - 2024', role: 'Ecommerce propio', company: 'Zapatillas', description: 'Shopify, dropshipping, comunidad de 6.800 seguidores.' },
+        { period: '2019', role: 'Impale Clothing', company: 'Marca de ropa propia', description: 'Diseño, ventas, colaboraciones.' },
       ],
     },
     education: {
       title: 'Formación',
       items: [
-        {
-          period: '2019',
-          title: 'Grado en Marketing e Investigación de Mercados',
-          institution: 'Universidad de Málaga',
-        },
+        { period: '2019', title: 'Grado en Publicidad y Relaciones Públicas', institution: 'Universidad' },
       ],
+    },
+    languages: {
+      title: 'Idiomas',
+      items: [
+        { language: 'Español', level: 'Nativo' },
+        { language: 'Inglés', level: 'Avanzado (C1)' },
+      ],
+    },
+    interests: {
+      title: 'Intereses',
+      items: ['Inteligencia Artificial', 'Automatización', 'Startups', 'Diseño UI/UX', 'Productividad', 'Negocios digitales'],
+    },
+    vision: {
+      title: 'Hacia dónde voy',
+      text: 'Ahora mismo soy freelance, pero el objetivo es claro: construir mi propio negocio basado en IA. Productos propios, sistemas internos para empresas, soluciones escalables. Este portfolio no es solo para conseguir clientes. Es el primer paso de algo más grande.',
     },
     cta: {
       title: '¿Trabajamos juntos?',
-      text: 'Estoy siempre abierto a escuchar sobre nuevos retos y proyectos interesantes.',
+      text: 'Si tienes un proyecto interesante o quieres explorar cómo optimizar tu negocio, escríbeme. Sin compromiso, sin llamada fría.',
       buttons: [
-        { label: 'Agendar reunión', href: 'https://cal.com/alvarofp/15min', variant: 'primary' },
-        { label: 'Ver mi trabajo', href: '/proyectos', variant: 'secondary' },
+        { label: 'Escríbeme por WhatsApp', href: 'https://wa.me/34684005952', variant: 'primary' },
+        { label: 'Ver proyectos', href: '/proyectos', variant: 'secondary' },
       ],
     },
   },

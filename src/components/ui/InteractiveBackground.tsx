@@ -17,8 +17,6 @@ export function InteractiveBackground() {
 
     // Grid configuration
     const gridSize = 40
-    const horizonY = height * 0.4 // Perspective vanishing point height
-    const speed = 0.5
     
     // Mouse interaction
     const mouse = { x: width / 2, y: height / 2 }
@@ -48,7 +46,6 @@ export function InteractiveBackground() {
 
       // Calculate grid offset based on time and mouse
       const offsetX = (mouse.x - width / 2) * 0.1
-      const offsetZ = time * speed
 
       // Gradient for fading out distant lines
       const gradient = ctx.createLinearGradient(0, 0, 0, height)
@@ -60,13 +57,6 @@ export function InteractiveBackground() {
       ctx.lineWidth = 1
 
       // Draw Vertical Lines (converging to vanishing point)
-      // We draw lines starting from bottom and going up
-      const fov = 300
-      const viewDist = 200
-      
-      // Horizontal Lines (moving towards camera)
-      // Z goes from 0 (camera) to positive (distance)
-      // We actually want lines on the ground plane
       
       // SIMPLER PERSPECTIVE GRID APPROACH
       
@@ -92,9 +82,6 @@ export function InteractiveBackground() {
       const horizontalLines = 20
       
       for (let i = 0; i < horizontalLines; i++) {
-        // Exponential spacing for perspective
-        const perspective = Math.pow(i / horizontalLines, 2.5) // Higher power = more bunching at top
-        
         // Animated Z offset
         const zOffset = (time * 0.2) % 1 // 0 to 1 loop
         
