@@ -27,7 +27,7 @@ export function CTA() {
   const { cta } = content.home
 
   return (
-    <section className="relative py-16 md:py-24 overflow-hidden bg-[#050508]">
+    <section className="relative py-12 md:py-16 overflow-hidden bg-[#050508]">
       {/* Efectos de fondo sutiles */}
       <GridPattern size={100} color="rgba(249, 115, 22, 0.03)" />
       <GlowPulse color="rgba(249, 115, 22, 0.12)" size={600} />

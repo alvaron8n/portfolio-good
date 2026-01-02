@@ -320,21 +320,21 @@ function Header() {
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
-        className="fixed top-4 left-1/2 -translate-x-1/2 z-[100] w-full max-w-5xl px-4"
+        className="fixed top-3 left-1/2 -translate-x-1/2 z-[100] w-full max-w-5xl px-4"
       >
         <nav
           className={`relative flex items-center justify-between px-4 rounded border transition-all duration-500 ${
             isScrolled
-              ? 'h-14 border-cyan-900/30 bg-[#030304]/90 shadow-[0_0_20px_rgba(0,0,0,0.5)]'
-              : 'h-16 border-white/5 bg-[#030304]/70'
+              ? 'h-11 border-cyan-900/20 bg-[#030304]/95 shadow-[0_0_15px_rgba(0,0,0,0.4)]'
+              : 'h-12 border-white/[0.04] bg-[#030304]/80'
           }`}
-          style={{ backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)' }}
+          style={{ backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)' }}
         >
-          {/* Corner decorations */}
-          <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-cyan-500/50" />
-          <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-cyan-500/50" />
-          <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-cyan-500/50" />
-          <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-cyan-500/50" />
+          {/* Corner decorations - más finos */}
+          <div className="absolute top-0 left-0 w-1.5 h-1.5 border-t border-l border-cyan-500/40" />
+          <div className="absolute top-0 right-0 w-1.5 h-1.5 border-t border-r border-cyan-500/40" />
+          <div className="absolute bottom-0 left-0 w-1.5 h-1.5 border-b border-l border-cyan-500/40" />
+          <div className="absolute bottom-0 right-0 w-1.5 h-1.5 border-b border-r border-cyan-500/40" />
 
           {/* Logo */}
           <div className="flex items-center gap-4">

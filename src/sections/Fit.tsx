@@ -52,7 +52,7 @@ export function Fit() {
 
       <div className="relative z-10 max-w-5xl mx-auto px-4 md:px-8">
         <motion.h2
-          className="font-display text-2xl md:text-3xl lg:text-4xl font-bold text-white text-center mb-10 md:mb-12"
+          className="font-display text-2xl md:text-3xl lg:text-4xl font-bold text-white text-center mb-8 md:mb-10"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}

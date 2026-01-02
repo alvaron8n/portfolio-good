@@ -36,7 +36,7 @@ export function WhatIDo() {
   return (
     <section 
       id="que-hago" 
-      className="relative py-16 md:py-20 overflow-hidden"
+      className="relative py-12 md:py-16 overflow-hidden"
       style={{ background: 'linear-gradient(180deg, #0a0a0f 0%, #0c0c14 100%)' }}
     >
       {/* Efectos de fondo sutiles */}
@@ -47,15 +47,26 @@ export function WhatIDo() {
       <ParticleField count={10} color="orange" />
 
       <div className="relative z-10 max-w-6xl mx-auto px-4 md:px-8">
-        <motion.h2
-          className="font-display text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-10 md:mb-12"
+        <motion.div
+          className="flex flex-wrap items-center gap-3 mb-8 md:mb-10"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          Lo que hago <AccentText>(sin palabras vacías)</AccentText>
-        </motion.h2>
+          <h2 className="font-display text-2xl md:text-3xl lg:text-4xl font-bold text-white">
+            Lo que hago
+          </h2>
+          <span 
+            className="inline-flex items-center px-3 py-1.5 rounded-full text-xs md:text-sm font-semibold tracking-wide"
+            style={{ 
+              background: 'linear-gradient(135deg, rgba(234, 88, 12, 0.15) 0%, rgba(251, 191, 36, 0.1) 100%)',
+              border: '1px solid rgba(249, 115, 22, 0.3)',
+            }}
+          >
+            <AccentText>(sin palabras vacías)</AccentText>
+          </span>
+        </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
           {whatIDo.items.map((item, index) => (

@@ -38,7 +38,7 @@ export function About() {
     <section 
       ref={sectionRef}
       id="sobre-mi" 
-      className="relative py-14 md:py-20 overflow-hidden"
+      className="relative py-10 md:py-14 overflow-hidden"
       style={{ background: '#0a0a0f' }}
     >
       {/* Efectos de fondo sutiles con parallax */}

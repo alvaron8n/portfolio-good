@@ -15,7 +15,7 @@ export const Section = forwardRef<HTMLElement, SectionProps>(
       <section
         ref={ref}
         id={id}
-        className={`${tight ? 'py-12 md:py-16' : 'py-20 md:py-28'} ${className}`}
+        className={`${tight ? 'py-10 md:py-12' : 'py-12 md:py-16'} ${className}`}
         style={style}
       >
         {children}

@@ -99,10 +99,10 @@ export function Services() {
   const { services } = content.home
 
   return (
-    <Section id="servicios" className="py-32 relative">
+    <Section id="servicios" className="py-16 md:py-20 relative">
       <Container>
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-20">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 md:mb-16">
           <motion.div
             className="max-w-xl"
             initial={{ opacity: 0, y: 20 }}
