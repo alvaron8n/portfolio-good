@@ -1,583 +1,791 @@
-import { motion, useSpring, useMotionValue, useInView } from 'framer-motion'
-import { useRef, useState, useEffect } from 'react'
+import { motion, useInView } from 'framer-motion'
+import { useRef } from 'react'
+import { ShaderGradientCanvas, ShaderGradient } from '@shadergradient/react'
 import { Section } from '../components/Section'
 import { Container } from '../components/Container'
 import { Button } from '../components/Button'
 import { content } from '../content/content'
-import { VeilSectionHeader } from '../components/ui/VeilSectionHeader'
+import AlvaroPhoto from '../lib/Alvaro.jpg'
 
-// Animated counter component
-function AnimatedCounter({ value, suffix = '', duration = 2000 }: { value: number; suffix?: string; duration?: number }) {
-  const ref = useRef<HTMLSpanElement>(null)
-  const isInView = useInView(ref, { once: true, margin: '-50px' })
-  const [displayValue, setDisplayValue] = useState(0)
+// Icons from react-icons
+import { 
+  SiN8N, SiZapier, SiOpenai, SiNotion, SiReact, SiTypescript, SiNodedotjs, 
+  SiSupabase, SiNextdotjs, SiAstro, SiWordpress, SiTailwindcss, SiFigma, 
+  SiAdobephotoshop, SiAdobeillustrator, SiAdobepremierepro, SiGit, SiShopify,
+  SiGoogleanalytics, SiFramer
+} from 'react-icons/si'
+import { HiOutlineCog, HiOutlineCode, HiOutlineLightningBolt, HiOutlineGlobe, HiOutlineColorSwatch, HiOutlineCollection } from 'react-icons/hi'
+import { BsRobot } from 'react-icons/bs'
 
-  useEffect(() => {
-    if (!isInView) return
-    let startTime: number
-    const animate = (timestamp: number) => {
-      if (!startTime) startTime = timestamp
-      const progress = Math.min((timestamp - startTime) / duration, 1)
-      const easeOutExpo = 1 - Math.pow(2, -10 * progress)
-      setDisplayValue(Math.floor(easeOutExpo * value))
-      if (progress < 1) requestAnimationFrame(animate)
-    }
-    requestAnimationFrame(animate)
-  }, [isInView, value, duration])
-
-  return <span ref={ref}>{displayValue}{suffix}</span>
+// ============================================
+// TOOL ICON MAP
+// ============================================
+const toolIcons: Record<string, React.ReactNode> = {
+  'n8n': <SiN8N />,
+  'Make': <HiOutlineCog />,
+  'Zapier': <SiZapier />,
+  'OpenAI API': <SiOpenai />,
+  'Notion API': <SiNotion />,
+  'Webhooks': <HiOutlineLightningBolt />,
+  'React': <SiReact />,
+  'TypeScript': <SiTypescript />,
+  'Node.js': <SiNodedotjs />,
+  'Supabase': <SiSupabase />,
+  'HTML/CSS': <HiOutlineCode />,
+  'GPT-4': <SiOpenai />,
+  'Claude': <BsRobot />,
+  'Llama': <BsRobot />,
+  'Prompt Engineering': <BsRobot />,
+  'Integraciones LLM': <BsRobot />,
+  'Next.js': <SiNextdotjs />,
+  'Astro': <SiAstro />,
+  'WordPress': <SiWordpress />,
+  'Elementor': <SiWordpress />,
+  'Tailwind CSS': <SiTailwindcss />,
+  'Framer Motion': <SiFramer />,
+  'Figma': <SiFigma />,
+  'Photoshop': <SiAdobephotoshop />,
+  'Illustrator': <SiAdobeillustrator />,
+  'Premiere Pro': <SiAdobepremierepro />,
+  'Diseño UI/UX': <HiOutlineColorSwatch />,
+  'Git': <SiGit />,
+  'Notion': <SiNotion />,
+  'Shopify': <SiShopify />,
+  'Google Analytics': <SiGoogleanalytics />,
+  'SEO On-Page': <HiOutlineGlobe />,
+  'CRM Automation': <HiOutlineCollection />,
 }
 
-// Timeline item with animated connector
-function TimelineItem({ item, index, isLast }: {
-  item: { period: string; role: string; company: string; description: string }
-  index: number
-  isLast: boolean
-}) {
+const categoryIcons: Record<string, React.ReactNode> = {
+  'Automatización': <HiOutlineCog className="w-5 h-5" />,
+  'Desarrollo': <HiOutlineCode className="w-5 h-5" />,
+  'IA': <BsRobot className="w-5 h-5" />,
+  'Web': <HiOutlineGlobe className="w-5 h-5" />,
+  'Diseño': <HiOutlineColorSwatch className="w-5 h-5" />,
+  'Otras': <HiOutlineCollection className="w-5 h-5" />,
+}
+
+
+// ============================================
+// GLASS PANEL COMPONENT
+// ============================================
+function GlassCard({ children, className = '' }: { children: React.ReactNode; className?: string }) {
+  return (
+    <div
+      className={`relative rounded-2xl overflow-hidden ${className}`}
+      style={{
+        background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 100%)',
+        backdropFilter: 'blur(20px) saturate(180%)',
+        WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+        border: '1px solid rgba(255, 255, 255, 0.08)',
+        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.06)',
+      }}
+    >
+      {children}
+    </div>
+  )
+}
+
+
+
+// ============================================
+// TOOL CARD - Premium tool category card
+// ============================================
+function ToolCard({ category, index }: { category: { name: string; items: readonly string[] }; index: number }) {
   const ref = useRef<HTMLDivElement>(null)
-  const isInView = useInView(ref, { once: true, margin: '-100px' })
+  const isInView = useInView(ref, { once: true, margin: '-50px' })
 
   return (
     <motion.div
       ref={ref}
-      className="relative pl-12 pb-12 last:pb-0"
-      initial={{ opacity: 0, x: -30 }}
-      animate={isInView ? { opacity: 1, x: 0 } : {}}
-      transition={{ duration: 0.6, delay: index * 0.15 }}
+      className="group relative p-5 rounded-xl overflow-hidden"
+      style={{
+        background: 'linear-gradient(180deg, rgba(20, 20, 24, 0.8) 0%, rgba(10, 10, 15, 0.9) 100%)',
+        border: '1px solid rgba(255, 255, 255, 0.06)',
+      }}
+      initial={{ opacity: 0, y: 20 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.4, delay: index * 0.08 }}
+      whileHover={{ 
+        borderColor: 'rgba(6, 182, 212, 0.3)',
+        boxShadow: '0 0 30px rgba(6, 182, 212, 0.1)',
+      }}
     >
-      {/* Connector line */}
-      {!isLast && (
-        <motion.div
-          className="absolute left-[22px] top-8 w-0.5 origin-top"
-          style={{
-            background: 'linear-gradient(to bottom, #8B5CF6 0%, rgba(139, 92, 246, 0.2) 100%)',
-            height: 'calc(100% - 24px)',
-          }}
-          initial={{ scaleY: 0 }}
-          animate={isInView ? { scaleY: 1 } : {}}
-          transition={{ duration: 0.6, delay: index * 0.15 + 0.3 }}
-        />
-      )}
-
-      {/* Marker */}
-      <motion.div
-        className="absolute left-3 top-1 w-5 h-5 rounded-full border-4 border-[#0A0A0F]"
-        style={{ background: 'linear-gradient(135deg, #8B5CF6 0%, #06B6D4 100%)' }}
-        initial={{ scale: 0 }}
-        animate={isInView ? { scale: 1 } : {}}
-        transition={{ duration: 0.3, delay: index * 0.15 + 0.1, type: 'spring' }}
-      />
-
-      {/* Content */}
-      <motion.div
-        className="group relative p-6 rounded-2xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.04] hover:border-violet-500/30 transition-all duration-300"
-        whileHover={{ x: 8 }}
-      >
-        <span className="text-xs font-semibold text-cyan-400 uppercase tracking-wider">
-          {item.period}
-        </span>
-        <h3 className="text-xl font-semibold text-white mt-2 mb-1 group-hover:text-violet-300 transition-colors">
-          {item.role}
+      {/* Category header */}
+      <div className="flex items-center gap-2.5 mb-4">
+        <div className="p-2 rounded-lg bg-gradient-to-br from-orange-500/20 to-cyan-500/10 text-orange-400">
+          {categoryIcons[category.name] || <HiOutlineCog className="w-5 h-5" />}
+        </div>
+        <h3 className="text-sm font-semibold text-orange-400 uppercase tracking-wider">
+          {category.name}
         </h3>
-        <p className="text-sm text-white/50 mb-3">{item.company}</p>
-        <p className="text-sm text-white/60 leading-relaxed">{item.description}</p>
+      </div>
 
-        {/* Hover glow */}
-        <motion.div
-          className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-          style={{
-            background: 'radial-gradient(circle at 50% 0%, rgba(139, 92, 246, 0.1) 0%, transparent 60%)',
-          }}
-        />
-      </motion.div>
-    </motion.div>
-  )
-}
-
-// Skill category with animated items
-function SkillCategory({ category, index }: {
-  category: { name: string; items: readonly string[] }
-  index: number
-}) {
-  const [hoveredSkill, setHoveredSkill] = useState<string | null>(null)
-
-  const skillColors: Record<string, string> = {
-    'React': '#61DAFB',
-    'TypeScript': '#3178C6',
-    'Next.js': '#FFFFFF',
-    'Tailwind': '#06B6D4',
-    'Framer Motion': '#FF0055',
-    'n8n': '#EA4B71',
-    'Make': '#6366F1',
-    'Zapier': '#FF4A00',
-    'Supabase': '#3ECF8E',
-    'Python': '#3776AB',
-    'Lovable': '#EC4899',
-    'Cursor AI': '#8B5CF6',
-    'GPT-4': '#10A37F',
-    'Claude': '#CC785C',
-    'Figma': '#F24E1E',
-    'Photoshop': '#31A8FF',
-    'Illustrator': '#FF9A00',
-    'Premiere': '#9999FF',
-  }
-
-  return (
-    <motion.div
-      className="relative p-7 rounded-2xl border border-white/5 bg-white/[0.02] overflow-hidden group"
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
-      whileHover={{ borderColor: 'rgba(139, 92, 246, 0.3)' }}
-    >
-      {/* Category icon glow */}
-      <motion.div
-        className="absolute -top-12 -right-12 w-32 h-32 rounded-full blur-3xl"
-        style={{ background: 'rgba(139, 92, 246, 0.15)' }}
-        animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
-        transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-      />
-
-      <h3 className="text-sm font-semibold text-violet-400 uppercase tracking-wider mb-5">
-        {category.name}
-      </h3>
-
-      <div className="flex flex-wrap gap-2.5 relative">
-        {category.items.map((item, i) => {
-          const color = skillColors[item] || '#A78BFA'
-          const isHovered = hoveredSkill === item
-
-          return (
-            <motion.span
-              key={item}
-              className="relative px-4 py-2 rounded-full text-sm font-medium cursor-default transition-all duration-200"
-              style={{
-                background: isHovered ? `${color}20` : 'rgba(255,255,255,0.05)',
-                border: `1px solid ${isHovered ? `${color}60` : 'rgba(255,255,255,0.1)'}`,
-                color: isHovered ? color : 'rgba(255,255,255,0.7)',
-              }}
-              onMouseEnter={() => setHoveredSkill(item)}
-              onMouseLeave={() => setHoveredSkill(null)}
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.3, delay: index * 0.1 + i * 0.03 }}
-              whileHover={{ scale: 1.05 }}
-            >
-              {item}
-            </motion.span>
-          )
-        })}
+      {/* Tools grid */}
+      <div className="flex flex-wrap gap-2">
+        {category.items.map((tool, i) => (
+          <motion.div
+            key={tool}
+            className="group/tool flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium text-white/70 hover:text-white transition-all duration-200"
+            style={{
+              background: 'rgba(255, 255, 255, 0.04)',
+              border: '1px solid rgba(255, 255, 255, 0.06)',
+            }}
+            whileHover={{ 
+              background: 'rgba(255, 255, 255, 0.08)',
+              borderColor: 'rgba(6, 182, 212, 0.3)',
+            }}
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={isInView ? { opacity: 1, scale: 1 } : {}}
+            transition={{ duration: 0.2, delay: index * 0.08 + i * 0.02 }}
+          >
+            <span className="text-cyan-400 text-sm opacity-70 group-hover/tool:opacity-100">
+              {toolIcons[tool] || <HiOutlineCog />}
+            </span>
+            <span>{tool}</span>
+          </motion.div>
+        ))}
       </div>
     </motion.div>
   )
 }
 
+
+// ============================================
+// TIMELINE ITEM - Improved with gradient line
+// ============================================
+function TimelineItem({ item, index, isLast }: {
+  item: { period: string; role: string; company: string; description: string; highlights?: readonly string[] }
+  index: number
+  isLast: boolean
+}) {
+  const ref = useRef<HTMLDivElement>(null)
+  const isInView = useInView(ref, { once: true, margin: '-80px' })
+
+  const icons = ['⚙️', '💡', '🎨', '📊', '🚀']
+
+  return (
+    <motion.div
+      ref={ref}
+      className="relative pl-10 pb-8 last:pb-0"
+      initial={{ opacity: 0, x: -20 }}
+      animate={isInView ? { opacity: 1, x: 0 } : {}}
+      transition={{ duration: 0.5, delay: index * 0.1 }}
+    >
+      {/* Animated gradient line */}
+      {!isLast && (
+        <motion.div
+          className="absolute left-[15px] top-8 w-0.5 origin-top"
+          style={{
+            background: 'linear-gradient(to bottom, #06B6D4 0%, #f97316 50%, rgba(249, 115, 22, 0.2) 100%)',
+            height: 'calc(100% - 16px)',
+          }}
+          initial={{ scaleY: 0 }}
+          animate={isInView ? { scaleY: 1 } : {}}
+          transition={{ duration: 0.6, delay: index * 0.1 + 0.2 }}
+        />
+      )}
+
+      {/* Node marker */}
+      <motion.div
+        className="absolute left-1.5 top-1.5 w-6 h-6 rounded-full flex items-center justify-center text-xs"
+        style={{ 
+          background: 'linear-gradient(135deg, #06B6D4 0%, #f97316 100%)',
+          boxShadow: '0 0 12px rgba(6, 182, 212, 0.4)',
+        }}
+        initial={{ scale: 0 }}
+        animate={isInView ? { scale: 1 } : {}}
+        transition={{ duration: 0.3, delay: index * 0.1, type: 'spring' }}
+      >
+        {icons[index % icons.length]}
+      </motion.div>
+
+      {/* Content card */}
+      <GlassCard className="p-5 group hover:border-cyan-500/30 transition-all duration-300">
+        <span className="text-[10px] font-bold text-cyan-400 uppercase tracking-widest">
+          {item.period}
+        </span>
+        <h3 className="text-lg font-semibold text-white mt-1.5 mb-0.5 group-hover:text-cyan-300 transition-colors">
+          {item.role}
+        </h3>
+        <p className="text-xs text-white/40 mb-2">{item.company}</p>
+        <p className="text-sm text-white/60 leading-relaxed mb-3">{item.description}</p>
+        
+        {item.highlights && item.highlights.length > 0 && (
+          <div className="flex flex-wrap gap-1.5">
+            {item.highlights.map((h, i) => (
+              <span 
+                key={i} 
+                className="text-[10px] px-2 py-1 rounded-full bg-cyan-500/10 text-cyan-400/80 border border-cyan-500/20"
+              >
+                {h}
+              </span>
+            ))}
+          </div>
+        )}
+      </GlassCard>
+    </motion.div>
+  )
+}
+
+// ============================================
+// VISION CARD - For manifesto grid
+// ============================================
+function VisionCard({ text, index }: { text: string; index: number }) {
+  const ref = useRef<HTMLDivElement>(null)
+  const isInView = useInView(ref, { once: true, margin: '-50px' })
+
+  return (
+    <motion.div
+      ref={ref}
+      className="group relative p-6 rounded-xl overflow-hidden cursor-default"
+      style={{
+        background: 'rgba(10, 10, 15, 0.6)',
+        border: '1px solid rgba(255, 255, 255, 0.05)',
+      }}
+      initial={{ opacity: 0, y: 20 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.4, delay: index * 0.1 }}
+      whileHover={{ 
+        borderColor: 'rgba(249, 115, 22, 0.3)',
+        background: 'rgba(15, 15, 20, 0.8)',
+      }}
+    >
+      {/* Hover glow */}
+      <motion.div
+        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+        style={{
+          background: 'radial-gradient(circle at 50% 0%, rgba(249, 115, 22, 0.08) 0%, transparent 60%)',
+        }}
+      />
+      <p className="relative text-sm md:text-base text-white/70 group-hover:text-white/90 leading-relaxed transition-colors">
+        "{text}"
+      </p>
+    </motion.div>
+  )
+}
+
+
+// ============================================
+// MAIN ABOUT PAGE
+// ============================================
 export function AboutPage() {
-  const photoRef = useRef<HTMLDivElement>(null)
-
-  // Photo magnetic effect
-  const mouseX = useMotionValue(0)
-  const mouseY = useMotionValue(0)
-  const photoX = useSpring(mouseX, { stiffness: 300, damping: 30 })
-  const photoY = useSpring(mouseY, { stiffness: 300, damping: 30 })
-
-  const handlePhotoMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!photoRef.current) return
-    const rect = photoRef.current.getBoundingClientRect()
-    const centerX = rect.left + rect.width / 2
-    const centerY = rect.top + rect.height / 2
-    mouseX.set((e.clientX - centerX) * 0.1)
-    mouseY.set((e.clientY - centerY) * 0.1)
-  }
-
-  const handlePhotoMouseLeave = () => {
-    mouseX.set(0)
-    mouseY.set(0)
-  }
-
-  // Stats for the intro section
-  const stats = [
-    { value: 5, suffix: '+', label: 'Años de experiencia' },
-    { value: 50, suffix: '+', label: 'Proyectos completados' },
-    { value: 100, suffix: '%', label: 'Clientes satisfechos' },
-  ]
+  const { about } = content
 
   return (
     <>
-      {/* Hero Section with VeilSectionHeader */}
-      <Section className="relative overflow-hidden pt-32 pb-8">
-        <Container>
-          <VeilSectionHeader
-            variant="about"
-            eyebrow="Sobre mí"
-            title={content.about.hero.title}
-            subtitle={content.about.hero.subtitle}
-            align="center"
-          />
-        </Container>
-
-        {/* Animated background */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden -z-10">
-          <motion.div
-            className="absolute w-[600px] h-[600px] rounded-full"
-            style={{
-              background: 'radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, transparent 70%)',
-              filter: 'blur(80px)',
-              top: '-20%',
-              right: '-15%',
-            }}
-            animate={{ scale: [1, 1.1, 1], opacity: [0.3, 0.4, 0.3] }}
-            transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
-          />
-          <motion.div
-            className="absolute w-[500px] h-[500px] rounded-full"
-            style={{
-              background: 'radial-gradient(circle, rgba(6, 182, 212, 0.12) 0%, transparent 70%)',
-              filter: 'blur(80px)',
-              bottom: '-10%',
-              left: '-10%',
-            }}
-            animate={{ scale: [1, 1.15, 1], opacity: [0.25, 0.35, 0.25] }}
-            transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
-          />
-
-          {/* Grid pattern */}
-          <div
-            className="absolute inset-0"
-            style={{
-              backgroundImage: `
-                linear-gradient(rgba(139, 92, 246, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(139, 92, 246, 0.03) 1px, transparent 1px)
-              `,
-              backgroundSize: '60px 60px',
-              maskImage: 'radial-gradient(ellipse at center, black 30%, transparent 70%)',
-            }}
-          />
+      {/* ============================================
+          HERO SECTION - ShaderGradient + Photo
+          ============================================ */}
+      <section className="relative min-h-[90vh] flex items-center overflow-hidden">
+        {/* ShaderGradient Background */}
+        <div className="absolute inset-0 z-0">
+          <ShaderGradientCanvas
+            style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
+            pointerEvents="none"
+          >
+            <ShaderGradient
+              type="waterPlane"
+              animate="on"
+              uTime={0}
+              uSpeed={0.1}
+              uStrength={1.5}
+              uDensity={1.2}
+              uFrequency={5.5}
+              uAmplitude={3}
+              positionX={0}
+              positionY={0}
+              positionZ={0}
+              rotationX={0}
+              rotationY={0}
+              rotationZ={0}
+              color1="#0a0a14"
+              color2="#1a1a2e"
+              color3="#16213e"
+              reflection={0.1}
+              wireframe={false}
+              shader="defaults"
+              cAzimuthAngle={180}
+              cPolarAngle={90}
+              cDistance={3.5}
+              cameraZoom={1}
+              lightType="3d"
+              brightness={1}
+              envPreset="city"
+              grain="off"
+            />
+          </ShaderGradientCanvas>
+          {/* Overlay for contrast */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/60" />
         </div>
-      </Section>
 
-      {/* Intro Section with Photo and Stats */}
-      <Section className="py-20 md:py-32">
-        <Container>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
-            {/* Photo with magnetic effect */}
+        {/* Fade-out bottom transition */}
+        <div 
+          className="absolute bottom-0 left-0 right-0 h-40 z-[5] pointer-events-none"
+          style={{ background: 'linear-gradient(to bottom, transparent 0%, #0a0a0f 100%)' }}
+        />
+
+        {/* Content */}
+        <Container className="relative z-10 py-24 md:py-32">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+            
+            {/* Left: Text */}
             <motion.div
-              ref={photoRef}
-              className="flex justify-center lg:justify-start"
-              initial={{ opacity: 0, x: -40 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
-              onMouseMove={handlePhotoMouseMove}
-              onMouseLeave={handlePhotoMouseLeave}
             >
-              <motion.div
-                className="relative"
-                style={{ x: photoX, y: photoY }}
+              {/* Eyebrow */}
+              <div className="flex items-center gap-3 mb-4">
+                <div className="h-px w-8 bg-gradient-to-r from-cyan-400 to-transparent" />
+                <span className="text-xs font-bold text-cyan-400 uppercase tracking-[0.2em]">
+                  {about.hero.eyebrow}
+                </span>
+              </div>
+
+              {/* H1 */}
+              <h1 className="mb-5">
+                <span 
+                  className="block text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight"
+                  style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+                >
+                  {about.hero.title}
+                </span>
+                <span 
+                  className="block text-2xl md:text-3xl lg:text-4xl font-bold mt-1"
+                  style={{ 
+                    fontFamily: "'BBH Bartle', 'Space Grotesk', sans-serif",
+                    background: 'linear-gradient(135deg, #ea580c 0%, #f97316 40%, #fbbf24 100%)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    filter: 'drop-shadow(0 0 20px rgba(249, 115, 22, 0.3))',
+                  }}
+                >
+                  {about.hero.titleAccent}
+                </span>
+              </h1>
+
+              {/* Subtitle */}
+              <p 
+                className="text-base md:text-lg text-white/60 leading-relaxed mb-8 max-w-xl"
+                style={{ fontFamily: "'Montserrat', sans-serif" }}
               >
-                {/* Animated border */}
+                {about.hero.subtitle}
+              </p>
+
+              {/* CTAs */}
+              <div className="flex flex-wrap gap-3">
+                <Button href="/proyectos" variant="primary">
+                  Ver proyectos
+                </Button>
+                <Button href="https://wa.me/34684005952" variant="secondary">
+                  Contactar
+                </Button>
+              </div>
+            </motion.div>
+
+            {/* Right: Photo */}
+            <motion.div
+              className="flex justify-center lg:justify-end"
+              initial={{ opacity: 0, x: 30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
+              <div className="relative">
+                {/* Animated gradient border */}
                 <motion.div
-                  className="absolute -inset-1 rounded-3xl"
+                  className="absolute -inset-1 rounded-2xl"
                   style={{
-                    background: 'linear-gradient(135deg, #8B5CF6 0%, #06B6D4 50%, #8B5CF6 100%)',
+                    background: 'linear-gradient(135deg, #06B6D4 0%, #f97316 50%, #06B6D4 100%)',
                     backgroundSize: '200% 200%',
                   }}
                   animate={{ backgroundPosition: ['0% 0%', '100% 100%', '0% 0%'] }}
-                  transition={{ duration: 5, repeat: Infinity, ease: 'linear' }}
+                  transition={{ duration: 6, repeat: Infinity, ease: 'linear' }}
                 />
-
-                <div className="relative p-3 rounded-3xl bg-[#0A0A0F]">
-                  <div className="w-72 h-80 md:w-80 md:h-96 rounded-2xl bg-gradient-to-br from-[#12121A] to-[#0A0A0F] flex items-center justify-center overflow-hidden">
-                    {/* Placeholder initials */}
-                    <motion.span
-                      className="text-7xl md:text-8xl font-black bg-gradient-to-br from-violet-400 to-cyan-400 bg-clip-text text-transparent"
-                      animate={{ opacity: [0.4, 0.6, 0.4] }}
-                      transition={{ duration: 3, repeat: Infinity }}
-                    >
-                      ÁF
-                    </motion.span>
-                  </div>
+                
+                {/* Photo container */}
+                <div className="relative p-1.5 rounded-2xl bg-[#0a0a0f]">
+                  <img
+                    src={AlvaroPhoto}
+                    alt="Álvaro Fernández"
+                    className="w-64 h-80 md:w-72 md:h-96 object-cover rounded-xl"
+                  />
+                  
+                  {/* Glass overlay effect */}
+                  <div 
+                    className="absolute inset-1.5 rounded-xl pointer-events-none"
+                    style={{
+                      background: 'linear-gradient(180deg, transparent 60%, rgba(10, 10, 15, 0.5) 100%)',
+                    }}
+                  />
                 </div>
 
-                {/* Floating badge */}
+                {/* Disponible badge */}
                 <motion.div
-                  className="absolute -bottom-4 -right-4 px-4 py-2 rounded-full bg-emerald-500/20 border border-emerald-500/40 backdrop-blur-sm"
+                  className="absolute -bottom-3 -right-3 px-4 py-2 rounded-full backdrop-blur-md"
+                  style={{
+                    background: 'rgba(16, 185, 129, 0.15)',
+                    border: '1px solid rgba(16, 185, 129, 0.3)',
+                  }}
                   initial={{ opacity: 0, scale: 0.8 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.4 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.5 }}
                 >
                   <span className="flex items-center gap-2 text-sm font-semibold text-emerald-400">
                     <motion.span
                       className="w-2 h-2 rounded-full bg-emerald-400"
-                      animate={{ scale: [1, 1.2, 1] }}
+                      animate={{ scale: [1, 1.3, 1], opacity: [1, 0.7, 1] }}
                       transition={{ duration: 1.5, repeat: Infinity }}
                     />
                     Disponible
                   </span>
                 </motion.div>
-              </motion.div>
+              </div>
             </motion.div>
+          </div>
+        </Container>
+      </section>
 
-            {/* Content */}
-            <motion.div
-              initial={{ opacity: 0, x: 40 }}
+
+      {/* ============================================
+          HISTORIA / PERFIL SECTION
+          ============================================ */}
+      <Section className="py-16 md:py-24" style={{ background: '#0a0a0f' }}>
+        <Container>
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-16">
+            
+            {/* Left: Main text (3 cols) */}
+            <div className="lg:col-span-3">
+              <motion.h2 
+                className="text-2xl md:text-3xl font-bold text-white mb-8 leading-tight"
+                style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+              >
+                {about.intro.headline}
+              </motion.h2>
+
+              <div className="space-y-5">
+                {about.intro.paragraphs.map((p, i) => {
+                  // Add highlights to specific phrases
+                  let enhanced: string = String(p)
+                  if (i === 0) {
+                    enhanced = enhanced.replace('Impale Clothing', '<highlight>Impale Clothing</highlight>')
+                      .replace('1.800 seguidores', '<highlight>1.800 seguidores</highlight>')
+                  }
+                  if (i === 1) {
+                    enhanced = enhanced.replace('4 años', '<highlight>4 años</highlight>')
+                      .replace('6.800 seguidores', '<highlight>6.800 seguidores</highlight>')
+                  }
+                  if (i === 2) {
+                    enhanced = enhanced.replace('la tecnología solo vale si mejora el negocio', '<highlight>la tecnología solo vale si mejora el negocio</highlight>')
+                  }
+                  if (i === 3) {
+                    enhanced = enhanced.replace('código, IA y diseño', '<highlight>código, IA y diseño</highlight>')
+                  }
+
+                  return (
+                    <motion.p
+                      key={i}
+                      className="text-sm md:text-base text-white/55 leading-relaxed"
+                      style={{ fontFamily: "'Montserrat', sans-serif" }}
+                      initial={{ opacity: 0, y: 15 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.4, delay: i * 0.1 }}
+                      dangerouslySetInnerHTML={{
+                        __html: enhanced.replace(/<highlight>(.*?)<\/highlight>/g, 
+                          '<span class="text-orange-400 font-medium">$1</span>')
+                      }}
+                    />
+                  )
+                })}
+              </div>
+
+              {/* Mini CTA */}
+              <motion.div
+                className="mt-8 flex flex-wrap gap-3"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.4 }}
+              >
+                <a 
+                  href="/proyectos" 
+                  className="inline-flex items-center gap-2 text-xs font-semibold text-cyan-400 hover:text-cyan-300 transition-colors uppercase tracking-wider"
+                >
+                  Ver mis proyectos
+                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </a>
+              </motion.div>
+            </div>
+
+            {/* Right: Photo card (2 cols) - Only on desktop */}
+            <motion.div 
+              className="hidden lg:block lg:col-span-2"
+              initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
+              transition={{ delay: 0.2 }}
             >
-              <h2 className="heading-lg text-gradient mb-6">
-                {content.about.intro.headline}
-              </h2>
-
-              <div className="space-y-4 mb-10">
-                {content.about.intro.paragraphs.map((p, i) => (
-                  <motion.p
-                    key={i}
-                    className="text-white/60 leading-relaxed"
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: 0.1 + i * 0.1 }}
-                  >
-                    {p}
-                  </motion.p>
-                ))}
-              </div>
-
-              {/* Stats */}
-              <div className="grid grid-cols-3 gap-6">
-                {stats.map((stat, i) => (
-                  <motion.div
-                    key={stat.label}
-                    className="text-center"
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: 0.3 + i * 0.1 }}
-                  >
-                    <div className="text-3xl md:text-4xl font-bold text-white mb-1">
-                      <AnimatedCounter value={stat.value} suffix={stat.suffix} />
-                    </div>
-                    <div className="text-xs text-white/50">{stat.label}</div>
-                  </motion.div>
-                ))}
-              </div>
+              <GlassCard className="p-5 sticky top-24">
+                <img
+                  src={AlvaroPhoto}
+                  alt="Álvaro Fernández"
+                  className="w-full h-64 object-cover rounded-lg mb-4"
+                />
+                <div className="space-y-2">
+                  <h3 className="text-lg font-semibold text-white">Álvaro Fernández</h3>
+                  <p className="text-xs text-white/50">Consultor de Automatización & Estratega Digital</p>
+                  <div className="flex flex-wrap gap-2 pt-2">
+                    <span className="text-[10px] px-2 py-1 rounded-full bg-orange-500/15 text-orange-400 border border-orange-500/20">
+                      Automatización
+                    </span>
+                    <span className="text-[10px] px-2 py-1 rounded-full bg-cyan-500/15 text-cyan-400 border border-cyan-500/20">
+                      IA Aplicada
+                    </span>
+                    <span className="text-[10px] px-2 py-1 rounded-full bg-violet-500/15 text-violet-400 border border-violet-500/20">
+                      Web & Diseño
+                    </span>
+                  </div>
+                </div>
+              </GlassCard>
             </motion.div>
           </div>
         </Container>
       </Section>
 
-      {/* Skills Section */}
-      <Section className="py-20 md:py-28" style={{ background: 'rgba(139, 92, 246, 0.02)' }}>
+      {/* ============================================
+          VISIÓN Y VALORES SECTION (NEW)
+          ============================================ */}
+      <Section className="py-14 md:py-20" style={{ background: 'linear-gradient(180deg, #0a0a0f 0%, #0c0c14 100%)' }}>
         <Container>
           <motion.div
-            className="text-center mb-16"
-            initial={{ opacity: 0, y: 30 }}
+            className="text-center mb-10"
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <span className="label-mono text-violet mb-3 block">
-              Habilidades
+            <span className="text-[10px] font-bold text-orange-400 uppercase tracking-[0.2em] mb-2 block">
+              Filosofía
             </span>
-            <h2 className="heading-lg text-text-primary">
-              {content.about.skills.title}
+            <h2 className="text-xl md:text-2xl font-bold text-white" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+              {about.vision.title}
             </h2>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {content.about.skills.categories.map((category, i) => (
-              <SkillCategory key={category.name} category={category} index={i} />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-3xl mx-auto">
+            {about.vision.items.map((item, i) => (
+              <VisionCard key={i} text={item} index={i} />
             ))}
           </div>
         </Container>
       </Section>
 
-      {/* Experience Section with Animated Timeline */}
-      <Section className="py-20 md:py-28">
+
+      {/* ============================================
+          HERRAMIENTAS SECTION
+          ============================================ */}
+      <Section className="py-14 md:py-20" style={{ background: '#0a0a0f' }}>
         <Container>
           <motion.div
-            className="text-center mb-16"
-            initial={{ opacity: 0, y: 30 }}
+            className="text-center mb-10"
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <span className="label-mono text-cyan mb-3 block">
-              Trayectoria
+            <span className="text-[10px] font-bold text-cyan-400 uppercase tracking-[0.2em] mb-2 block">
+              Stack
             </span>
-            <h2 className="heading-lg text-text-primary">
-              {content.about.experience.title}
+            <h2 className="text-xl md:text-2xl font-bold text-white" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+              {about.skills.title}
             </h2>
           </motion.div>
 
-          <div className="max-w-3xl mx-auto">
-            {content.about.experience.items.map((item, i) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {about.skills.categories.map((category, i) => (
+              <ToolCard key={category.name} category={category} index={i} />
+            ))}
+          </div>
+        </Container>
+      </Section>
+
+      {/* ============================================
+          TRAYECTORIA SECTION
+          ============================================ */}
+      <Section className="py-14 md:py-20" style={{ background: 'linear-gradient(180deg, #0a0a0f 0%, #0b0b10 100%)' }}>
+        <Container>
+          <motion.div
+            className="text-center mb-10"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <span className="text-[10px] font-bold text-cyan-400 uppercase tracking-[0.2em] mb-2 block">
+              Experiencia
+            </span>
+            <h2 className="text-xl md:text-2xl font-bold text-white" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+              {about.experience.title}
+            </h2>
+          </motion.div>
+
+          <div className="max-w-2xl mx-auto">
+            {about.experience.items.map((item, i) => (
               <TimelineItem
                 key={i}
                 item={item}
                 index={i}
-                isLast={i === content.about.experience.items.length - 1}
+                isLast={i === about.experience.items.length - 1}
               />
             ))}
           </div>
         </Container>
       </Section>
 
-      {/* Education Section */}
-      <Section className="py-20 md:py-28" style={{ background: 'rgba(6, 182, 212, 0.02)' }}>
+      {/* ============================================
+          FORMACIÓN SECTION
+          ============================================ */}
+      <Section className="py-14 md:py-20" style={{ background: '#0a0a0f' }}>
         <Container>
           <motion.div
-            className="text-center mb-16"
-            initial={{ opacity: 0, y: 30 }}
+            className="text-center mb-10"
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <span className="label-mono text-cyan mb-3 block">
-              Formación
+            <span className="text-[10px] font-bold text-orange-400 uppercase tracking-[0.2em] mb-2 block">
+              Educación
             </span>
-            <h2 className="heading-lg text-text-primary">
-              {content.about.education.title}
+            <h2 className="text-xl md:text-2xl font-bold text-white" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+              {about.education.title}
             </h2>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
-            {content.about.education.items.map((item, i) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-4xl mx-auto">
+            {about.education.items.map((item, i) => (
               <motion.div
                 key={i}
-                className="group relative p-7 rounded-2xl border border-white/5 bg-white/[0.02] overflow-hidden"
-                initial={{ opacity: 0, y: 30 }}
+                className="group p-5 rounded-xl"
+                style={{
+                  background: 'rgba(15, 15, 20, 0.5)',
+                  border: '1px solid rgba(255, 255, 255, 0.05)',
+                }}
+                initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.1 }}
-                whileHover={{ borderColor: 'rgba(6, 182, 212, 0.3)', y: -5 }}
+                transition={{ duration: 0.4, delay: i * 0.1 }}
+                whileHover={{ borderColor: 'rgba(249, 115, 22, 0.25)' }}
               >
-                {/* Hover glow */}
-                <motion.div
-                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-                  style={{
-                    background: 'radial-gradient(circle at 50% 0%, rgba(6, 182, 212, 0.1) 0%, transparent 60%)',
-                  }}
-                />
-
-                <span className="text-xs font-semibold text-cyan-400 uppercase tracking-wider">
-                  {item.period}
-                </span>
-                <h3 className="text-lg font-semibold text-white mt-2 mb-2 group-hover:text-cyan-300 transition-colors">
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="text-lg">🎓</span>
+                  <span className="text-[10px] font-bold text-orange-400 uppercase tracking-wider">
+                    {item.period}
+                  </span>
+                </div>
+                <h3 className="text-base font-semibold text-white mb-1 group-hover:text-orange-300 transition-colors">
                   {item.title}
                 </h3>
-                <p className="text-sm text-white/50">{item.institution}</p>
+                <p className="text-xs text-white/40">{item.institution}</p>
+                {item.note && (
+                  <p className="text-[10px] text-white/30 mt-2 italic">{item.note}</p>
+                )}
               </motion.div>
             ))}
           </div>
         </Container>
       </Section>
 
-      {/* Languages & Interests */}
-      <Section className="py-20 md:py-28">
-        <Container>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {/* Languages */}
-            <motion.div
-              className="p-8 rounded-2xl border border-white/5 bg-white/[0.02]"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-            >
-              <h3 className="text-xl font-semibold text-white mb-6 flex items-center gap-3">
-                <span className="text-2xl">🌍</span>
-                {content.about.languages.title}
-              </h3>
-              <div className="space-y-4">
-                {content.about.languages.items.map((lang, i) => (
-                  <motion.div
-                    key={lang.language}
-                    className="flex justify-between items-center p-3 rounded-xl bg-white/[0.03] hover:bg-white/[0.05] transition-colors"
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.1 }}
-                  >
-                    <span className="text-white/80 font-medium">{lang.language}</span>
-                    <span className="text-sm px-3 py-1 rounded-full bg-violet-500/20 text-violet-300">
-                      {lang.level}
-                    </span>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
 
-            {/* Interests */}
-            <motion.div
-              className="p-8 rounded-2xl border border-white/5 bg-white/[0.02]"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
-            >
-              <h3 className="text-xl font-semibold text-white mb-6 flex items-center gap-3">
-                <span className="text-2xl">💡</span>
-                {content.about.interests.title}
+      {/* ============================================
+          IDIOMAS & EXTRAS (Compact row)
+          ============================================ */}
+      <Section className="py-10 md:py-14" style={{ background: 'linear-gradient(180deg, #0a0a0f 0%, #0c0c14 100%)' }}>
+        <Container>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-3xl mx-auto">
+            {/* Idiomas */}
+            <GlassCard className="p-5">
+              <h3 className="text-sm font-semibold text-white mb-4 flex items-center gap-2">
+                <span>🌍</span> {about.languages.title}
               </h3>
-              <div className="flex flex-wrap gap-3">
-                {content.about.interests.items.map((interest, i) => (
-                  <motion.span
-                    key={interest}
-                    className="px-4 py-2 rounded-full text-sm font-medium bg-gradient-to-r from-violet-500/10 to-cyan-500/10 border border-violet-500/20 text-white/80 hover:border-violet-500/40 transition-colors cursor-default"
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.05 }}
-                    whileHover={{ scale: 1.05 }}
+              <div className="flex flex-wrap gap-2">
+                {about.languages.items.map((lang, i) => (
+                  <span 
+                    key={i}
+                    className="text-xs px-3 py-1.5 rounded-full bg-white/5 text-white/70 border border-white/10"
                   >
-                    {interest}
-                  </motion.span>
+                    {lang.language} · <span className="text-cyan-400">{lang.level}</span>
+                  </span>
                 ))}
               </div>
-            </motion.div>
+            </GlassCard>
+
+            {/* Extras */}
+            <GlassCard className="p-5">
+              <h3 className="text-sm font-semibold text-white mb-4 flex items-center gap-2">
+                <span>📋</span> {about.extras.title}
+              </h3>
+              <div className="flex flex-wrap gap-2">
+                {about.extras.items.map((item, i) => (
+                  <span 
+                    key={i}
+                    className="text-xs px-3 py-1.5 rounded-full bg-white/5 text-white/60 border border-white/10"
+                  >
+                    {item}
+                  </span>
+                ))}
+              </div>
+            </GlassCard>
           </div>
         </Container>
       </Section>
 
-      {/* CTA Section */}
-      <Section className="py-20 md:py-28">
+      {/* ============================================
+          CTA SECTION
+          ============================================ */}
+      <Section className="py-14 md:py-20" style={{ background: '#0a0a0f' }}>
         <Container>
           <motion.div
-            className="relative text-center p-12 md:p-16 rounded-3xl overflow-hidden"
-            initial={{ opacity: 0, y: 30 }}
+            className="relative text-center p-10 md:p-14 rounded-2xl overflow-hidden"
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            {/* Animated gradient border */}
+            {/* Animated border */}
             <motion.div
-              className="absolute inset-0 rounded-3xl p-px"
+              className="absolute inset-0 rounded-2xl p-px"
               style={{
-                background: 'linear-gradient(135deg, #8B5CF6 0%, #06B6D4 50%, #10B981 100%)',
+                background: 'linear-gradient(135deg, #06B6D4 0%, #f97316 50%, #06B6D4 100%)',
+                backgroundSize: '200% 200%',
               }}
               animate={{ backgroundPosition: ['0% 0%', '100% 100%', '0% 0%'] }}
               transition={{ duration: 5, repeat: Infinity, ease: 'linear' }}
             >
-              <div className="absolute inset-px rounded-3xl bg-[#0A0A0F]" />
+              <div className="absolute inset-px rounded-2xl bg-[#0a0a0f]" />
             </motion.div>
 
             {/* Background glow */}
             <div
-              className="absolute inset-px rounded-3xl"
+              className="absolute inset-px rounded-2xl"
               style={{
-                background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(6, 182, 212, 0.05) 100%)',
+                background: 'linear-gradient(135deg, rgba(6, 182, 212, 0.08) 0%, rgba(249, 115, 22, 0.05) 100%)',
               }}
             />
 
             <div className="relative">
-              <h2 className="heading-lg text-text-primary mb-4">
-                {content.about.cta.title}
+              <h2 
+                className="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-3"
+                style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+              >
+                {about.cta.title}
               </h2>
-              <p className="body-lg mb-8 max-w-lg mx-auto">
-                {content.about.cta.text}
+              <p className="text-sm md:text-base text-white/50 mb-6 max-w-md mx-auto">
+                {about.cta.text}
               </p>
-              <div className="flex flex-wrap gap-4 justify-center">
-                {content.about.cta.buttons.map((btn) => (
+              <div className="flex flex-wrap gap-3 justify-center">
+                {about.cta.buttons.map((btn) => (
                   <Button
                     key={btn.label}
                     href={btn.href}

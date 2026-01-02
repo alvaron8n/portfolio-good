@@ -401,8 +401,10 @@ export const content = {
   // ============================================
   about: {
     hero: {
-      title: 'Sobre mí',
-      subtitle: 'Negocio, diseño y tecnología. Con IA aplicada de verdad.',
+      eyebrow: 'SOBRE MÍ',
+      title: 'Negocio, diseño y tecnología.',
+      titleAccent: 'Con IA aplicada de verdad.',
+      subtitle: 'Perfil híbrido que combina la creatividad publicitaria con la eficiencia técnica. Tras fundar dos e-commerce propios y formarme en agencias de marketing, he evolucionado hacia la Automatización de Procesos y la Inteligencia Artificial.',
     },
     intro: {
       headline: 'La versión corta: vengo del negocio real, no solo de tutoriales.',
@@ -413,54 +415,89 @@ export const content = {
         'Hoy combino esa visión de negocio con código, IA y diseño. No soy el típico perfil técnico que solo sabe programar. Vengo de ventas, de marketing, de diseño gráfico. Y eso me permite ver lo que muchos devs no ven: el problema real del cliente.',
       ],
     },
-    principles: {
-      title: 'Cómo pienso cuando trabajo contigo',
+    vision: {
+      title: 'Visión y valores',
       items: [
-        { title: 'Criterio de negocio', description: 'La tecnología es una herramienta, no un fin. Si algo no mejora resultados, no lo hago.' },
-        { title: 'Diseño con intención', description: 'Bonito sí, pero sobre todo claro, usable y orientado a conversión.' },
-        { title: 'Sistemas y orden', description: 'Lo dejo documentado y usable. Que no dependas de mí para siempre.' },
-        { title: 'Comunicación clara', description: 'Te explico todo en humano. Sin jerga innecesaria, sin hacerme el listo.' },
+        'La tecnología solo vale si mejora el negocio.',
+        'Menos features, más impacto.',
+        'Diseño, código y estrategia con propósito.',
+        'La IA no reemplaza el criterio humano, lo potencia.',
       ],
     },
     skills: {
       title: 'Herramientas con las que trabajo',
       categories: [
-        { name: 'Automatización', items: ['n8n', 'Make', 'Webhooks', 'APIs'] },
-        { name: 'Desarrollo', items: ['React', 'TypeScript', 'Node.js', 'Supabase'] },
-        { name: 'IA', items: ['OpenAI (GPT)', 'Claude', 'Integraciones LLM'] },
-        { name: 'Web', items: ['Next.js', 'Astro', 'Tailwind CSS', 'Framer Motion'] },
-        { name: 'Diseño', items: ['Figma', 'Photoshop', 'Illustrator'] },
-        { name: 'Otras', items: ['Git', 'Notion', 'Shopify'] },
+        { name: 'Automatización', items: ['n8n', 'Make', 'Zapier', 'OpenAI API', 'Notion API', 'Webhooks'] },
+        { name: 'Desarrollo', items: ['React', 'TypeScript', 'Node.js', 'Supabase', 'HTML/CSS'] },
+        { name: 'IA', items: ['GPT-4', 'Claude', 'Llama', 'Prompt Engineering', 'Integraciones LLM'] },
+        { name: 'Web', items: ['Next.js', 'Astro', 'WordPress', 'Elementor', 'Tailwind CSS', 'Framer Motion'] },
+        { name: 'Diseño', items: ['Figma', 'Photoshop', 'Illustrator', 'Premiere Pro', 'Diseño UI/UX'] },
+        { name: 'Otras', items: ['Git', 'Notion', 'Shopify', 'Google Analytics', 'SEO On-Page', 'CRM Automation'] },
       ],
     },
     experience: {
       title: 'Trayectoria',
       items: [
-        { period: '2024 - Presente', role: 'Freelance', company: 'Automatización, desarrollo web e IA', description: 'Para empresas y agencias. Colaboración activa con Flama Studios.' },
-        { period: '2020 - 2024', role: 'Ecommerce propio', company: 'Zapatillas', description: 'Shopify, dropshipping, comunidad de 6.800 seguidores.' },
-        { period: '2019', role: 'Impale Clothing', company: 'Marca de ropa propia', description: 'Diseño, ventas, colaboraciones.' },
+        { 
+          period: '2024 - Presente', 
+          role: 'Consultor de Automatización & Web', 
+          company: 'Freelance', 
+          location: 'Málaga',
+          description: 'Automatización, desarrollo web e IA para empresas y agencias. Colaboración activa con Flama Studios.',
+          highlights: ['Flujos n8n para facturación y leads', 'Web WordPress + SEO (hostelería)', 'IA para atención al cliente'],
+        },
+        { 
+          period: '2020 - 2024', 
+          role: 'Fundador & Growth Manager', 
+          company: 'Pikete Lowcost (Ecommerce)', 
+          location: '',
+          description: 'Gestión integral del negocio: logística, ventas, marketing y comunidad.',
+          highlights: ['7.500 seguidores orgánicos', 'Contenido viral y sorteos', '4 años de operación'],
+        },
+        { 
+          period: '2019', 
+          role: 'Fundador & Director Creativo', 
+          company: 'Impale Clothing', 
+          location: '',
+          description: 'Diseño de identidad corporativa, branding y diseño textil.',
+          highlights: ['1.500 seguidores', 'Ventas recurrentes', 'Colaboraciones locales'],
+        },
+        { 
+          period: '2021', 
+          role: 'Asistente de Publicidad (Prácticas)', 
+          company: 'Rommel & Montgomery', 
+          location: 'Cáceres',
+          description: 'Apoyo en campañas publicitarias 360° y prototipado en Figma.',
+          highlights: [],
+        },
+        { 
+          period: '2020', 
+          role: 'Asistente de Marketing Digital (Prácticas)', 
+          company: 'Publimark', 
+          location: 'Cáceres',
+          description: 'Gestión de redes sociales y diseño de piezas gráficas.',
+          highlights: [],
+        },
       ],
     },
     education: {
       title: 'Formación',
       items: [
-        { period: '2019', title: 'Grado en Publicidad y Relaciones Públicas', institution: 'Universidad' },
+        { period: '2022 - Actualidad', title: 'Grado en Publicidad y RR.PP.', institution: 'Universidad de Valladolid', note: 'TFG enfocado en aplicaciones de IA en publicidad' },
+        { period: '2021 - 2022', title: 'G.S. Gestión de Ventas y Espacios Comerciales', institution: 'I.E.S. Ágora (Cáceres)', note: '' },
+        { period: '2019 - 2021', title: 'G.S. Marketing y Publicidad', institution: 'I.E.S. Ágora (Cáceres)', note: '' },
       ],
     },
     languages: {
       title: 'Idiomas',
       items: [
         { language: 'Español', level: 'Nativo' },
-        { language: 'Inglés', level: 'Avanzado (C1)' },
+        { language: 'Inglés', level: 'B2 - Profesional' },
       ],
     },
-    interests: {
-      title: 'Intereses',
-      items: ['Inteligencia Artificial', 'Automatización', 'Startups', 'Diseño UI/UX', 'Productividad', 'Negocios digitales'],
-    },
-    vision: {
-      title: 'Hacia dónde voy',
-      text: 'Ahora mismo soy freelance, pero el objetivo es claro: construir mi propio negocio basado en IA. Productos propios, sistemas internos para empresas, soluciones escalables. Este portfolio no es solo para conseguir clientes. Es el primer paso de algo más grande.',
+    extras: {
+      title: 'Otros',
+      items: ['Carnet de Conducir B', 'Vehículo Propio', 'Disponibilidad Geográfica'],
     },
     cta: {
       title: '¿Trabajamos juntos?',
