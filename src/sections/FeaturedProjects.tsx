@@ -1,5 +1,5 @@
 import { useRef, useEffect, useState } from 'react'
-import { motion, useMotionValue, useSpring, type PanInfo } from 'framer-motion'
+import { motion, useMotionValue, useSpring } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { Section } from '../components/Section'
 import { Container } from '../components/Container'
@@ -33,7 +33,7 @@ function DraggableCarousel() {
   const dragConstraintLeft = -(totalWidth - containerWidth) - 50 // Extra padding
   const dragConstraintRight = 50
 
-  const handleDragEnd = (_event: MouseEvent | TouchEvent | PointerEvent, _info: PanInfo) => {
+  const handleDragEnd = () => {
     // Optional: Add snap logic here if needed
   }
 

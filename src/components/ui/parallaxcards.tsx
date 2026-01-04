@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState, useCallback } from 'react'
+import { useRef, useState, useCallback } from 'react'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 import { ScrollTrigger, shouldAnimate } from '@/utils/animations'
@@ -19,12 +19,7 @@ interface ParallaxCardsProps {
 // ============================================
 function DesktopParallaxCards({ cards }: { cards: ParallaxCard[] }) {
   const sectionRef = useRef<HTMLElement>(null)
-  const [isMounted, setIsMounted] = useState(false)
   const [activeIndex, setActiveIndex] = useState(0)
-
-  useEffect(() => {
-    setIsMounted(true)
-  }, [])
 
   const updateActiveCard = useCallback(
     (progress: number) => {
@@ -38,7 +33,7 @@ function DesktopParallaxCards({ cards }: { cards: ParallaxCard[] }) {
 
   useGSAP(
     () => {
-      if (!isMounted || !sectionRef.current) return
+      if (!sectionRef.current) return
 
       const prefersReducedMotion = !shouldAnimate()
       const cardElements =

@@ -1,5 +1,11 @@
 import { motion } from 'framer-motion'
-import { useMemo, memo } from 'react'
+import { useMemo, memo, useState } from 'react'
+
+// Simple seeded pseudo-random generator for stable values
+const seededRandom = (seed: number) => {
+  const x = Math.sin(seed * 9999) * 10000
+  return x - Math.floor(x)
+}
 
 // ===========================================
 // PARTICLE FIELD - Sutil y optimizado
@@ -15,15 +21,20 @@ export const ParticleField = memo(({
   color = 'orange',
   className = '',
 }: ParticleFieldProps) => {
+  // Use lazy state initializer - only runs once on mount
+  const [randomValues] = useState(() => 
+    Array.from({ length: 50 }, (_, i) => ({
+      x: seededRandom(i * 1) * 100,
+      y: seededRandom(i * 2) * 100,
+      size: 2 + seededRandom(i * 3) * 2,
+      duration: 15 + seededRandom(i * 4) * 10,
+      delay: seededRandom(i * 5) * 5,
+    }))
+  )
+  
   const particles = useMemo(() => 
-    Array.from({ length: count }, (_, i) => ({
-      id: i,
-      x: Math.random() * 100,
-      y: Math.random() * 100,
-      size: 2 + Math.random() * 2,
-      duration: 15 + Math.random() * 10,
-      delay: Math.random() * 5,
-    })), [count]
+    randomValues.slice(0, count).map((p, i) => ({ ...p, id: i })), 
+    [count, randomValues]
   )
 
   const colorValue = {
@@ -262,13 +273,18 @@ export const Constellation = memo(({
   color = 'rgba(249, 115, 22, 0.3)',
   className = ''
 }: ConstellationProps) => {
+  // Use lazy state initializer - only runs once on mount
+  const [randomValues] = useState(() => 
+    Array.from({ length: 50 }, (_, i) => ({
+      x: 10 + seededRandom(i * 100 + 1) * 80,
+      y: 10 + seededRandom(i * 100 + 2) * 80,
+      size: 2 + seededRandom(i * 100 + 3) * 2,
+    }))
+  )
+  
   const nodes = useMemo(() => 
-    Array.from({ length: nodeCount }, (_, i) => ({
-      id: i,
-      x: 10 + Math.random() * 80,
-      y: 10 + Math.random() * 80,
-      size: 2 + Math.random() * 2,
-    })), [nodeCount]
+    randomValues.slice(0, nodeCount).map((p, i) => ({ ...p, id: i })), 
+    [nodeCount, randomValues]
   )
 
   const connections = useMemo(() => {

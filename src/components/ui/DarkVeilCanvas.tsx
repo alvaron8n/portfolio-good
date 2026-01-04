@@ -140,23 +140,36 @@ export function DarkVeilCanvas({
   const programRef = useRef<Program | null>(null)
   const rafRef = useRef<number | null>(null)
   const isVisibleRef = useRef(true)
-  const startTimeRef = useRef(Date.now())
+  const startTimeRef = useRef<number>(0)
+  const animateRef = useRef<(() => void) | null>(null)
+  const speedRef = useRef(speed)
 
-  // Animation loop
-  const animate = useCallback(() => {
-    if (!isVisibleRef.current || !rendererRef.current || !programRef.current) {
-      return
-    }
-
-    const elapsed = (Date.now() - startTimeRef.current) * 0.001 * speed
-
-    programRef.current.uniforms.uTime.value = elapsed
-
-    // @ts-ignore - mesh property added dynamically
-    rendererRef.current.render({ scene: programRef.current.mesh as Mesh })
-
-    rafRef.current = requestAnimationFrame(animate)
+  // Keep speed ref updated
+  useEffect(() => {
+    speedRef.current = speed
   }, [speed])
+
+  // Store animate function in ref via effect (not during render)
+  useEffect(() => {
+    animateRef.current = () => {
+      if (!isVisibleRef.current || !rendererRef.current || !programRef.current) {
+        return
+      }
+
+      const elapsed = (Date.now() - startTimeRef.current) * 0.001 * speedRef.current
+
+      programRef.current.uniforms.uTime.value = elapsed
+
+      // @ts-expect-error - mesh property added dynamically
+      rendererRef.current.render({ scene: programRef.current.mesh as Mesh })
+
+      rafRef.current = requestAnimationFrame(() => animateRef.current?.())
+    }
+  }, [])
+  
+  const animate = useCallback(() => {
+    animateRef.current?.()
+  }, [])
 
   useEffect(() => {
     if (!containerRef.current || resolutionScale === 0) return

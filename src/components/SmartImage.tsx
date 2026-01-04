@@ -45,7 +45,7 @@ export function SmartImage({
         alt={alt}
         loading={priority ? "eager" : "lazy"}
         decoding={priority ? "sync" : "async"}
-        // @ts-ignore - fetchPriority is standard but missing in React types currently
+        // @ts-expect-error - fetchPriority is standard but missing in React types currently
         fetchPriority={priority ? "high" : "auto"}
         className={cn(
           "w-full h-full object-cover transition-opacity duration-500",

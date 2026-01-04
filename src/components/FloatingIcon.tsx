@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { useMemo } from 'react'
 
 interface FloatingIconProps {
   children: React.ReactNode
@@ -17,6 +18,8 @@ export function FloatingIcon({
   y = 0,
   z = 0,
 }: FloatingIconProps) {
+  // Generate stable random duration on mount
+  const randomDuration = useMemo(() => 3 + (((x * 17 + y * 31) % 100) / 100) * 2, [x, y])
   return (
     <motion.div
       className={`absolute pointer-events-none select-none ${className}`}
@@ -35,7 +38,7 @@ export function FloatingIcon({
         opacity: { duration: 0.6, delay },
         scale: { duration: 0.6, delay },
         y: {
-          duration: 3 + Math.random() * 2,
+          duration: randomDuration,
           repeat: Infinity,
           ease: 'easeInOut',
           delay,

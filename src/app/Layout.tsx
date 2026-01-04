@@ -309,14 +309,15 @@ function Header() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  const prevPathRef = useRef(location.pathname)
-
+  // Close mobile menu on route change - sync with external router state
+  const previousPathname = useRef(location.pathname)
   useLayoutEffect(() => {
-    if (prevPathRef.current !== location.pathname) {
-      prevPathRef.current = location.pathname
+    if (previousPathname.current !== location.pathname) {
+      previousPathname.current = location.pathname
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- Sync with router is valid
       setMobileMenuOpen(false)
     }
-  })
+  }, [location.pathname])
 
   const isProjectPage = location.pathname.startsWith('/proyectos/') && location.pathname !== '/proyectos'
 

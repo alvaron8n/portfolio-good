@@ -1,5 +1,9 @@
-import { useRef, useEffect, useState, useMemo, useId } from 'react'
+import { useRef, useEffect, useState, useMemo, useId, useLayoutEffect } from 'react'
 import './CurvedLoop.css'
+
+// Safe initial value getters (SSR-safe)
+const getInitialMobile = () => typeof window !== 'undefined' ? window.innerWidth < 768 : false
+const getInitialReducedMotion = () => typeof window !== 'undefined' ? window.matchMedia('(prefers-reduced-motion: reduce)').matches : false
 
 interface CurvedLoopProps {
   marqueeText?: string
@@ -26,9 +30,10 @@ const CurvedLoop = ({
   const measureRef = useRef<SVGTextElement>(null)
   const textPathRef = useRef<SVGTextPathElement>(null)
   const [spacing, setSpacing] = useState(0)
-  const [offset, setOffset] = useState(0)
-  const [isMobile, setIsMobile] = useState(false)
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false)
+  const offsetRef = useRef(0)
+  const [isMobile, setIsMobile] = useState(getInitialMobile)
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(getInitialReducedMotion)
+  const [isDragging, setIsDragging] = useState(false)
   const uid = useId()
   const pathId = `curve-${uid}`
   
@@ -47,17 +52,19 @@ const CurvedLoop = ({
     : text
   const ready = spacing > 0
 
-  // Detect preferences
+  // Detect preferences - subscribe to changes only
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768)
     const mq = window.matchMedia('(prefers-reduced-motion: reduce)')
-    setPrefersReducedMotion(mq.matches)
-    checkMobile()
     
     window.addEventListener('resize', checkMobile)
-    mq.addEventListener('change', (e) => setPrefersReducedMotion(e.matches))
+    const handleChange = (e: MediaQueryListEvent) => setPrefersReducedMotion(e.matches)
+    mq.addEventListener('change', handleChange)
     
-    return () => window.removeEventListener('resize', checkMobile)
+    return () => {
+      window.removeEventListener('resize', checkMobile)
+      mq.removeEventListener('change', handleChange)
+    }
   }, [])
 
   // Measure text
@@ -67,12 +74,12 @@ const CurvedLoop = ({
     }
   }, [text, className])
 
-  // Set initial offset
-  useEffect(() => {
+  // Set initial offset - useLayoutEffect to avoid flash
+  useLayoutEffect(() => {
     if (!spacing || !textPathRef.current) return
     const initial = -spacing
     textPathRef.current.setAttribute('startOffset', initial + 'px')
-    setOffset(initial)
+    offsetRef.current = initial
   }, [spacing])
 
   // Animation loop
@@ -89,7 +96,7 @@ const CurvedLoop = ({
         if (newOffset > 0) newOffset -= spacing
 
         textPathRef.current.setAttribute('startOffset', newOffset + 'px')
-        setOffset(newOffset)
+        offsetRef.current = newOffset
       }
       frameRef.current = requestAnimationFrame(step)
     }
@@ -102,6 +109,7 @@ const CurvedLoop = ({
   const onPointerDown = (e: React.PointerEvent) => {
     if (!interactive || isMobile) return
     dragRef.current = true
+    setIsDragging(true)
     lastXRef.current = e.clientX
     velRef.current = 0
     ;(e.target as HTMLElement).setPointerCapture(e.pointerId)
@@ -120,17 +128,18 @@ const CurvedLoop = ({
     if (newOffset > 0) newOffset -= spacing
 
     textPathRef.current.setAttribute('startOffset', newOffset + 'px')
-    setOffset(newOffset)
+    offsetRef.current = newOffset
   }
 
   const endDrag = () => {
     if (!interactive || isMobile) return
     dragRef.current = false
+    setIsDragging(false)
     dirRef.current = velRef.current > 0 ? 'right' : 'left'
   }
 
   const cursorStyle = interactive && !isMobile
-    ? (dragRef.current ? 'grabbing' : 'grab')
+    ? (isDragging ? 'grabbing' : 'grab')
     : 'default'
 
   return (
@@ -165,7 +174,7 @@ const CurvedLoop = ({
             <textPath
               ref={textPathRef}
               href={`#${pathId}`}
-              startOffset={offset + 'px'}
+              startOffset="0px"
               xmlSpace="preserve"
             >
               {totalText}

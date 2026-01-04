@@ -116,22 +116,18 @@ export function Button({
     </>
   )
 
-  // Motion wrapper for animations
-  const MotionComponent = ({ children: motionChildren }: { children: ReactNode }) => (
-    <motion.span
-      className="inline-block"
-      whileHover={{ scale: 1.02, y: -1 }}
-      whileTap={{ scale: 0.98 }}
-      transition={{ duration: 0.2 }}
-    >
-      {motionChildren}
-    </motion.span>
-  )
+  // Motion props for animations
+  const motionProps = {
+    className: "inline-block",
+    whileHover: { scale: 1.02, y: -1 },
+    whileTap: { scale: 0.98 },
+    transition: { duration: 0.2 }
+  }
 
   if (href) {
     if (external || href.startsWith('http') || href.startsWith('mailto:') || href.startsWith('tel:')) {
       return (
-        <MotionComponent>
+        <motion.span {...motionProps}>
           <a
             href={href}
             className={`group ${combinedStyles}`}
@@ -140,21 +136,21 @@ export function Button({
           >
             {content}
           </a>
-        </MotionComponent>
+        </motion.span>
       )
     }
 
     return (
-      <MotionComponent>
+      <motion.span {...motionProps}>
         <Link to={href} className={`group ${combinedStyles}`}>
           {content}
         </Link>
-      </MotionComponent>
+      </motion.span>
     )
   }
 
   return (
-    <MotionComponent>
+    <motion.span {...motionProps}>
       <button
         type={type}
         className={`group ${combinedStyles}`}
@@ -163,7 +159,7 @@ export function Button({
       >
         {content}
       </button>
-    </MotionComponent>
+    </motion.span>
   )
 }
 
@@ -216,22 +212,48 @@ export function IconButton({
     brand: 'bg-gradient-to-r from-orange-600 to-amber-500 text-white shadow-lg shadow-orange-500/30',
   }
 
-  const Component = href ? (external ? 'a' : Link) : 'button'
-  const linkProps = href ? (external ? { href, target: '_blank', rel: 'noopener noreferrer' } : { to: href }) : {}
+  const combinedClassName = `${baseStyles} ${variantMap[variant]} ${className}`
+  const iconContent = <span className={iconSizeMap[size]}>{icon}</span>
+  
+  const motionWrapperProps = {
+    whileHover: { scale: 1.1 },
+    whileTap: { scale: 0.95 }
+  }
+
+  if (href) {
+    if (external) {
+      return (
+        <motion.span {...motionWrapperProps}>
+          <a
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={combinedClassName}
+            aria-label={label}
+          >
+            {iconContent}
+          </a>
+        </motion.span>
+      )
+    }
+    return (
+      <motion.span {...motionWrapperProps}>
+        <Link to={href} className={combinedClassName} aria-label={label}>
+          {iconContent}
+        </Link>
+      </motion.span>
+    )
+  }
 
   return (
-    <motion.span
-      whileHover={{ scale: 1.1 }}
-      whileTap={{ scale: 0.95 }}
-    >
-      <Component
-        {...(linkProps as any)}
-        className={`${baseStyles} ${variantMap[variant]} ${className}`}
+    <motion.span {...motionWrapperProps}>
+      <button
+        className={combinedClassName}
         onClick={onClick}
         aria-label={label}
       >
-        <span className={iconSizeMap[size]}>{icon}</span>
-      </Component>
+        {iconContent}
+      </button>
     </motion.span>
   )
 }
