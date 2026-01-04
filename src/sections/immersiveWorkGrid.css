@@ -81,7 +81,7 @@
   align-items: center;
   overflow: hidden;
   position: relative;
-  background: #000;
+  background: var(--color-bg-base, #0a0a0f);
 }
 
 /* ===========================================
@@ -266,10 +266,10 @@
     ellipse 40% 40% at center,
     transparent 0%,
     transparent 15%,
-    rgba(0, 0, 0, 0.3) 35%,
-    rgba(0, 0, 0, 0.6) 55%,
-    rgba(0, 0, 0, 0.85) 75%,
-    rgba(0, 0, 0, 1) 100%
+    rgba(10, 10, 15, 0.3) 35%,
+    rgba(10, 10, 15, 0.6) 55%,
+    rgba(10, 10, 15, 0.85) 75%,
+    rgba(10, 10, 15, 1) 100%
   );
   opacity: 0;
   z-index: 15;
@@ -281,7 +281,7 @@
 .iwg-black-overlay {
   position: absolute;
   inset: 0;
-  background: #000;
+  background: var(--color-bg-base, #0a0a0f);
   opacity: 0;
   pointer-events: none;
   z-index: 20;
@@ -313,7 +313,7 @@
    =========================================== */
 @media (max-width: 767px) {
   .iwg-intro {
-    padding: 1.5rem 1rem 0.5rem;
+    padding: 2rem 1rem 1rem;
   }
   
   .iwg-label {
@@ -330,19 +330,22 @@
     font-size: 1.4rem;
   }
   
-  /* Wrapper smaller to show grid immediately */
+  /* Wrapper adjusted for better scroll experience */
   .iwg-wrapper {
-    height: auto;
-    min-height: 55vh;
-    padding: 0.5rem 0 1rem;
+    height: 100svh;
+    min-height: 500px;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   
   .iwg-grid {
     grid-template-columns: 0.9fr 1.1fr 0.9fr;
-    grid-template-rows: 0.75fr 1.1fr 0.75fr;
-    width: 94vw;
-    height: min(52vh, 380px);
-    gap: 6px;
+    grid-template-rows: 0.7fr 1.2fr 0.7fr;
+    width: 92vw;
+    height: min(65vh, 420px);
+    gap: 8px;
   }
   
   .iwg-item {
@@ -388,26 +391,30 @@
   }
   
   .iwg-overlay {
-    padding: 0.65rem;
+    padding: 0.75rem;
   }
   
   .iwg-tag {
     font-size: 0.5rem;
-    margin-bottom: 0.15rem;
+    margin-bottom: 0.2rem;
   }
   
   .iwg-title {
-    font-size: 0.75rem;
+    font-size: 0.8rem;
+    margin-bottom: 0.15rem;
   }
   
   .iwg-text {
-    display: none;
+    font-size: 0.6rem;
+    margin-bottom: 0.4rem;
+    display: block;
+    opacity: 0.7;
   }
   
   .iwg-cta {
     font-size: 0.6rem;
-    padding: 0.35rem 0.6rem;
-    border-radius: 5px;
+    padding: 0.4rem 0.7rem;
+    border-radius: 6px;
   }
   
   .iwg-cta svg {
@@ -415,15 +422,15 @@
     height: 10px;
   }
   
-  /* Tighter vignette on mobile */
+  /* Vignette adapted for gray background */
   .iwg-vignette {
     background: radial-gradient(
       ellipse 35% 35% at center,
       transparent 0%,
       transparent 10%,
-      rgba(0, 0, 0, 0.4) 30%,
-      rgba(0, 0, 0, 0.75) 55%,
-      rgba(0, 0, 0, 1) 100%
+      rgba(10, 10, 15, 0.4) 30%,
+      rgba(10, 10, 15, 0.75) 55%,
+      rgba(10, 10, 15, 1) 100%
     );
   }
 }

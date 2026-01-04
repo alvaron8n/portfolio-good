@@ -68,17 +68,18 @@ export function ImmersiveWorkGrid() {
       window.addEventListener('resize', updateTransformOrigin)
 
       // Animation parameters - ENHANCED for immersion
-      const scaleTarget = isMobile ? 5 : isTablet ? 5.5 : 6
-      const scrollDistance = isMobile ? 900 : isTablet ? 1100 : 1400
+      const scaleTarget = isMobile ? 4.5 : isTablet ? 5.5 : 6
+      const scrollDistance = isMobile ? 700 : isTablet ? 1100 : 1400
 
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: wrapperRef.current,
-          start: isMobile ? 'top 60px' : 'top top',
+          start: isMobile ? 'top top' : 'top top',
           end: `+=${scrollDistance}`,
           pin: true,
-          scrub: isMobile ? 0.8 : 1.2,
+          scrub: isMobile ? 0.5 : 1.2,
           anticipatePin: 1,
+          pinSpacing: true,
         }
       })
 
