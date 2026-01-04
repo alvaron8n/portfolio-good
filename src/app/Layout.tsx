@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef } from 'react'
+import { useState, useEffect, useCallback, useRef, useSyncExternalStore, useLayoutEffect } from 'react'
 import { createPortal } from 'react-dom'
 import { Outlet, Link, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion'
@@ -238,12 +238,13 @@ function MobileMenuContent({ onClose }: { onClose: () => void }) {
 // ============================================
 // MOBILE MENU PORTAL
 // ============================================
-function MobileMenuPortal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
-  const [mounted, setMounted] = useState(false)
+// Helper para detectar cliente de forma segura
+const emptySubscribe = () => () => {}
+const getClientSnapshot = () => true
+const getServerSnapshot = () => false
 
-  useEffect(() => {
-    setMounted(true)
-  }, [])
+function MobileMenuPortal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
+  const mounted = useSyncExternalStore(emptySubscribe, getClientSnapshot, getServerSnapshot)
 
   useEffect(() => {
     if (isOpen) {
@@ -308,9 +309,14 @@ function Header() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  useEffect(() => {
-    setMobileMenuOpen(false)
-  }, [location.pathname])
+  const prevPathRef = useRef(location.pathname)
+
+  useLayoutEffect(() => {
+    if (prevPathRef.current !== location.pathname) {
+      prevPathRef.current = location.pathname
+      setMobileMenuOpen(false)
+    }
+  })
 
   const isProjectPage = location.pathname.startsWith('/proyectos/') && location.pathname !== '/proyectos'
 
