@@ -1,56 +1,200 @@
+import { useRef, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { content } from '../content/content'
 import { MagneticButton } from '../components/ui/MagneticButton'
-import { 
-  ParticleField, 
-  GradientOrbs, 
-  GridPattern,
-  Constellation
-} from '../components/backgrounds/AnimatedBackgrounds'
 
+// ============================================
+// ELEGANT FLOATING PARTICLES
+// ============================================
+function FloatingParticles() {
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+
+  useEffect(() => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+
+    const ctx = canvas.getContext('2d')
+    if (!ctx) return
+
+    let animationId: number
+    let width = 0
+    let height = 0
+
+    interface Particle {
+      x: number
+      y: number
+      baseX: number
+      baseY: number
+      size: number
+      opacity: number
+      speed: number
+      angle: number
+      isOrange: boolean
+    }
+
+    const particles: Particle[] = []
+
+    const resize = () => {
+      width = canvas.offsetWidth
+      height = canvas.offsetHeight
+      canvas.width = width
+      canvas.height = height
+    }
+
+    const createParticles = () => {
+      particles.length = 0
+      const count = 40
+
+      for (let i = 0; i < count; i++) {
+        particles.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          baseX: Math.random() * width,
+          baseY: Math.random() * height,
+          size: Math.random() * 2 + 1,
+          opacity: Math.random() * 0.5 + 0.2,
+          speed: Math.random() * 0.0008 + 0.0003,
+          angle: Math.random() * Math.PI * 2,
+          isOrange: Math.random() > 0.6
+        })
+      }
+    }
+
+    const animate = (time: number) => {
+      ctx.clearRect(0, 0, width, height)
+
+      particles.forEach((p, i) => {
+        // Movimiento sinusoidal suave
+        p.angle += p.speed
+        p.x = p.baseX + Math.sin(p.angle + i) * 30
+        p.y = p.baseY + Math.cos(p.angle * 0.7 + i) * 20
+
+        // Wrap around edges suavemente
+        if (p.x < -20) p.baseX = width + 20
+        if (p.x > width + 20) p.baseX = -20
+        if (p.y < -20) p.baseY = height + 20
+        if (p.y > height + 20) p.baseY = -20
+
+        // Movimiento lento hacia arriba
+        p.baseY -= 0.15
+
+        // Dibujar partícula
+        const alpha = p.opacity * (0.7 + Math.sin(time * 0.001 + i) * 0.3)
+        
+        if (p.isOrange) {
+          // Glow naranja
+          const gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size * 6)
+          gradient.addColorStop(0, `rgba(249, 115, 22, ${alpha * 0.8})`)
+          gradient.addColorStop(0.4, `rgba(249, 115, 22, ${alpha * 0.2})`)
+          gradient.addColorStop(1, 'rgba(249, 115, 22, 0)')
+          ctx.fillStyle = gradient
+          ctx.beginPath()
+          ctx.arc(p.x, p.y, p.size * 6, 0, Math.PI * 2)
+          ctx.fill()
+
+          // Core
+          ctx.fillStyle = `rgba(251, 146, 60, ${alpha})`
+          ctx.beginPath()
+          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2)
+          ctx.fill()
+        } else {
+          // Partícula blanca sutil
+          ctx.fillStyle = `rgba(255, 255, 255, ${alpha * 0.4})`
+          ctx.beginPath()
+          ctx.arc(p.x, p.y, p.size * 0.8, 0, Math.PI * 2)
+          ctx.fill()
+        }
+      })
+
+      animationId = requestAnimationFrame(animate)
+    }
+
+    resize()
+    createParticles()
+    window.addEventListener('resize', () => {
+      resize()
+      createParticles()
+    })
+
+    animationId = requestAnimationFrame(animate)
+
+    return () => {
+      cancelAnimationFrame(animationId)
+      window.removeEventListener('resize', resize)
+    }
+  }, [])
+
+  return (
+    <canvas 
+      ref={canvasRef} 
+      className="absolute inset-0 w-full h-full pointer-events-none"
+    />
+  )
+}
+
+// ============================================
+// ACCENT TEXT
+// ============================================
 const AccentText = ({ children }: { children: React.ReactNode }) => (
   <span 
+    className="cta-accent inline-block"
     style={{ 
       fontFamily: "'BBH Bartle', 'Space Grotesk', sans-serif",
       background: 'linear-gradient(135deg, #ea580c 0%, #f97316 40%, #fb923c 70%, #fbbf24 100%)',
       WebkitBackgroundClip: 'text',
       WebkitTextFillColor: 'transparent',
       backgroundClip: 'text',
+      textTransform: 'uppercase',
+      letterSpacing: '0.02em',
     }}
   >
     {children}
   </span>
 )
 
-// Micro proof chip
+// ============================================
+// MICRO CHIP
+// ============================================
 function MicroChip({ icon, text }: { icon: React.ReactNode; text: string }) {
   return (
-    <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] text-white/50" 
-      style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}>
-      {icon}
+    <div 
+      className="cta-chip inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] text-white/50" 
+      style={{ 
+        background: 'rgba(255,255,255,0.04)', 
+        border: '1px solid rgba(255,255,255,0.08)'
+      }}
+    >
+      <span className="text-orange-500/60">{icon}</span>
       <span>{text}</span>
     </div>
   )
 }
 
+// ============================================
+// MAIN CTA SECTION
+// ============================================
 export function CTA() {
   const { cta } = content.home
 
   return (
-    <section className="relative py-14 md:py-20 overflow-hidden bg-[#050508]">
-      {/* Efectos de fondo - más sutiles */}
-      <GridPattern size={80} color="rgba(249, 115, 22, 0.02)" />
-      <Constellation nodeCount={8} color="rgba(249, 115, 22, 0.15)" />
-      <ParticleField count={6} color="orange" />
-      
-      <GradientOrbs orbs={[
-        { color: 'rgba(249, 115, 22, 0.08)', size: 400, x: '50%', y: '50%' },
-        { color: 'rgba(251, 191, 36, 0.04)', size: 300, x: '20%', y: '60%' },
-      ]} />
+    <section className="cta-section relative py-14 md:py-20 overflow-hidden bg-[#050508]">
+      {/* Floating particles */}
+      <FloatingParticles />
 
+      {/* Subtle radial glow */}
+      <div 
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] pointer-events-none"
+        style={{
+          background: 'radial-gradient(ellipse at center, rgba(249, 115, 22, 0.06) 0%, transparent 70%)',
+        }}
+      />
+
+      {/* Content */}
       <div className="relative z-10 max-w-2xl mx-auto px-4 md:px-8 text-center">
+        
+        {/* Headline */}
         <motion.h2
-          className="font-display text-2xl sm:text-3xl md:text-4xl font-bold mb-4 tracking-tight text-white leading-[1.2]"
+          className="cta-headline font-display text-2xl sm:text-3xl md:text-4xl font-bold mb-4 tracking-tight text-white leading-[1.2]"
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -59,8 +203,9 @@ export function CTA() {
           Si tu negocio va a mil... tu <AccentText>sistema</AccentText> debería ayudarte, no frenarte.
         </motion.h2>
 
+        {/* Subheadline */}
         <motion.p
-          className="text-sm md:text-base text-white/45 mb-6 leading-relaxed max-w-lg mx-auto"
+          className="cta-subheadline text-sm md:text-base text-white/45 mb-6 leading-relaxed max-w-lg mx-auto"
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -71,7 +216,7 @@ export function CTA() {
 
         {/* CTAs */}
         <motion.div
-          className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-5"
+          className="cta-buttons flex flex-col sm:flex-row items-center justify-center gap-3 mb-5"
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -82,7 +227,7 @@ export function CTA() {
               href={cta.whatsapp.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-3 bg-white text-black font-bold uppercase tracking-wider text-[10px] transition-all duration-300 hover:bg-orange-400 rounded-lg"
+              className="cta-primary group inline-flex items-center gap-2 px-5 py-3 bg-white text-black font-bold uppercase tracking-wider text-[10px] transition-all duration-300 hover:bg-orange-400 rounded-lg"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
@@ -98,7 +243,7 @@ export function CTA() {
               href={cta.calendar.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-3 text-white/50 hover:text-white uppercase tracking-wider text-[10px] transition-colors duration-300"
+              className="cta-secondary inline-flex items-center gap-2 px-4 py-3 text-white/50 hover:text-white uppercase tracking-wider text-[10px] transition-colors duration-300"
               whileTap={{ scale: 0.98 }}
             >
               <span>{cta.calendar.label}</span>
@@ -114,7 +259,7 @@ export function CTA() {
 
         {/* Micro-proof chips */}
         <motion.div
-          className="flex flex-wrap items-center justify-center gap-2 mb-4"
+          className="cta-chips flex flex-wrap items-center justify-center gap-2 mb-4"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
@@ -136,7 +281,7 @@ export function CTA() {
 
         {/* Email */}
         <motion.div
-          className="text-white/20 text-[10px] uppercase tracking-widest"
+          className="cta-email text-white/20 text-[10px] uppercase tracking-widest"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}

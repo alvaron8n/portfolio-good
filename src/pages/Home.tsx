@@ -1,6 +1,5 @@
 import { Hero } from '../sections/Hero'
 import { SocialProof } from '../sections/SocialProof'
-import { WhatIDo } from '../sections/WhatIDo'
 import { About } from '../sections/About'
 import { Services } from '../sections/Services'
 import { Fit } from '../sections/Fit'
@@ -13,9 +12,8 @@ export function Home() {
     <>
       <Hero />
       <SocialProof />
-      <WhatIDo />
-      <About />
       <Services />
+      <About />
       <Fit />
       <ImmersiveWorkGrid />
       <FeaturedProjects />
