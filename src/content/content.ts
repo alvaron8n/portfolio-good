@@ -403,7 +403,8 @@ export const content = {
     hero: {
       eyebrow: 'SOBRE MÍ',
       title: 'Negocio, diseño y tecnología.',
-      titleAccent: 'Con IA aplicada de verdad.',
+      titlePre: 'Con IA aplicada de forma',
+      titleAccent: 'eficiente.',
       subtitle: 'Perfil híbrido que combina la creatividad publicitaria con la eficiencia técnica. Tras fundar dos e-commerce propios y formarme en agencias de marketing, he evolucionado hacia la Automatización de Procesos y la Inteligencia Artificial.',
     },
     intro: {

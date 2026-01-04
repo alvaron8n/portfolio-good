@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom'
 import gsap from 'gsap'
 import { Section } from '../components/Section'
 import { Container } from '../components/Container'
+import { ShaderBackground } from '../components/backgrounds/ShaderBackground'
+import { PageDecoratives } from '../components/backgrounds/PageDecoratives'
 
 // ============================================
 // EXTENDED PROJECTS DATA
@@ -315,66 +317,6 @@ function FilterButton({ cat, isActive, onClick, count }: {
 }
 
 // ============================================
-// DECORATIVE SHAPES
-// ============================================
-function DecorativeShapes() {
-  return (
-    <div className="prj-shapes">
-      {/* Grid Pattern */}
-      <svg className="prj-grid-pattern" viewBox="0 0 100 100" preserveAspectRatio="none">
-        <defs>
-          <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
-            <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(249,115,22,0.08)" strokeWidth="0.5"/>
-          </pattern>
-        </defs>
-        <rect width="100%" height="100%" fill="url(#grid)" />
-      </svg>
-
-      {/* Floating circles */}
-      <div className="prj-circle prj-circle--1" />
-      <div className="prj-circle prj-circle--2" />
-      <div className="prj-circle prj-circle--3" />
-
-      {/* Gradient orbs */}
-      <div className="prj-orb prj-orb--1" />
-      <div className="prj-orb prj-orb--2" />
-
-      {/* Lines */}
-      <svg className="prj-lines" viewBox="0 0 400 400">
-        <line x1="0" y1="100" x2="400" y2="100" stroke="rgba(249,115,22,0.1)" strokeWidth="1" strokeDasharray="8,8" />
-        <line x1="0" y1="200" x2="400" y2="200" stroke="rgba(249,115,22,0.05)" strokeWidth="1" strokeDasharray="4,12" />
-        <line x1="0" y1="300" x2="400" y2="300" stroke="rgba(249,115,22,0.08)" strokeWidth="1" strokeDasharray="2,6" />
-      </svg>
-
-      {/* Corner accents */}
-      <svg className="prj-corner prj-corner--tl" viewBox="0 0 100 100">
-        <path d="M0,50 L0,0 L50,0" fill="none" stroke="rgba(249,115,22,0.2)" strokeWidth="1"/>
-        <circle cx="0" cy="0" r="3" fill="#f97316" opacity="0.5"/>
-      </svg>
-      <svg className="prj-corner prj-corner--br" viewBox="0 0 100 100">
-        <path d="M100,50 L100,100 L50,100" fill="none" stroke="rgba(249,115,22,0.2)" strokeWidth="1"/>
-        <circle cx="100" cy="100" r="3" fill="#f97316" opacity="0.5"/>
-      </svg>
-
-      {/* Dots pattern */}
-      <svg className="prj-dots" viewBox="0 0 200 200">
-        {[...Array(5)].map((_, i) => 
-          [...Array(5)].map((_, j) => (
-            <circle 
-              key={`${i}-${j}`} 
-              cx={20 + i * 40} 
-              cy={20 + j * 40} 
-              r="2" 
-              fill={`rgba(249,115,22,${0.1 + Math.random() * 0.2})`}
-            />
-          ))
-        )}
-      </svg>
-    </div>
-  )
-}
-
-// ============================================
 // MAIN PAGE
 // ============================================
 export function Projects() {
@@ -394,12 +336,15 @@ export function Projects() {
 
   return (
     <div className="prj-page">
-      {/* Decorative Background */}
-      <DecorativeShapes />
+      {/* Fondo gris base + decorativos */}
+      <div className="prj-base-bg" />
+      <PageDecoratives page="projects" />
 
-      {/* Hero */}
-      <section className="prj-hero">
-        <Container>
+      {/* Hero con ShaderGradient contenido */}
+      <section className="prj-hero relative overflow-hidden">
+        <ShaderBackground preset="projects" />
+        
+        <Container className="relative z-10">
           <motion.div 
             className="prj-hero-content"
             initial={{ opacity: 0 }}
@@ -513,126 +458,24 @@ export function Projects() {
           --glass: rgba(16,16,24,0.8);
           position: relative;
           min-height: 100vh;
-          background: var(--dark);
           overflow-x: hidden;
         }
 
-        /* ===== DECORATIVE SHAPES ===== */
-        .prj-shapes {
+        .prj-base-bg {
           position: fixed;
           inset: 0;
-          pointer-events: none;
-          z-index: 0;
-          overflow: hidden;
-        }
-
-        .prj-grid-pattern {
-          position: absolute;
-          inset: 0;
-          width: 100%;
-          height: 100%;
-          opacity: 0.5;
-        }
-
-        .prj-circle {
-          position: absolute;
-          border-radius: 50%;
-          border: 1px solid rgba(249,115,22,0.15);
-        }
-
-        .prj-circle--1 {
-          width: 400px;
-          height: 400px;
-          top: -100px;
-          right: -100px;
-          animation: pulse 8s ease-in-out infinite;
-        }
-
-        .prj-circle--2 {
-          width: 300px;
-          height: 300px;
-          bottom: 20%;
-          left: -150px;
-          border-color: rgba(251,191,36,0.1);
-          animation: pulse 10s ease-in-out infinite reverse;
-        }
-
-        .prj-circle--3 {
-          width: 200px;
-          height: 200px;
-          top: 40%;
-          right: 10%;
-          border-color: rgba(249,115,22,0.08);
-          animation: pulse 6s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-          0%, 100% { transform: scale(1); opacity: 1; }
-          50% { transform: scale(1.05); opacity: 0.7; }
-        }
-
-        .prj-orb {
-          position: absolute;
-          border-radius: 50%;
-          filter: blur(100px);
-        }
-
-        .prj-orb--1 {
-          width: 500px;
-          height: 500px;
-          background: radial-gradient(circle, rgba(249,115,22,0.15) 0%, transparent 70%);
-          top: -10%;
-          left: 50%;
-          transform: translateX(-50%);
-        }
-
-        .prj-orb--2 {
-          width: 400px;
-          height: 400px;
-          background: radial-gradient(circle, rgba(251,191,36,0.1) 0%, transparent 70%);
-          bottom: 10%;
-          right: -10%;
-        }
-
-        .prj-lines {
-          position: absolute;
-          top: 20%;
-          left: 0;
-          width: 100%;
-          height: 400px;
-          opacity: 0.5;
-        }
-
-        .prj-corner {
-          position: absolute;
-          width: 100px;
-          height: 100px;
-        }
-
-        .prj-corner--tl {
-          top: 120px;
-          left: 40px;
-        }
-
-        .prj-corner--br {
-          bottom: 100px;
-          right: 40px;
-        }
-
-        .prj-dots {
-          position: absolute;
-          width: 200px;
-          height: 200px;
-          bottom: 30%;
-          left: 5%;
-          opacity: 0.6;
+          background: #18181b;
+          z-index: -1;
         }
 
         /* ===== HERO ===== */
         .prj-hero {
           position: relative;
           z-index: 1;
-          padding: 160px 0 100px;
+          padding: 140px 0 80px;
+          min-height: 70vh;
+          display: flex;
+          align-items: center;
         }
 
         .prj-hero-content {
@@ -655,22 +498,21 @@ export function Projects() {
           font-weight: 600;
           text-transform: uppercase;
           letter-spacing: 4px;
-          color: var(--orange);
+          color: #10b981;
         }
 
         .prj-hero-line {
           width: 40px;
           height: 1px;
-          background: linear-gradient(90deg, transparent, var(--orange));
+          background: linear-gradient(90deg, transparent, #10b981);
         }
 
         .prj-hero-line:last-child {
-          background: linear-gradient(90deg, var(--orange), transparent);
+          background: linear-gradient(90deg, #10b981, transparent);
         }
 
         .prj-hero-title {
           font-family: 'Space Grotesk', sans-serif;
-          font-size: clamp(42px, 8vw, 72px);
           font-weight: 700;
           line-height: 1.1;
           margin: 0 0 28px;
@@ -679,14 +521,18 @@ export function Projects() {
         .prj-title-line1 {
           display: block;
           color: white;
+          font-size: clamp(32px, 6vw, 56px);
         }
 
         .prj-hero-gradient {
           display: block;
+          font-family: 'BBH Bartle', 'Space Grotesk', sans-serif;
+          font-size: clamp(28px, 5vw, 48px);
           background: linear-gradient(135deg, var(--orange), var(--amber));
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
+          margin-top: 8px;
         }
 
         .prj-hero-desc {

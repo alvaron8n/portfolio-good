@@ -4,6 +4,8 @@ import { Section } from '../components/Section'
 import { Container } from '../components/Container'
 import { Button } from '../components/Button'
 import { ProfileCard } from '../components/ui/ProfileCard'
+import { ShaderBackground } from '../components/backgrounds/ShaderBackground'
+import { PageDecoratives } from '../components/backgrounds/PageDecoratives'
 import { content } from '../content/content'
 import AlvaroPhoto from '../lib/Alvaro.jpg'
 
@@ -43,223 +45,6 @@ const categoryIcons: Record<string, React.ReactNode> = {
   'Diseño': <HiOutlineColorSwatch className="w-5 h-5" />,
   'Otras': <HiOutlineCollection className="w-5 h-5" />,
 }
-
-// ============================================
-// ANIMATED MESH GRADIENT BACKGROUND - PREMIUM
-// ============================================
-function MeshGradientBg() {
-  return (
-    <div className="absolute inset-0 overflow-hidden">
-      {/* Base gradient */}
-      <div 
-        className="absolute inset-0"
-        style={{ background: 'linear-gradient(135deg, #08080c 0%, #0c0c14 40%, #0a0a12 100%)' }}
-      />
-      
-      {/* Large animated gradient orbs - más visibles */}
-      <motion.div
-        className="absolute w-[800px] h-[800px] rounded-full"
-        style={{
-          background: 'radial-gradient(circle, rgba(249, 115, 22, 0.18) 0%, rgba(249, 115, 22, 0.05) 40%, transparent 70%)',
-          top: '-20%',
-          left: '-15%',
-          filter: 'blur(80px)',
-        }}
-        animate={{
-          x: [0, 120, 60, 0],
-          y: [0, 80, 120, 0],
-          scale: [1, 1.3, 1.1, 1],
-        }}
-        transition={{ duration: 25, repeat: Infinity, ease: 'easeInOut' }}
-      />
-      
-      <motion.div
-        className="absolute w-[700px] h-[700px] rounded-full"
-        style={{
-          background: 'radial-gradient(circle, rgba(6, 182, 212, 0.15) 0%, rgba(6, 182, 212, 0.04) 40%, transparent 70%)',
-          top: '10%',
-          right: '-10%',
-          filter: 'blur(60px)',
-        }}
-        animate={{
-          x: [0, -100, -50, 0],
-          y: [0, 100, 50, 0],
-          scale: [1, 1.2, 0.9, 1],
-        }}
-        transition={{ duration: 22, repeat: Infinity, ease: 'easeInOut', delay: 3 }}
-      />
-      
-      <motion.div
-        className="absolute w-[500px] h-[500px] rounded-full"
-        style={{
-          background: 'radial-gradient(circle, rgba(139, 92, 246, 0.12) 0%, transparent 60%)',
-          bottom: '5%',
-          left: '25%',
-          filter: 'blur(50px)',
-        }}
-        animate={{
-          x: [0, 80, -40, 0],
-          y: [0, -60, 30, 0],
-          scale: [1, 1.25, 0.9, 1],
-        }}
-        transition={{ duration: 18, repeat: Infinity, ease: 'easeInOut', delay: 5 }}
-      />
-
-      {/* Floating tech icons - decorativos */}
-      <motion.div
-        className="absolute text-4xl opacity-10"
-        style={{ top: '15%', left: '10%' }}
-        animate={{ 
-          y: [0, -20, 0], 
-          rotate: [0, 10, 0],
-          opacity: [0.08, 0.15, 0.08],
-        }}
-        transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-      >
-        ⚡
-      </motion.div>
-      
-      <motion.div
-        className="absolute text-5xl opacity-10"
-        style={{ top: '25%', right: '15%' }}
-        animate={{ 
-          y: [0, 25, 0], 
-          rotate: [0, -15, 0],
-          opacity: [0.06, 0.12, 0.06],
-        }}
-        transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
-      >
-        🧠
-      </motion.div>
-      
-      <motion.div
-        className="absolute text-3xl opacity-10"
-        style={{ bottom: '30%', left: '8%' }}
-        animate={{ 
-          y: [0, -15, 0], 
-          x: [0, 10, 0],
-          opacity: [0.05, 0.1, 0.05],
-        }}
-        transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
-      >
-        💻
-      </motion.div>
-
-      <motion.div
-        className="absolute text-4xl opacity-10"
-        style={{ bottom: '20%', right: '12%' }}
-        animate={{ 
-          y: [0, 20, 0], 
-          rotate: [0, -10, 0],
-          opacity: [0.07, 0.13, 0.07],
-        }}
-        transition={{ duration: 9, repeat: Infinity, ease: 'easeInOut', delay: 3 }}
-      >
-        🚀
-      </motion.div>
-
-      {/* Floating geometric shapes */}
-      <motion.div
-        className="absolute w-32 h-32 border border-orange-500/10 rounded-full"
-        style={{ top: '20%', left: '20%' }}
-        animate={{ 
-          rotate: [0, 360],
-          scale: [1, 1.1, 1],
-        }}
-        transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-      />
-
-      <motion.div
-        className="absolute w-20 h-20 border border-orange-500/10 rounded-lg"
-        style={{ top: '40%', right: '25%' }}
-        animate={{ 
-          rotate: [0, -360],
-          scale: [1, 0.9, 1],
-        }}
-        transition={{ duration: 15, repeat: Infinity, ease: 'linear' }}
-      />
-
-      <motion.div
-        className="absolute w-16 h-16 bg-gradient-to-br from-orange-500/5 to-transparent rounded-lg"
-        style={{ bottom: '35%', left: '15%' }}
-        animate={{ 
-          rotate: [0, 180, 360],
-          y: [0, -30, 0],
-        }}
-        transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
-      />
-
-      {/* Animated lines / rays */}
-      <motion.div
-        className="absolute w-px h-40 origin-top"
-        style={{ 
-          top: '10%', 
-          left: '30%',
-          background: 'linear-gradient(to bottom, rgba(249, 115, 22, 0.2), transparent)',
-        }}
-        animate={{ 
-          scaleY: [0, 1, 0],
-          opacity: [0, 0.5, 0],
-        }}
-        transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 0 }}
-      />
-
-      <motion.div
-        className="absolute w-px h-32 origin-top"
-        style={{ 
-          top: '15%', 
-          right: '35%',
-          background: 'linear-gradient(to bottom, rgba(6, 182, 212, 0.2), transparent)',
-        }}
-        animate={{ 
-          scaleY: [0, 1, 0],
-          opacity: [0, 0.4, 0],
-        }}
-        transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
-      />
-
-      {/* Grid overlay - más visible */}
-      <div
-        className="absolute inset-0 opacity-40"
-        style={{
-          backgroundImage: `
-            linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px)
-          `,
-          backgroundSize: '60px 60px',
-          maskImage: 'radial-gradient(ellipse 80% 70% at 50% 30%, black, transparent)',
-        }}
-      />
-
-      {/* Dot pattern */}
-      <div
-        className="absolute inset-0 opacity-20"
-        style={{
-          backgroundImage: 'radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px)',
-          backgroundSize: '30px 30px',
-          maskImage: 'radial-gradient(ellipse 60% 50% at 30% 40%, black, transparent)',
-        }}
-      />
-
-      {/* Noise texture */}
-      <div 
-        className="absolute inset-0 opacity-[0.04]"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
-        }}
-      />
-
-      {/* Vignette effect */}
-      <div 
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background: 'radial-gradient(ellipse 80% 60% at 50% 50%, transparent 0%, rgba(8, 8, 12, 0.4) 100%)',
-        }}
-      />
-    </div>
-  )
-}
-
 
 // ============================================
 // GLASS CARD COMPONENT
@@ -544,12 +329,16 @@ export function AboutPage() {
   ]
 
   return (
-    <>
+    <div className="about-page-wrapper">
+      {/* Fondo gris base + decorativos */}
+      <div className="about-base-bg" />
+      <PageDecoratives page="about" />
+
       {/* ============================================
-          HERO SECTION - Premium animated background
+          HERO SECTION - con ShaderGradient contenido
           ============================================ */}
-      <section className="relative min-h-[85vh] flex items-center overflow-hidden">
-        <MeshGradientBg />
+      <section className="about-hero relative min-h-[75vh] flex items-center overflow-hidden">
+        <ShaderBackground preset="about" />
 
         {/* Floating code snippets - decorativos */}
         <motion.div
@@ -612,50 +401,38 @@ export function AboutPage() {
         />
 
         <Container className="relative z-10 py-24 md:py-32">
-          <div className="max-w-3xl">
+          <div className="max-w-3xl mx-auto text-center lg:text-left lg:mx-0">
             {/* Eyebrow */}
             <motion.div 
-              className="flex items-center gap-3 mb-5"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
+              className="about-hero-eyebrow"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
             >
-              <div className="h-px w-10 bg-gradient-to-r from-cyan-400 to-transparent" />
-              <span className="text-xs font-bold text-cyan-400 uppercase tracking-[0.25em]">
-                {about.hero.eyebrow}
-              </span>
+              <span className="about-hero-line" />
+              <span>{about.hero.eyebrow}</span>
+              <span className="about-hero-line" />
             </motion.div>
 
             {/* H1 */}
             <motion.h1 
-              className="mb-6"
+              className="about-hero-title"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
             >
-              <span 
-                className="block text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-[1.1] tracking-tight"
-                style={{ fontFamily: "'Space Grotesk', sans-serif" }}
-              >
+              <span className="about-hero-title-main">
                 {about.hero.title}
               </span>
-              <span 
-                className="block text-xl md:text-2xl lg:text-3xl font-bold mt-3"
-                style={{ 
-                  fontFamily: "'BBH Bartle', 'Space Grotesk', sans-serif",
-                  background: 'linear-gradient(135deg, #ea580c 0%, #f97316 40%, #fbbf24 100%)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  filter: 'drop-shadow(0 0 20px rgba(249, 115, 22, 0.3))',
-                }}
-              >
-                {about.hero.titleAccent}
+              <span className="about-hero-subtitle-line">
+                <span className="about-hero-title-pre">{about.hero.titlePre} </span>
+                <span className="about-hero-highlight">{about.hero.titleAccent}</span>
               </span>
             </motion.h1>
 
             {/* Subtitle */}
             <motion.p 
-              className="text-base md:text-lg text-white/55 leading-relaxed mb-8 max-w-2xl"
+              className="text-base md:text-lg text-white/55 leading-relaxed mb-8 max-w-2xl mx-auto lg:mx-0"
               style={{ fontFamily: "'Montserrat', sans-serif" }}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -666,7 +443,7 @@ export function AboutPage() {
 
             {/* CTAs */}
             <motion.div 
-              className="flex flex-wrap gap-3"
+              className="flex flex-wrap gap-3 justify-center lg:justify-start"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
@@ -1041,6 +818,85 @@ export function AboutPage() {
           </motion.div>
         </Container>
       </Section>
-    </>
+
+      <style>{`
+        .about-page-wrapper {
+          position: relative;
+          min-height: 100vh;
+        }
+        
+        .about-base-bg {
+          position: fixed;
+          inset: 0;
+          background: #18181b;
+          z-index: -1;
+        }
+
+        .about-hero {
+          padding-top: 100px;
+        }
+
+        /* Hero Eyebrow - Morado */
+        .about-hero-eyebrow {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 12px;
+          margin-bottom: 20px;
+          font-size: 12px;
+          font-weight: 500;
+          letter-spacing: 0.15em;
+          text-transform: uppercase;
+          color: #8b5cf6;
+        }
+        @media (min-width: 1024px) {
+          .about-hero-eyebrow {
+            justify-content: flex-start;
+          }
+        }
+        .about-hero-line {
+          width: 32px;
+          height: 1px;
+          background: linear-gradient(90deg, transparent, #8b5cf6);
+        }
+        .about-hero-line:last-child {
+          background: linear-gradient(90deg, #8b5cf6, transparent);
+        }
+
+        /* Hero Title */
+        .about-hero-title {
+          margin-bottom: 24px;
+        }
+        .about-hero-title-main {
+          display: block;
+          font-family: 'Space Grotesk', sans-serif;
+          font-size: clamp(36px, 5vw, 52px);
+          font-weight: 700;
+          color: white;
+          line-height: 1.1;
+          margin-bottom: 8px;
+        }
+        .about-hero-subtitle-line {
+          display: block;
+          line-height: 1.3;
+        }
+        .about-hero-title-pre {
+          font-family: 'Space Grotesk', sans-serif;
+          font-size: clamp(22px, 3.5vw, 36px);
+          font-weight: 600;
+          color: white;
+        }
+        .about-hero-highlight {
+          font-family: 'BBH Bartle', 'Space Grotesk', sans-serif;
+          font-size: clamp(22px, 3.5vw, 36px);
+          font-weight: 700;
+          background: linear-gradient(135deg, #ea580c 0%, #f97316 40%, #fbbf24 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          filter: drop-shadow(0 0 20px rgba(249, 115, 22, 0.3));
+        }
+      `}</style>
+    </div>
   )
 }

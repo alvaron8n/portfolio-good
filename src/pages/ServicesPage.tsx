@@ -4,8 +4,8 @@ import { Section } from '../components/Section'
 import { Container } from '../components/Container'
 import { Button } from '../components/Button'
 import { content } from '../content/content'
-import { HeroParallax, ParallaxHeader } from '../components/ui/hero-parallax'
-import { ServicesBackdrop } from '../components/ui/ServicesBackdrop'
+import { ShaderBackground } from '../components/backgrounds/ShaderBackground'
+import { PageDecoratives } from '../components/backgrounds/PageDecoratives'
 
 // ============================================
 // BRAND COLORS
@@ -16,107 +16,6 @@ const brandTheme = {
   primaryDark: '#ea580c',  // Orange 600
   accent: '#10b981',       // Emerald 500
 }
-
-// ============================================
-// SERVICE CARDS DATA - With Unsplash Images (BRAND COLORS)
-// ============================================
-const serviceCards = [
-  // ROW 1: AUTOMATIZACIÓN (5 cards)
-  {
-    title: 'Workflows n8n',
-    category: 'Automatización',
-    thumbnail: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80&auto=format',
-    color: brandTheme.primary,
-  },
-  {
-    title: 'Integraciones API',
-    category: 'Automatización',
-    thumbnail: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&q=80&auto=format',
-    color: brandTheme.primary,
-  },
-  {
-    title: 'Dashboards',
-    category: 'Automatización',
-    thumbnail: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80&auto=format',
-    color: brandTheme.primary,
-  },
-  {
-    title: 'Procesos 24/7',
-    category: 'Automatización',
-    thumbnail: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800&q=80&auto=format',
-    color: brandTheme.primary,
-  },
-  {
-    title: 'Zero Errores',
-    category: 'Automatización',
-    thumbnail: 'https://images.unsplash.com/photo-1518186285589-2f7649de83e0?w=800&q=80&auto=format',
-    color: brandTheme.primary,
-  },
-
-  // ROW 2: DESARROLLO IA (5 cards)
-  {
-    title: 'IA Copilot',
-    category: 'Desarrollo IA',
-    thumbnail: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&q=80&auto=format',
-    color: brandTheme.primaryLight,
-  },
-  {
-    title: 'CRM a Medida',
-    category: 'Desarrollo IA',
-    thumbnail: 'https://images.unsplash.com/photo-1551434678-e076c223a692?w=800&q=80&auto=format',
-    color: brandTheme.primaryLight,
-  },
-  {
-    title: 'React + TypeScript',
-    category: 'Desarrollo IA',
-    thumbnail: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&q=80&auto=format',
-    color: brandTheme.primaryLight,
-  },
-  {
-    title: 'Supabase Backend',
-    category: 'Desarrollo IA',
-    thumbnail: 'https://images.unsplash.com/photo-1544383835-bda2bc66a55d?w=800&q=80&auto=format',
-    color: brandTheme.primaryLight,
-  },
-  {
-    title: 'Software en Semanas',
-    category: 'Desarrollo IA',
-    thumbnail: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&q=80&auto=format',
-    color: brandTheme.primaryLight,
-  },
-
-  // ROW 3: WEB + BRANDING (5 cards)
-  {
-    title: 'Webs Premium',
-    category: 'Web',
-    thumbnail: 'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=800&q=80&auto=format',
-    color: brandTheme.accent,
-  },
-  {
-    title: '+60% Conversiones',
-    category: 'Web',
-    thumbnail: 'https://images.unsplash.com/photo-1553484771-371a605b060b?w=800&q=80&auto=format',
-    color: brandTheme.accent,
-  },
-  {
-    title: 'Identidad Visual',
-    category: 'Branding',
-    thumbnail: 'https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=800&q=80&auto=format',
-    color: brandTheme.primaryDark,
-  },
-  {
-    title: 'UI/UX Design',
-    category: 'Web',
-    thumbnail: 'https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?w=800&q=80&auto=format',
-    color: brandTheme.accent,
-  },
-  {
-    title: 'Brand Guidelines',
-    category: 'Branding',
-    thumbnail: 'https://images.unsplash.com/photo-1613909207039-6b173b755cc1?w=800&q=80&auto=format',
-    color: brandTheme.primaryDark,
-  },
-]
 
 // ============================================
 // ACCORDION ITEM (MOBILE)
@@ -523,45 +422,76 @@ export function ServicesPage() {
   const [openAccordion, setOpenAccordion] = useState<number>(0)
 
   return (
-    <>
-      {/* Premium animated backdrop */}
-      <ServicesBackdrop />
+    <div className="svc-page-wrapper">
+      {/* Fondo gris base + decorativos */}
+      <div className="svc-base-bg" />
+      <PageDecoratives page="services" />
 
-      {/* Desktop: Hero Parallax */}
-      <div className="hidden lg:block relative z-10">
-        <HeroParallax
-          services={serviceCards}
-          header={
-            <ParallaxHeader
-              title="Soluciones que escalan tu negocio"
-              subtitle="Automatización, desarrollo a medida e IA para eliminar el caos operativo y generar resultados medibles."
-            />
-          }
-        />
-      </div>
-
-      {/* Mobile: Simple Header + Accordion Cards */}
-      <Section className="lg:hidden relative overflow-hidden pt-24 pb-8" style={{ background: 'transparent' }}>
-        <Container>
-          {/* Header - NO duplication */}
+      {/* HERO con ShaderGradient contenido */}
+      <section className="svc-hero relative min-h-[70vh] lg:min-h-[80vh] flex items-center overflow-hidden">
+        <ShaderBackground preset="services" />
+        
+        <Container className="relative z-10">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="mb-8"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6 }}
+            className="max-w-3xl mx-auto text-center lg:text-left lg:mx-0"
           >
-            <h1 
-              className="text-2xl sm:text-3xl font-bold text-white mb-3"
-              style={{ fontFamily: 'var(--font-display)' }}
+            {/* Eyebrow */}
+            <motion.div 
+              className="svc-hero-eyebrow"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
             >
-              Soluciones que escalan tu negocio
-            </h1>
-            <p className="text-sm sm:text-base text-white/50 max-w-md leading-relaxed">
-              Automatización, desarrollo a medida e IA para eliminar el caos operativo.
-            </p>
-          </motion.div>
+              <span className="svc-hero-line" />
+              <span>Servicios</span>
+              <span className="svc-hero-line" />
+            </motion.div>
 
-          {/* Mobile Accordion Cards */}
+            {/* Title */}
+            <motion.h1 
+              className="svc-hero-title"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+            >
+              <span className="svc-hero-title-main">Soluciones que</span>
+              <span className="svc-hero-highlight">escalan tu negocio.</span>
+            </motion.h1>
+
+            {/* Description */}
+            <motion.p 
+              className="text-base sm:text-lg lg:text-xl text-white/60 max-w-2xl leading-relaxed mb-8"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+            >
+              Automatización, desarrollo a medida e IA para eliminar el caos operativo y generar resultados medibles.
+            </motion.p>
+
+            {/* CTAs */}
+            <motion.div 
+              className="flex flex-wrap gap-3 justify-center lg:justify-start"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6 }}
+            >
+              <Button href="/contacto" variant="primary">
+                Hablemos de tu proyecto
+              </Button>
+              <Button href="/proyectos" variant="secondary">
+                Ver casos de éxito
+              </Button>
+            </motion.div>
+          </motion.div>
+        </Container>
+      </section>
+
+      {/* Mobile: Accordion Cards */}
+      <Section className="lg:hidden relative overflow-hidden py-12" style={{ background: 'transparent' }}>
+        <Container>
           <div className="space-y-3">
             {content.services.items.map((service, index) => (
               <MobileAccordionCard
@@ -576,7 +506,7 @@ export function ServicesPage() {
         </Container>
       </Section>
 
-      {/* Service Details Section (Desktop - after parallax) */}
+      {/* Desktop: Service Details */}
       <Section className="hidden lg:block relative py-20" style={{ background: 'transparent' }}>
         <Container>
           <motion.div
@@ -661,8 +591,75 @@ export function ServicesPage() {
               padding: 56px 48px;
             }
           }
+
+          .svc-page-wrapper {
+            position: relative;
+            min-height: 100vh;
+          }
+          
+          .svc-base-bg {
+            position: fixed;
+            inset: 0;
+            background: #18181b;
+            z-index: -1;
+          }
+
+          .svc-hero {
+            padding-top: 100px;
+          }
+
+          /* Hero Eyebrow */
+          .svc-hero-eyebrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: #3b82f6;
+          }
+          @media (min-width: 1024px) {
+            .svc-hero-eyebrow {
+              justify-content: flex-start;
+            }
+          }
+          .svc-hero-line {
+            width: 32px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #3b82f6);
+          }
+          .svc-hero-line:last-child {
+            background: linear-gradient(90deg, #3b82f6, transparent);
+          }
+
+          /* Hero Highlight */
+          .svc-hero-title {
+            margin-bottom: 24px;
+          }
+          .svc-hero-title-main {
+            display: block;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(32px, 6vw, 56px);
+            font-weight: 700;
+            color: white;
+            line-height: 1.1;
+          }
+          .svc-hero-highlight {
+            display: block;
+            font-family: 'BBH Bartle', 'Space Grotesk', sans-serif;
+            font-size: clamp(28px, 5vw, 48px);
+            font-weight: 700;
+            background: linear-gradient(135deg, #f97316, #fb923c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-top: 8px;
+          }
         `}</style>
       </Section>
-    </>
+    </div>
   )
 }
