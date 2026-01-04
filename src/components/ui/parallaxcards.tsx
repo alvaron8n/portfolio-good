@@ -116,7 +116,7 @@ function DesktopParallaxCards({ cards }: { cards: ParallaxCard[] }) {
         ScrollTrigger.getAll().forEach((st) => st.kill())
       }
     },
-    { scope: sectionRef, dependencies: [isMounted, updateActiveCard] }
+        { scope: sectionRef, dependencies: [updateActiveCard] }
   )
 
   return (
