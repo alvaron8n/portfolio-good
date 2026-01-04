@@ -315,15 +315,17 @@ export function SocialProof() {
       <Container>
         <div className="max-w-5xl mx-auto">
           {/* Collaboration text */}
-          <motion.p
-            className="text-center text-white/50 text-sm md:text-base mb-12 md:mb-16 max-w-2xl mx-auto leading-relaxed"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            {socialProof.text}
-          </motion.p>
+          {socialProof.text && (
+            <motion.p
+              className="text-center text-white/50 text-sm md:text-base mb-12 md:mb-16 max-w-2xl mx-auto leading-relaxed"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              {socialProof.text}
+            </motion.p>
+          )}
           
           <EpicManifestoCard />
         </div>

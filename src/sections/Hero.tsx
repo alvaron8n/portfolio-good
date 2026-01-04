@@ -214,12 +214,14 @@ export function Hero() {
               </div>
 
               {/* Microcopy */}
-              <p 
-                className="text-[11px] md:text-xs text-white/40 leading-relaxed max-w-md"
-                style={{ fontFamily: "'Montserrat', sans-serif" }}
-              >
-                {hero.microcopy}
-              </p>
+              {hero.microcopy && (
+                <p 
+                  className="text-[11px] md:text-xs text-white/40 leading-relaxed max-w-md"
+                  style={{ fontFamily: "'Montserrat', sans-serif" }}
+                >
+                  {hero.microcopy}
+                </p>
+              )}
             </GlassPanel>
           </motion.div>
         </motion.div>

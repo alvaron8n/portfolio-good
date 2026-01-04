@@ -48,11 +48,11 @@ export const content = {
         label: 'Cuéntame tu caso',
         href: 'https://wa.me/34684005952',
       },
-      microcopy: 'Dame contexto por WhatsApp o email y te preparo una propuesta clara. Sin compromiso, sin llamada fría.',
+      microcopy: '',
     },
 
     socialProof: {
-      text: 'Actualmente colaboro con Flama Studios y trabajo con equipos que valoran la eficiencia y el trabajo bien hecho.',
+      text: '',
       quote: {
         text: 'La IA no te va a quitar el trabajo. Lo hará alguien que sepa usarla.',
         author: 'Álvaro Fernández',
